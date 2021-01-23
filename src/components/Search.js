@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
 import '../styles/Search.scss';
 
 export default function Search() {
-    const [searchWord, setSearchWord] = useState('')
+    const [searchWord, setSearchWord] = useState('');
+    const [associationArray, setAssociationArray] = useState([]);
 
     const updateSearchWord = (e) => {
         setSearchWord(e.target.value);
@@ -19,21 +20,19 @@ export default function Search() {
     
     async function _getAssociations () {
         try {
-            console.log('go')
             let data = await fetch(`https://api.wordassociations.net/associations/v1.0/json/search?apikey=5b4acb51-a76e-4d05-9349-8044794dea94&text=${searchWord}&lang=en&limit=10`, {mode: 'cors'})
             let words = await data.json()
-            console.log(words)
             return words
         } catch {
             console.log('error')
         }
     }
     
-    async function _setAssociations () {
+    async function setAssociations () {
         let firstAssociation = new association()
         let secondAssociation = new association()
         let data = await _getAssociations()
-        let synonymArray = []
+        let placeholderArray = []
     
         firstAssociation.meaning = data.response[0].items[0].item
         firstAssociation.partOfSpeech = data.response[0].items[0].pos
@@ -43,31 +42,34 @@ export default function Search() {
         secondAssociation.partOfSpeech = data.response[0].items[1].pos
         secondAssociation.weight = data.response[0].items[1].weight
         
-        synonymArray.push(firstAssociation, secondAssociation)
-        return synonymArray
+        placeholderArray.push(firstAssociation, secondAssociation)
+        console.log(placeholderArray)
+        setAssociationArray(placeholderArray)
+        return associationArray
     }
-    
-    async function renderAssociations() {
-        //defaultFunctions.setLoader()
-        let array = await _setAssociations()
-        //defaultFunctions.removeLoader()
-        // array.forEach(element => {
-        //     let container = document.createElement('div')
-        //     container.classList.add('.wordContainer')
-        //     let synonymContainer = document.getElementById('synonymContainer')
-        //     synonymContainer.appendChild(container)
-        //     container.textContent = element.meaning
-        // })
-        console.log(array)
-    };
+
+    // useEffect(() => {
+    //     console.log('AA = ' + associationArray[0].meaning)
+    //   }, [associationArray]);
+    let associationContainer ;
+    if(associationArray.length === 0) {
+        associationContainer = <div className='association-container'></div>
+    } else {
+        associationContainer = 
+        <div className='association-container'>
+            <p>{associationArray[0].meaning}</p>
+            <p>{associationArray[1].meaning}</p>
+        </div>
+    }
 
     return (
         <div>
             <div className='search-container'>
                 <h2>Search</h2>
                 <input type='text' className='search-input-text' onChange={e => updateSearchWord(e)}></input>
-                <button className='find-synonyms-button' onClick={renderAssociations}>Find Synonyms</button>
+                <button className='find-synonyms-button' onClick={setAssociations}>Find Associations</button>
             </div>
+            {associationContainer}
         </div>
     );
 }

@@ -1,0 +1,33 @@
+/*NAVBAR*/
+.navbar {
+    font-family: 'Krub', sans-serif;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 1300px;
+    height: 80px;
+    background-color: rgb(255, 176, 176);
+}
+
+.navbar-brand {
+    color: rgb(0, 0, 0);
+}
+
+/*ICON AND TITLE*/
+.navbar-left {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    width: 600px;
+}
+
+/*LOGIN AND REGISTRATION LINKS*/
+.navbar-right {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    width: 600px;
+}

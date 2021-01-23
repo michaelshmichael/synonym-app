@@ -3,7 +3,7 @@ import Header from './Header';
 import { Route } from 'react-router-dom';
 import Registration from './Registration';
 import Login from './Login';
-import Landing from './Landing';
+import Home from './Home';
 
 export default function Routes() {
     const [signedIn, setSignedIn] = useState (false);
@@ -25,7 +25,7 @@ export default function Routes() {
           user={user}
           updateSignedIn={updateSignedIn}
           ></Header>
-          <Route exact path='/' render={props => <Landing {...props}
+          <Route exact path='/' render={props => <Home {...props}
                 signedIn={signedIn}
             />}></Route>
           <Route path='/login' render={props => <Login {...props}

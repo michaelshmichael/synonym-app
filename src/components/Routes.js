@@ -1,21 +1,26 @@
 import React, { useState } from 'react';
-import Header from './Header';
 import { Route } from 'react-router-dom';
+import axios from 'axios';
+import Header from './Header';
 import Registration from './Registration';
 import Login from './Login';
 import Home from './Home';
 
 export default function Routes() {
-    const [signedIn, setSignedIn] = useState (false);
-    const [user, setUser] = useState('John');
+    const [signedIn, setSignedIn] = useState(JSON.parse(localStorage.getItem('signedIn')) || false);
+    const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')) || '');
 
-    const updateSignedIn  = () => {
+    const updateSignedIn  = (username) => {
         if (signedIn === false) {
-            setSignedIn(true)
+          setSignedIn(true, localStorage.setItem('signedIn', JSON.stringify(true)));
+          setUser(username, localStorage.setItem('user', JSON.stringify(username)));
         } else {
-            setSignedIn(false)
+          localStorage.clear();
+          axios.post('https://app.yawe.dev/api/1/ce/vasco-da-gama/users?key=1f8d0c6bbd604833adfa5d2cf8095ef4&logout=true',
+              { withCredentials: true });
         }
-    };
+      };
+
 
 
     return (

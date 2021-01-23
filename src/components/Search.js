@@ -8,7 +8,6 @@ export default function Search() {
             <div className='landing-blurb'>
                 <h2>Search</h2>
             </div>
-            <button className='registration-button' href='registration'>Register</button>
         </div>
     );
 }

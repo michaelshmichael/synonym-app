@@ -64,8 +64,8 @@
     margin-right: 20px;
     text-align: center;
     background-color: rgb(53, 147, 163);
+    .p {
+        pointer-events: inherit;
+    }
 }
 
-.p {
-    pointer-events: none;
-}

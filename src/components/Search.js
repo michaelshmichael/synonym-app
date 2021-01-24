@@ -5,7 +5,7 @@ export default function Search() {
     const [searchWord, setSearchWord] = useState('');
     const [associationArray, setAssociationArray] = useState([]);
     const inputRef = useRef();
-    
+
     const createNewSearchFromResult = (e) => {
         setSearchWord(e);
         inputRef.current.value = e;
@@ -23,6 +23,7 @@ export default function Search() {
         try {
             let data = await fetch(`https://api.wordassociations.net/associations/v1.0/json/search?apikey=5b4acb51-a76e-4d05-9349-8044794dea94&text=${searchWord}&lang=en&limit=10`, {mode: 'cors'})
             let words = await data.json()
+            console.log(words)
             return words
         } catch {
             console.log('Error')
@@ -60,10 +61,10 @@ export default function Search() {
             </div>
             <div className='association-container'>
             {associationArray.map((word) => {
-                return<div id={word.meaning} className='association-box' onClick={e => createNewSearchFromResult(e.target.id)}>
-                    <p>{word.meaning}</p>
-                    <p>{word.partOfSpeech}</p>
-                    <p>{word.weight}</p>
+                return<div data-index={word.meaning} className='association-box' onClick={e => createNewSearchFromResult(e.target.dataset.index)}>
+                    <p data-index={word.meaning}>{word.meaning}</p>
+                    <p data-index={word.meaning}>{word.partOfSpeech}</p>
+                    <p data-index={word.meaning}>{word.weight}</p>
                 </div>
             })}
             </div>

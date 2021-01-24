@@ -42,7 +42,7 @@ export default function Registration() {
             username,
             password
         };
-        const authEndpoint = 'https://app.yawe.dev/api/1/ce/registering-users?key=1f8d0c6bbd604833adfa5d2cf8095ef4';
+        const authEndpoint = 'https://app.yawe.dev/api/1/ce/registeringusers?key=ecee2707727b40f0b5c742371df2fa8b';
         try {
             const registeredUser = await axios.post(authEndpoint, usernameAndPassword);
             console.log(registeredUser.data.data);

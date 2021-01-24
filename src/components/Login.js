@@ -26,9 +26,10 @@ export default function Login(props) {
             username,
             password
         };
-        const loginEndpoint = 'https://app.yawe.dev/api/1/ce/registering-users?key=1f8d0c6bbd604833adfa5d2cf8095ef4&login=true';
+        const loginEndpoint = 'https://app.yawe.dev/api/1/ce/registeringusers?key=ecee2707727b40f0b5c742371df2fa8b&login=true';
         try {
             await axios.post(loginEndpoint, userLogIn, { withCredentials: true });
+            console.log('signed in')
             props.updateSignedIn(userLogIn.username);
             redirectToHomeAfterLoggingIn();
         } catch (error) {

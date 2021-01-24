@@ -16,12 +16,10 @@ export default function Routes() {
           setUser(username, localStorage.setItem('user', JSON.stringify(username)));
         } else {
           localStorage.clear();
-          axios.post('https://app.yawe.dev/api/1/ce/vasco-da-gama/users?key=1f8d0c6bbd604833adfa5d2cf8095ef4&logout=true',
+          axios.post('https://app.yawe.dev/api/1/ce/registering-users?key=1f8d0c6bbd604833adfa5d2cf8095ef4&logout=true',
               { withCredentials: true });
         }
       };
-
-
 
     return (
       <div className="App">

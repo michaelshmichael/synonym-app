@@ -1,14 +1,16 @@
 import React, { useRef, useState } from 'react';
 import '../styles/Search.scss';
 
-export default function Search() {
+export default function Search(props) {
     const [searchWord, setSearchWord] = useState('');
     const [associationArray, setAssociationArray] = useState([]);
     const inputRef = useRef();
+    const searchButton = useRef();
 
     const createNewSearchFromResult = (e) => {
         setSearchWord(e);
         inputRef.current.value = e;
+        searchButton.current.focus();
     };
 
     class association {
@@ -21,7 +23,7 @@ export default function Search() {
     
     async function _getAssociations () {
         try {
-            let data = await fetch(`https://api.wordassociations.net/associations/v1.0/json/search?apikey=5b4acb51-a76e-4d05-9349-8044794dea94&text=${searchWord}&lang=en&limit=10`, {mode: 'cors'})
+            let data = await fetch(`https://api.wordassociations.net/associations/v1.0/json/search?apikey=5b4acb51-a76e-4d05-9349-8044794dea94&text=${searchWord}&lang=${props.language}&limit=10`, {mode: 'cors'})
             let words = await data.json()
             console.log(words)
             return words
@@ -52,12 +54,14 @@ export default function Search() {
         <div>
             <div className='search-container'>
                 <h2>Search</h2>
-                <input ref={inputRef} type='text' className='search-input-text' 
-                onChange={e => setSearchWord(e.target.value)}>
-                </input>
-                <button className='find-synonyms-button' 
-                onClick={setAssociations}>Find Associations
-                </button>
+                <div className='search-input-and-button'>
+                    <input ref={inputRef} type='text' className='search-input-text' 
+                    onChange={e => setSearchWord(e.target.value)}>
+                    </input>
+                    <button ref={searchButton} className='find-synonyms-button' 
+                    onClick={setAssociations}>Find Associations
+                    </button>
+                </div>
             </div>
             <div className='association-container'>
             {associationArray.map((word) => {

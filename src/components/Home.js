@@ -12,7 +12,7 @@ export default function Home(props) {
     }
     return (
         <div>
-            <Search></Search>
+            <Search language={props.language}></Search>
         </div>
     );
 }

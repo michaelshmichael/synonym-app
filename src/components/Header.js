@@ -14,6 +14,8 @@ export default function Header(props) {
         <nav className="navbar navbar-dark bg-primary">
             <div className='navbar-left'>
                 <a className="navbar-brand" href="/">Word Associations</a>
+                <button onClick={e => props.setLanguage('en')}>En</button>
+                <button onClick={e => props.setLanguage('ru')}>Ru</button>
             </div>
             <div className='navbar-right'>
                 {navbarRight}

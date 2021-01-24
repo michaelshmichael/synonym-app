@@ -5,14 +5,14 @@
     margin-top: 20px;
     font-family: 'Krub', sans-serif;
 }
+
 .search-container {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     font-family: 'Krub', sans-serif;
     font-weight: 800;
     padding-left: 20px;
-    padding-top: -30px;
     position: fixed;
     top: 150px;
     left: 100px;
@@ -40,13 +40,20 @@
     }
 }
 
+.search-input-and-button{
+    display: flex;
+    flex-direction: row;
+    width: 400px;
+    margin-top: 20px;
+
+}
 .search-input-text {
     height: 30px;
     width: 200px;
 }
 
 .find-synonyms-button {
-    margin-top: 30px;
+    margin-left: 20px;
     width: 150px;
 }
 
@@ -64,6 +71,7 @@
     margin-right: 20px;
     text-align: center;
     background-color: rgb(53, 147, 163);
+    cursor: default;
     .p {
         pointer-events: inherit;
     }

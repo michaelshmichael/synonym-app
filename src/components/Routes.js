@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Route } from 'react-router-dom';
 import axios from 'axios';
 import Header from './Header';
@@ -10,6 +10,7 @@ import APIEndpoints from '../api';
 export default function Routes() {
     const [signedIn, setSignedIn] = useState(JSON.parse(localStorage.getItem('signedIn')) || false);
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')) || '');
+    const [language, setLanguage] = useState('en')
 
     const updateSignedIn  = (username) => {
         if (signedIn === false) {
@@ -27,9 +28,11 @@ export default function Routes() {
           signedIn={signedIn}
           user={user}
           updateSignedIn={updateSignedIn}
+          setLanguage={setLanguage}
           ></Header>
           <Route exact path='/' render={props => <Home {...props}
                 signedIn={signedIn}
+                language={language}
             />}></Route>
           <Route path='/login' render={props => <Login {...props}
                 updateSignedIn={updateSignedIn}

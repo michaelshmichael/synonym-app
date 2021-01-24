@@ -1,5 +1,5 @@
 .association-container {
-    position: fixed;
+    position: absolute;
     top: 350px;
     left: 100px;
     margin-top: 20px;
@@ -13,7 +13,7 @@
     font-family: 'Krub', sans-serif;
     font-weight: 800;
     padding-left: 20px;
-    position: fixed;
+    position: absolute;
     top: 150px;
     left: 100px;
     height: 200px;
@@ -61,6 +61,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
+    flex-wrap: wrap;
     background-color: rgb(255, 255, 255);
     width: 1120px;
 }
@@ -69,11 +70,30 @@
     height: 120px;
     width: 200px;
     margin-right: 20px;
+    margin-bottom: 20px;
     text-align: center;
     background-color: rgb(53, 147, 163);
+    animation: slideInInformation 0.5s;
     cursor: default;
     .p {
         pointer-events: inherit;
     }
 }
+
+@keyframes slideInInformation {
+    0% {
+        opacity: 0;
+        transform: translateX(-100px);
+    }
+
+    80% {
+        transform: translateX(10px);
+    }
+
+    100% {
+        opacity: 0.7;
+        transform: translateX(0);
+    }
+}
+
 

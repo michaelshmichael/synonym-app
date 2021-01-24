@@ -43,7 +43,7 @@ export default function Search(props) {
     async function setAssociations () {
         let data = await _getAssociations()
         let placeholderArray = []
-        for(let i=0; i < 6; i++) {
+        for(let i=0; i < 10; i++) {
             let association =_makeAssociationData(data, i)
             placeholderArray.push(association)
         }

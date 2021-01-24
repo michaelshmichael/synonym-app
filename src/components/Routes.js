@@ -7,6 +7,7 @@ import Login from './Login';
 import Home from './Home';
 import APIEndpoints from '../api';
 
+
 export default function Routes() {
     const [signedIn, setSignedIn] = useState(JSON.parse(localStorage.getItem('signedIn')) || false);
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')) || '');

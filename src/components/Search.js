@@ -1,9 +1,15 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import '../styles/Search.scss';
 
 export default function Search() {
     const [searchWord, setSearchWord] = useState('');
     const [associationArray, setAssociationArray] = useState([]);
+    const inputRef = useRef();
+    
+    const createNewSearchFromResult = (e) => {
+        setSearchWord(e);
+        inputRef.current.value = e;
+    };
 
     class association {
         constructor(meaning, partOfSpeech, weight){
@@ -45,7 +51,7 @@ export default function Search() {
         <div>
             <div className='search-container'>
                 <h2>Search</h2>
-                <input type='text' className='search-input-text' 
+                <input ref={inputRef} type='text' className='search-input-text' 
                 onChange={e => setSearchWord(e.target.value)}>
                 </input>
                 <button className='find-synonyms-button' 
@@ -54,10 +60,10 @@ export default function Search() {
             </div>
             <div className='association-container'>
             {associationArray.map((word) => {
-                return<div className='association-box'>
-                <p>{word.meaning}</p>
-                <p>{word.partOfSpeech}</p>
-                <p>{word.weight}</p>
+                return<div id={word.meaning} className='association-box' onClick={e => createNewSearchFromResult(e.target.id)}>
+                    <p>{word.meaning}</p>
+                    <p>{word.partOfSpeech}</p>
+                    <p>{word.weight}</p>
                 </div>
             })}
             </div>

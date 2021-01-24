@@ -5,6 +5,7 @@ import Header from './Header';
 import Registration from './Registration';
 import Login from './Login';
 import Home from './Home';
+import APIEndpoints from '../api';
 
 export default function Routes() {
     const [signedIn, setSignedIn] = useState(JSON.parse(localStorage.getItem('signedIn')) || false);
@@ -16,8 +17,7 @@ export default function Routes() {
           setUser(username, localStorage.setItem('user', JSON.stringify(username)));
         } else {
           localStorage.clear();
-          axios.post('https://app.yawe.dev/api/1/ce/registering-users?key=1f8d0c6bbd604833adfa5d2cf8095ef4&logout=true',
-              { withCredentials: true });
+          axios.post(APIEndpoints.logoutEndpoint, { withCredentials: true });
         }
       };
 

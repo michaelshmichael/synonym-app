@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
+import APIEndpoints from '../api';
 import '../styles/Login.scss';
 
 export default function Login(props) {
@@ -26,9 +27,8 @@ export default function Login(props) {
             username,
             password
         };
-        const loginEndpoint = 'https://app.yawe.dev/api/1/ce/registeringusers?key=ecee2707727b40f0b5c742371df2fa8b&login=true';
         try {
-            await axios.post(loginEndpoint, userLogIn, { withCredentials: true });
+            await axios.post(APIEndpoints.loginEndpoint, userLogIn, { withCredentials: true });
             console.log('signed in')
             props.updateSignedIn(userLogIn.username);
             redirectToHomeAfterLoggingIn();

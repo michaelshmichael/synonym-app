@@ -1,14 +1,9 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState } from 'react';
 import '../styles/Search.scss';
 
 export default function Search() {
     const [searchWord, setSearchWord] = useState('');
     const [associationArray, setAssociationArray] = useState([]);
-
-    const updateSearchWord = (e) => {
-        setSearchWord(e.target.value);
-        console.log(searchWord)
-    }
 
     class association {
         constructor(meaning, partOfSpeech, weight){
@@ -16,7 +11,7 @@ export default function Search() {
             this.partOfSpeech = partOfSpeech;
             this.weight = weight;
         }
-    }
+    };
     
     async function _getAssociations () {
         try {
@@ -24,52 +19,48 @@ export default function Search() {
             let words = await data.json()
             return words
         } catch {
-            console.log('error')
+            console.log('Error')
         }
+    };
+
+    const _makeAssociationData = (data, i) => {
+        let defaultAssociation = new association();
+        defaultAssociation.meaning = data.response[0].items[i].item
+        defaultAssociation.partOfSpeech = data.response[0].items[i].pos
+        defaultAssociation.weight = data.response[0].items[i].weight
+        return defaultAssociation
     }
     
     async function setAssociations () {
-        let firstAssociation = new association()
-        let secondAssociation = new association()
         let data = await _getAssociations()
         let placeholderArray = []
-    
-        firstAssociation.meaning = data.response[0].items[0].item
-        firstAssociation.partOfSpeech = data.response[0].items[0].pos
-        firstAssociation.weight = data.response[0].items[0].weight
-    
-        secondAssociation.meaning = data.response[0].items[1].item
-        secondAssociation.partOfSpeech = data.response[0].items[1].pos
-        secondAssociation.weight = data.response[0].items[1].weight
-        
-        placeholderArray.push(firstAssociation, secondAssociation)
-        console.log(placeholderArray)
+        for(let i=0; i < 6; i++) {
+            let association =_makeAssociationData(data, i)
+            placeholderArray.push(association)
+        }
         setAssociationArray(placeholderArray)
-        return associationArray
-    }
-
-    // useEffect(() => {
-    //     console.log('AA = ' + associationArray[0].meaning)
-    //   }, [associationArray]);
-    let associationContainer ;
-    if(associationArray.length === 0) {
-        associationContainer = <div className='association-container'></div>
-    } else {
-        associationContainer = 
-        <div className='association-container'>
-            <p>{associationArray[0].meaning}</p>
-            <p>{associationArray[1].meaning}</p>
-        </div>
-    }
+    };
 
     return (
         <div>
             <div className='search-container'>
                 <h2>Search</h2>
-                <input type='text' className='search-input-text' onChange={e => updateSearchWord(e)}></input>
-                <button className='find-synonyms-button' onClick={setAssociations}>Find Associations</button>
+                <input type='text' className='search-input-text' 
+                onChange={e => setSearchWord(e.target.value)}>
+                </input>
+                <button className='find-synonyms-button' 
+                onClick={setAssociations}>Find Associations
+                </button>
             </div>
-            {associationContainer}
+            <div className='association-container'>
+            {associationArray.map((word) => {
+                return<div className='association-box'>
+                <p>{word.meaning}</p>
+                <p>{word.partOfSpeech}</p>
+                <p>{word.weight}</p>
+                </div>
+            })}
+            </div>
         </div>
     );
 }

@@ -49,3 +49,19 @@
     margin-top: 30px;
     width: 150px;
 }
+
+.association-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    background-color: rgb(255, 255, 255);
+    width: 1120px;
+}
+
+.association-box {
+    height: 120px;
+    width: 200px;
+    margin-right: 20px;
+    text-align: center;
+    background-color: rgb(53, 147, 163);
+}

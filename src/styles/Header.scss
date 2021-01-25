@@ -7,7 +7,7 @@
     position: fixed;
     top: 0;
     left: 0;
-    width: 1300px;
+    width: 100%;
     height: 80px;
     background-color: rgb(255, 176, 176);
 }
@@ -22,6 +22,11 @@
     flex-direction: row;
     justify-content: flex-start;
     width: 600px;
+}
+
+.language-flags {
+    width: 30px;
+    height: 20px;
 }
 
 /*LOGIN AND REGISTRATION LINKS*/

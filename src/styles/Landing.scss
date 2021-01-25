@@ -1,13 +1,19 @@
 /*LANDING PAGE*/
 .landing-container {
     height: 800px;
-    width: 100vw;
+    width: 100%;
     overflow-x: hidden;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
 
+.learning-svg {
+    width: 400px;
+    height: 400px;
+    margin-left: 800px;
+    margin-top: 100px;
+}
 .landing-blurb {
     font-family: 'Krub', sans-serif;
     font-weight: 800;
@@ -18,7 +24,7 @@
     left: 100px;
     height: 200px;
     width: 1100px;
-    background-color: rgb(56, 142, 253);
+    background:  linear-gradient(to right,rgb(126, 178, 247),rgba(56, 141, 253, 0)); 
     opacity: 0.8;
     clip-path: polygon(0 0, 100% 0, 100% 80%, 0 100%);
     animation: slideInInformation 0.5s;

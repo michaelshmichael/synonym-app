@@ -41,13 +41,17 @@ export default function Search(props) {
     }
     
     async function setAssociations () {
-        let data = await _getAssociations()
-        let placeholderArray = []
-        for(let i=0; i < 10; i++) {
-            let association =_makeAssociationData(data, i)
-            placeholderArray.push(association)
-        }
-        setAssociationArray(placeholderArray)
+        let words = await _getAssociations()
+        if(words.response[0].items.length !== 0) {
+            let placeholderArray = []
+            for(let i=0; i < 10; i++) {
+                let association =_makeAssociationData(words, i)
+                placeholderArray.push(association)
+            }
+            setAssociationArray(placeholderArray)
+        } else {
+            alert('Try new word')
+        }  
     };
 
     return (

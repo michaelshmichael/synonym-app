@@ -1,4 +1,11 @@
 import React, { useRef, useState } from 'react';
+import unitedKingdom from '../svg/unitedKingdom.svg';
+import russia from '../svg/russia.svg';
+import portugal from '../svg/portugal.svg';
+import italy from '../svg/italy.svg';
+import france from '../svg/france.svg';
+import germany from '../svg/germany.svg';
+import spain from '../svg/spain.svg';
 import '../styles/Search.scss';
 
 export default function Search(props) {
@@ -6,8 +13,25 @@ export default function Search(props) {
     const [associationArray, setAssociationArray] = useState([]);
     const inputRef = useRef();
     const searchButton = useRef();
+    
+    let x;
+    if (props.language === 'en') {
+        x = 'Search in English';
+    } else if (props.language === 'ru') {
+        x = 'Search in Russian';
+    } else if (props.language === 'pt') {
+        x = 'Search in Portuguese'
+    } else if (props.language === 'de') {
+        x = 'Search in German';
+    } else if (props.language === 'fr') {
+        x = 'Search in French';
+    } else if (props.language === 'it') {
+        x = 'Search in Italian';
+    } else if (props.language === 'es') {
+        x = 'Search in Spanish';
+    }
 
-    const createNewSearchFromResult = (e) => {
+    const createNewSearchFromResult = (e) =>  {
         setSearchWord(e);
         inputRef.current.value = e;
         searchButton.current.focus();
@@ -56,8 +80,19 @@ export default function Search(props) {
 
     return (
         <div>
+            <div className='language-flags-container'>
+                <img className='language-flags' src={unitedKingdom} alt='united-kingdom' onClick={e => props.setLanguage('en')}/>
+                <img className='language-flags' src={russia} alt='russia' onClick={e => props.setLanguage('ru')}/>
+                <img className='language-flags' src={portugal} alt='portugal' onClick={e => props.setLanguage('pt')}/>
+                <img className='language-flags' src={italy} alt='italy' onClick={e => props.setLanguage('it')}/>
+                <img className='language-flags' src={germany} alt='germany' onClick={e => props.setLanguage('de')}/>
+                <img className='language-flags' src={spain} alt='spain' onClick={e => props.setLanguage('es')}/>
+                <img className='language-flags' src={france} alt='france' onClick={e => props.setLanguage('fr')}/>
+                
+            </div>
             <div className='search-container'>
-                <h2>Search</h2>
+                
+                <h2> {x} </h2>
                 <div className='search-input-and-button'>
                     <input ref={inputRef} type='text' className='search-input-text' 
                     onChange={e => setSearchWord(e.target.value)}>

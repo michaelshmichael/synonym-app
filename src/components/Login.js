@@ -17,8 +17,8 @@ export default function Login(props) {
         setPassword(e.target.value);
     };
 
-    const redirectToHomeAfterLoggingIn = () => {
-        history.push('./');
+    const redirectToProfileAfterLoggingIn = () => {
+        history.push('./profile');
     };
 
     async function loginUser(e) {
@@ -31,7 +31,7 @@ export default function Login(props) {
             await axios.post(APIEndpoints.loginEndpoint, userLogIn, { withCredentials: true });
             console.log('signed in')
             props.updateSignedIn(userLogIn.username);
-            redirectToHomeAfterLoggingIn();
+            redirectToProfileAfterLoggingIn();
         } catch (error) {
             alert('User or password not correct');
             console.log(error);

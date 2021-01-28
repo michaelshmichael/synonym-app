@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import APIEndpoints from '../api';
+import joiningSVG from '../svg/joining.svg';
 import '../styles/Registration.scss';
 
 export default function Registration() {
@@ -53,6 +54,7 @@ export default function Registration() {
     }
 
     return (
+        <div className='registration-page-container'>
         <div className='registration-form-container'>
             <form method='post' action='#' autoComplete='off' className='registration-form'>
                 <div className="form-group">
@@ -102,6 +104,8 @@ export default function Registration() {
                 </div>
                 <button className='btn btn-primary registration-button' onClick={registerUser}>Register</button>
             </form>
+        </div>
+        <img className='joiningSVG' src={joiningSVG} alt='join-us!'></img>
         </div>
     );
 }

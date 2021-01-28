@@ -34,5 +34,22 @@
     margin-top: 80px;
     width: 400px;
     height: 400px;
-    
+    animation: slideInImage 0.5s;   
+}
+
+
+@keyframes slideInImage {
+    0% {
+        opacity: 0;
+        transform: translateX(200px);
+    }
+
+    80% {
+        transform: translateX(-10px);
+    }
+
+    100% {
+        opacity: 0.7;
+        transform: translateX(0);
+    }
 }

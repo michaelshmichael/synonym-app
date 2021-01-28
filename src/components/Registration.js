@@ -53,10 +53,10 @@ export default function Registration() {
     }
 
     return (
-        <div className='registration-form'>
-            <form method='post' action='#' autoComplete='off'>
+        <div className='registration-form-container'>
+            <form method='post' action='#' autoComplete='off' className='registration-form'>
                 <div className="form-group">
-                    <label htmlFor="firstNameInput">First Name</label>
+                    <label htmlFor="firstNameInput">First Name </label>
                     <input type="text"
                         className="form-control"
                         id="firstNameInput"
@@ -65,7 +65,7 @@ export default function Registration() {
                     ></input>
                 </div>
                 <div className="form-group">
-                    <label htmlFor="lastNameInput">Last Name</label>
+                    <label htmlFor="lastNameInput">Last Name </label>
                     <input type="text"
                         className="form-control"
                         id="lastNameInput"
@@ -74,7 +74,7 @@ export default function Registration() {
                     ></input>
                 </div>
                 <div className="form-group">
-                    <label htmlFor="lastNameInput">Username</label>
+                    <label htmlFor="lastNameInput">Username </label>
                     <input type="text"
                         className="form-control"
                         id="usernameInput"
@@ -83,7 +83,7 @@ export default function Registration() {
                     ></input>
                 </div>
                 <div className="form-group">
-                    <label htmlFor="passwordInput">Password</label>
+                    <label htmlFor="passwordInput">Password </label>
                     <input type="password"
                         className="form-control"
                         id="passwordInput"
@@ -92,7 +92,7 @@ export default function Registration() {
                     ></input>
                 </div>
                 <div className="form-group">
-                    <label htmlFor="emailInput">Email</label>
+                    <label htmlFor="emailInput">Email </label>
                     <input type="email"
                         className="form-control"
                         id="emailInput"
@@ -100,7 +100,7 @@ export default function Registration() {
                         onChange={e => handleChanges('email', e)}
                     ></input>
                 </div>
-                <button className='btn btn-primary' onClick={registerUser}>Register</button>
+                <button className='btn btn-primary registration-button' onClick={registerUser}>Register</button>
             </form>
         </div>
     );

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Route } from 'react-router-dom';
 import axios from 'axios';
 import Header from './Header';
+import Footer from './Footer';
 import Registration from './Registration';
 import Login from './Login';
 import Landing from './Landing';
@@ -48,6 +49,7 @@ export default function Routes() {
           <Route path='/profile' render={props => <Profile {...props}
                 user={user}
             />}></Route>
+          <Footer></Footer>
       </div>
     );
 };

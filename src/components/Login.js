@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import APIEndpoints from '../api';
-import loginSVG from '../svg/login.svg';
 import '../styles/Login.scss';
 
 export default function Login(props) {
@@ -40,8 +39,6 @@ export default function Login(props) {
     }
 
     return (
-        <div className='login-page-container'>
-        <img className='loginSVG' src={loginSVG} alt='login!'></img>
         <div className='login-form-container'>
             <form className='login-form' method='post' action='#' autoComplete='off'>
                 <div className="form-group">
@@ -64,7 +61,6 @@ export default function Login(props) {
                 </div>
                 <button className='btn btn-primary login-button' onClick={loginUser}>Login</button>
             </form>
-        </div>
         </div>
     );
 }

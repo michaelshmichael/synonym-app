@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react';
+import Sidebar from './Sidebar.js';
 import unitedKingdom from '../svg/unitedKingdom.svg';
 import russia from '../svg/russia.svg';
 import portugal from '../svg/portugal.svg';
@@ -79,37 +80,40 @@ export default function Search(props) {
     };
 
     return (
-        <div>
-            <div className='language-flags-container'>
-                <img className='language-flags' src={unitedKingdom} alt='united-kingdom' onClick={e => props.setLanguage('en')}/>
-                <img className='language-flags' src={russia} alt='russia' onClick={e => props.setLanguage('ru')}/>
-                <img className='language-flags' src={portugal} alt='portugal' onClick={e => props.setLanguage('pt')}/>
-                <img className='language-flags' src={italy} alt='italy' onClick={e => props.setLanguage('it')}/>
-                <img className='language-flags' src={germany} alt='germany' onClick={e => props.setLanguage('de')}/>
-                <img className='language-flags' src={spain} alt='spain' onClick={e => props.setLanguage('es')}/>
-                <img className='language-flags' src={france} alt='france' onClick={e => props.setLanguage('fr')}/>
-                
-            </div>
-            <div className='search-container'>
-                
-                <h2> {x} </h2>
-                <div className='search-input-and-button'>
-                    <input ref={inputRef} type='text' className='search-input-text' 
-                    onChange={e => setSearchWord(e.target.value)}>
-                    </input>
-                    <button ref={searchButton} className='find-synonyms-button' 
-                    onClick={setAssociations}>Find Associations
-                    </button>
+        <div className='search-page-container'>
+            <Sidebar className='sidebar'></Sidebar>
+            <div className='search-and-results-container'>
+                <div className='language-flags-container'>
+                    <img className='language-flags' src={unitedKingdom} alt='united-kingdom' onClick={e => props.setLanguage('en')}/>
+                    <img className='language-flags' src={russia} alt='russia' onClick={e => props.setLanguage('ru')}/>
+                    <img className='language-flags' src={portugal} alt='portugal' onClick={e => props.setLanguage('pt')}/>
+                    <img className='language-flags' src={italy} alt='italy' onClick={e => props.setLanguage('it')}/>
+                    <img className='language-flags' src={germany} alt='germany' onClick={e => props.setLanguage('de')}/>
+                    <img className='language-flags' src={spain} alt='spain' onClick={e => props.setLanguage('es')}/>
+                    <img className='language-flags' src={france} alt='france' onClick={e => props.setLanguage('fr')}/>
+                    
                 </div>
-            </div>
-            <div className='association-container'>
-            {associationArray.map((word) => {
-                return<div data-index={word.meaning} className='association-box' onClick={e => createNewSearchFromResult(e.target.dataset.index)}>
-                    <p data-index={word.meaning}>{word.meaning}</p>
-                    <p data-index={word.meaning}>{word.partOfSpeech}</p>
-                    <p data-index={word.meaning}>{word.weight}</p>
+                <div className='search-container'>
+                    
+                    <h2> {x} </h2>
+                    <div className='search-input-and-button'>
+                        <input ref={inputRef} type='text' className='search-input-text' 
+                        onChange={e => setSearchWord(e.target.value)}>
+                        </input>
+                        <button ref={searchButton} className='find-synonyms-button' 
+                        onClick={setAssociations}>Find Associations
+                        </button>
+                    </div>
                 </div>
-            })}
+                <div className='association-container'>
+                {associationArray.map((word) => {
+                    return<div data-index={word.meaning} className='association-box' onClick={e => createNewSearchFromResult(e.target.dataset.index)}>
+                        <p data-index={word.meaning}>{word.meaning}</p>
+                        <p data-index={word.meaning}>{word.partOfSpeech}</p>
+                        <p data-index={word.meaning}>{word.weight}</p>
+                    </div>
+                })}
+                </div>
             </div>
         </div>
     );

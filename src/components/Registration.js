@@ -51,7 +51,7 @@ export default function Registration() {
             //nativeLanguage
         };
         try {
-            const registeredUser = await axios.post(APIEndpoints.registrationEndpoint, usernameAndPassword);
+            const registeredUser = await axios.post(APIEndpoints.userEndpoint, usernameAndPassword);
             console.log(registeredUser.data.data);
             redirectToLoginPageAfterRegistering();
         } catch (error) {

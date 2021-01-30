@@ -46,8 +46,11 @@ export default function Registration() {
     async function registerUser(e) {
         e.preventDefault();
         const usernameAndPassword = {
+            firstName,
+            lastName,
             username,
             password,
+            email
             //nativeLanguage
         };
         try {

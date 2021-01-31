@@ -3,11 +3,11 @@ import Sidebar from './Sidebar';
 import ProfileData from './ProfileData';
 import '../styles/Profile.scss';
 
-export default function Profile (props) {
+export default function Profile () {
     return(
         <div className='profile-container'>
             <Sidebar></Sidebar>
-            <ProfileData user={props.user}></ProfileData>
+            <ProfileData></ProfileData>
         </div>
         
     )

@@ -8,27 +8,26 @@ import france from '../svg/france.svg';
 import germany from '../svg/germany.svg';
 import spain from '../svg/spain.svg';
 import APIEndpoints from '../api';
-import '../styles/ProfileData.scss';
 
-export default function ProfileData(props) {
+export default function ProfileData() {
     const [userData, setUserData] = useState('');
     const [nativeLanguageFlag, setNativeLanguageFlag] = useState();
        
     useEffect(() => {  
         // Make this DRY   
-        if(userData.nativeLanguageValue === 'Portuguese') {
+        if(userData.nativeLanguage === 'Portuguese') {
             setNativeLanguageFlag(portugal)
-        } else if (userData.nativeLanguageValue === 'French') {
+        } else if (userData.nativeLanguage === 'French') {
             setNativeLanguageFlag(france)
-        } else if (userData.nativeLanguageValue === 'Italian') {
+        } else if (userData.nativeLanguage === 'Italian') {
             setNativeLanguageFlag(italy) 
-        } else if (userData.nativeLanguageValue === 'German') {
+        } else if (userData.nativeLanguage === 'German') {
             setNativeLanguageFlag(germany)
-        } else if (userData.nativeLanguageValue === 'Russian') {
+        } else if (userData.nativeLanguage === 'Russian') {
             setNativeLanguageFlag(russia)
-        } else if (userData.nativeLanguageValue === 'Spanish') {
+        } else if (userData.nativeLanguage === 'Spanish') {
             setNativeLanguageFlag(spain)
-        } else if (userData.nativeLanguageValue === 'English') {
+        } else if (userData.nativeLanguage === 'English') {
             setNativeLanguageFlag(unitedKingdom)
         }
     },[userData]);
@@ -38,6 +37,7 @@ export default function ProfileData(props) {
             try {
                 const user = await axios.get(APIEndpoints.getUser, {withCredentials: true});
                 console.log(user.data.data)
+                console.log(typeof(user.data.data.learningLanguage))
                 setUserData(user.data.data);
             } catch (error) {
                 console.error(error);
@@ -46,17 +46,25 @@ export default function ProfileData(props) {
         getUserData();
     },[]);
    
-
+    if(!userData) {
+        return(
+            <span>Loading...</span>
+        )
+    }
     return(
         <div className='profile-data'>
             <div className='username-and-flag-container'>
-                <h1 className='profile-name'>{props.user}</h1>
+                <h1 className='profile-name'>{userData.username}</h1>
                 <img className='native-language-flag' src={nativeLanguageFlag} alt='flag-showing-native-language'></img>
             </div>
-            
-            <form>
-                <input type='text' placeholder='What language are you learning?'></input>
-            </form>
+            <div className='learning-languages-container'>
+                <h1>Languages Being Studied</h1>
+                {/* {userData.learningLanguage.map((language) => (
+                    <h2>{language}</h2>
+                ))} */}
+                {userData.languageLearning}
+                <button>Add another language?</button>
+            </div>
         </div>
     )
 };

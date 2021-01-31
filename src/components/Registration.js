@@ -11,7 +11,8 @@ export default function Registration() {
     const [lastName, setLastName] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [nativeLanguageValue, setNativeLanguageValue] = useState();
+    const [nativeLanguage, setNativeLanguage] = useState();
+    const [learningLanguage, setLearningLanguage] = useState([]);
     const [email, setEmail] = useState('');
 
     const handleChanges = (formItemBeingUpdated, e) => {
@@ -28,9 +29,6 @@ export default function Registration() {
         case 'password':
             setPassword(e.target.value);
             break;
-        // case 'nativeLangauge':
-        //     setNativeLanguage(e.target.value);
-        //     break;
         case 'email':
             setEmail(e.target.value);
             break;
@@ -51,7 +49,8 @@ export default function Registration() {
             username,
             password,
             email,
-            nativeLanguageValue
+            nativeLanguage,
+            learningLanguage
         };
         try {
             const registeredUser = await axios.post(APIEndpoints.userEndpoint, user);
@@ -104,10 +103,22 @@ export default function Registration() {
                 </div>
                 <div className="form-group">
                     <label htmlFor="nativeLanguage">Native Language </label>
-                    <select onChange={e => setNativeLanguageValue(e.currentTarget.value)}
-                    value={nativeLanguageValue} 
+                    <select onChange={e => setNativeLanguage(e.currentTarget.value)}
+                    value={nativeLanguage} 
                     id="nativeLanguage" 
                     name="nativeLanguage">
+                        <option value="English">English</option>
+                        <option value="Russian">Russian</option>
+                        <option value="Portuguese">Portuguese</option>
+                        <option value="Spanish">Spanish</option>
+                    </select>
+                </div>
+                <div className="form-group">
+                    <label htmlFor="learningLanguage">Language you are learning </label>
+                    <select onChange={e => setLearningLanguage(learningLanguage.concat(e.currentTarget.value))}
+                    value={learningLanguage} 
+                    id="learningLanguage" 
+                    name="learningLanguage">
                         <option value="English">English</option>
                         <option value="Russian">Russian</option>
                         <option value="Portuguese">Portuguese</option>

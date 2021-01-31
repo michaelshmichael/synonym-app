@@ -17,16 +17,26 @@
         width: 75%;
         margin-right: -20px;
         padding-left: 20px;
-        .profile-name {
-            font-family: 'Krub', sans-serif;
-            margin-top: 15px;
-            margin-left: 20px;
+        .username-and-flag-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            width: 600px;
+            height: 80px;
+            margin-top: 20px;
+            .profile-name {
+                font-family: 'Krub', sans-serif;
+                margin-top: 15px;
+                margin-left: 20px;
+            }
+            .native-language-flag {
+                height: 40px;
+                margin-left: 10px;
+                padding-bottom: 5px;
+            }
         }
-        input {
-            font-family: 'Krub', sans-serif;
-            height: 40px;
-            width: 300px;
-        }
+        
     }
 }
 

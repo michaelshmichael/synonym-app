@@ -11,8 +11,36 @@ import APIEndpoints from '../api';
 
 export default function ProfileData() {
     const [userData, setUserData] = useState('');
+    const [uniqueId, setUniqueId] = useState('');
     const [nativeLanguageFlag, setNativeLanguageFlag] = useState();
        
+    const addLanguage = () => {
+        let updatedLanguages = userData.learningLanguage.concat('A new language')
+        setUserData((prevState) => ({
+            ...prevState,
+            learningLanguage: updatedLanguages
+        }));
+        // Does this have time to get the new state or only the old ones
+        updateUser();
+    };
+
+    // This does not work, PUT request not working properly
+    async function updateUser() {
+        let requestBody = JSON.stringify(userData)
+        console.log('RequestBody' + requestBody)
+        console.log('UniqueId' + uniqueId)
+        try {
+            const updatedUser = await axios.put(`https://app.yawe.dev/api/1/ce/user-endpoint?key=ecee2707727b40f0b5c742371df2fa8b&uniqueId=${uniqueId}`, 
+            { body: requestBody },
+            { withCredentials: true },
+            { headers: {'Content-Type': 'application/json'}}
+            )
+            console.log(updatedUser)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     useEffect(() => {  
         // Make this DRY   
         if(userData.nativeLanguage === 'Portuguese') {
@@ -37,7 +65,7 @@ export default function ProfileData() {
             try {
                 const user = await axios.get(APIEndpoints.getUser, {withCredentials: true});
                 console.log(user.data.data)
-                console.log(typeof(user.data.data.learningLanguage))
+                setUniqueId(user.data.uniqueId)
                 setUserData(user.data.data);
             } catch (error) {
                 console.error(error);
@@ -59,11 +87,10 @@ export default function ProfileData() {
             </div>
             <div className='learning-languages-container'>
                 <h1>Languages Being Studied</h1>
-                {/* {userData.learningLanguage.map((language) => (
+                {userData.learningLanguage.map((language) => (
                     <h2>{language}</h2>
-                ))} */}
-                {userData.languageLearning}
-                <button>Add another language?</button>
+                ))}
+                <button onClick={addLanguage}>Add another language?</button>
             </div>
         </div>
     )

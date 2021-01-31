@@ -12,7 +12,7 @@ export default function Registration() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [nativeLanguage, setNativeLanguage] = useState();
-    const [learningLanguage, setLearningLanguage] = useState([]);
+    const [learningLanguage, setLearningLanguage] = useState(['Javascript']);
     const [email, setEmail] = useState('');
 
     const handleChanges = (formItemBeingUpdated, e) => {
@@ -54,7 +54,7 @@ export default function Registration() {
         };
         try {
             const registeredUser = await axios.post(APIEndpoints.userEndpoint, user);
-            console.log(registeredUser.data.data);
+            console.log(registeredUser.data);
             redirectToLoginPageAfterRegistering();
         } catch (error) {
             console.error(error);

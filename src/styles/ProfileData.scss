@@ -1,0 +1,13 @@
+.username-and-flag-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    width: 600px;
+    height: 80px;
+    margin-top: 20px;
+    .native-language-flag {
+        height: 50px;
+        margin-left: 10px;
+    }
+}

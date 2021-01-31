@@ -11,7 +11,7 @@ export default function Registration() {
     const [lastName, setLastName] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    // const [nativeLanguage, setNativeLanguage] = useState('');
+    const [nativeLanguageValue, setNativeLanguageValue] = useState();
     const [email, setEmail] = useState('');
 
     const handleChanges = (formItemBeingUpdated, e) => {
@@ -29,7 +29,7 @@ export default function Registration() {
             setPassword(e.target.value);
             break;
         // case 'nativeLangauge':
-        //     setNativeLanguage(e.options[e.selectedIndex].value);
+        //     setNativeLanguage(e.target.value);
         //     break;
         case 'email':
             setEmail(e.target.value);
@@ -45,16 +45,16 @@ export default function Registration() {
 
     async function registerUser(e) {
         e.preventDefault();
-        const usernameAndPassword = {
+        const user = {
             firstName,
             lastName,
             username,
             password,
-            email
-            //nativeLanguage
+            email,
+            nativeLanguageValue
         };
         try {
-            const registeredUser = await axios.post(APIEndpoints.userEndpoint, usernameAndPassword);
+            const registeredUser = await axios.post(APIEndpoints.userEndpoint, user);
             console.log(registeredUser.data.data);
             redirectToLoginPageAfterRegistering();
         } catch (error) {
@@ -102,17 +102,18 @@ export default function Registration() {
                         onChange={e => handleChanges('password', e)}
                     ></input>
                 </div>
-                {/* <div className="form-group">
+                <div className="form-group">
                     <label htmlFor="nativeLanguage">Native Language </label>
-                    <select onClick={e => handleChanges('nativeLanguage', e)} 
+                    <select onChange={e => setNativeLanguageValue(e.currentTarget.value)}
+                    value={nativeLanguageValue} 
                     id="nativeLanguage" 
                     name="nativeLanguage">
-                        <option value="english">English</option>
-                        <option value="russian">Russian</option>
-                        <option value="portuguese">Portuguese</option>
-                        <option value="spanish">Spanish</option>
+                        <option value="English">English</option>
+                        <option value="Russian">Russian</option>
+                        <option value="Portuguese">Portuguese</option>
+                        <option value="Spanish">Spanish</option>
                     </select>
-                </div> */}
+                </div>
                 <div className="form-group">
                     <label htmlFor="emailInput">Email </label>
                     <input type="email"

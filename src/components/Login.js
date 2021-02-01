@@ -29,7 +29,6 @@ export default function Login(props) {
         };
         try {
             await axios.post(APIEndpoints.loginEndpoint, userLogIn, { withCredentials: true });
-            console.log('signed in')
             props.updateSignedIn(userLogIn.username);
             redirectToProfileAfterLoggingIn();
         } catch (error) {

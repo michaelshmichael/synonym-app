@@ -4,7 +4,7 @@
     height: 100vh;
     margin-left: -10px;
     margin-top: 80px;
-    overflow-x: hidden;
+    overflow: hidden;
     .sidebar {
         height: 100vh;
         font-family: 'Krub', sans-serif;
@@ -35,6 +35,9 @@
                 margin-left: 10px;
                 padding-bottom: 5px;
             }
+        }
+        .learning-languages-container{
+            font-family: 'Krub', sans-serif;
         }
         
     }

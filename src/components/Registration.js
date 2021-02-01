@@ -53,7 +53,7 @@ export default function Registration() {
             learningLanguage
         };
         try {
-            const registeredUser = await axios.post(APIEndpoints.userEndpoint, user);
+            const registeredUser = await axios.post(APIEndpoints.authenticationEndpoint, user);
             console.log(registeredUser.data);
             redirectToLoginPageAfterRegistering();
         } catch (error) {

@@ -14,32 +14,20 @@ export default function ProfileData() {
     const [uniqueId, setUniqueId] = useState('');
     const [nativeLanguageFlag, setNativeLanguageFlag] = useState();
        
-    const addLanguage = () => {
-        let updatedLanguages = userData.learningLanguage.concat('A new language')
-        setUserData((prevState) => ({
-            ...prevState,
-            learningLanguage: updatedLanguages
-        }));
-        // Does this have time to get the new state or only the old ones
-        updateUser();
-    };
-
-    // This does not work, PUT request not working properly
-    async function updateUser() {
-        let requestBody = JSON.stringify(userData)
-        console.log('RequestBody' + requestBody)
-        console.log('UniqueId' + uniqueId)
-        try {
-            const updatedUser = await axios.put(`https://app.yawe.dev/api/1/ce/user-endpoint?key=ecee2707727b40f0b5c742371df2fa8b&uniqueId=${uniqueId}`, 
-            { body: requestBody },
-            { withCredentials: true },
-            { headers: {'Content-Type': 'application/json'}}
-            )
-            console.log(updatedUser)
-        } catch (error) {
-            console.log(error)
+    useEffect(() => {
+        async function getUserData () {
+            try {
+                const user = await axios.get(APIEndpoints.authenticationEndpoint, {withCredentials: true});
+                console.log(user.data.data)
+                setUserData(user.data.data);
+                console.log(user.data.uniqueId)
+                setUniqueId(user.data.uniqueId);  
+            } catch (error) {
+                console.error(error);
+            }
         }
-    }
+        getUserData();
+    },[]);
 
     useEffect(() => {  
         // Make this DRY   
@@ -60,20 +48,54 @@ export default function ProfileData() {
         }
     },[userData]);
 
-    useEffect(() => {
-        async function getUserData () {
+    // Fix this
+    // This function sets a new user object without a password to send to the
+    // unauthenticated endpoint. This can then be updated without a password
+    useEffect(() => {  
+        async function setUserWithoutPassword () {
+            console.log('UniqueId' + uniqueId)
+            console.log(typeof(uniqueId))
+            userData.uniqueId = uniqueId;
+            setUserData(userData);
+            console.log(userData);
             try {
-                const user = await axios.get(APIEndpoints.getUser, {withCredentials: true});
-                console.log(user.data.data)
-                setUniqueId(user.data.uniqueId)
-                setUserData(user.data.data);
+                await axios.post(APIEndpoints.userDataEndpoint, 
+                { data: userData}, 
+                { withCredentials: true },
+                { headers: {'Content-Type': 'application/json'}}
+                )
             } catch (error) {
-                console.error(error);
+                console.log(error)
             }
+        };
+        setUserWithoutPassword();
+    },[uniqueId]);
+
+    const addLanguage = () => {
+        let updatedLanguages = userData.learningLanguage.concat('A new language')
+        setUserData((prevState) => ({
+            ...prevState,
+            learningLanguage: updatedLanguages
+        }));
+        updateUserLanguage();
+    };
+
+    async function updateUserLanguage() {
+        const requestBody = JSON.stringify(userData);
+        console.log(uniqueId)
+        console.log(requestBody)
+        try {
+            const updatedUser = await axios.put(`https://app.yawe.dev/api/1/ce/user-data-endpoint?key=ecee2707727b40f0b5c742371df2fa8b&uniqueId=${uniqueId}`, 
+            { data: requestBody},
+            { withCredentials: true },
+            { headers: {'Content-Type': 'application/json'}}
+            )
+            console.log(updatedUser)
+        } catch (error) {
+            console.log(error)
         }
-        getUserData();
-    },[]);
-   
+    };
+
     if(!userData) {
         return(
             <span>Loading...</span>

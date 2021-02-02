@@ -55,7 +55,7 @@ export default function Registration() {
         try {
             await axios.post(APIEndpoints.authenticationEndpoint, userData, { withCredentials: true });
             await axios.post(APIEndpoints.userDataEndpoint,
-                { data: userData }, 
+                userData, 
                 { withCredentials: true },
                 { headers: {'Content-Type': 'application/json'}}
             );

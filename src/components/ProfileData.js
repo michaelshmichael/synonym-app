@@ -13,13 +13,14 @@ export default function ProfileData(props) {
     const [activeUser, setActiveUser] = useState('');
     const [uniqueId, setUniqueId] = useState('')
     const [nativeLanguageFlag, setNativeLanguageFlag] = useState();
-    const [languages, setLanguages] = useState([]);
     
     useEffect(() => {
         async function getUserData () {
             try {
                 const allUsers = await axios.get(APIEndpoints.userDataEndpoint, {withCredentials: true});
                 getActiveUser(allUsers);
+                console.log('ALL USERS')
+                console.log(allUsers)
             } catch (error) {
                 console.error(error);
             }
@@ -46,28 +47,31 @@ export default function ProfileData(props) {
     };
 
     const getActiveUser = (allUsers) => {
-        const currentActiveUser = allUsers.data.find(element => element.data.data.username === props.user);
-        displayFlag(currentActiveUser.data.data);
+        const currentActiveUser = allUsers.data.find(element => element.data.username === props.user);
+        displayFlag(currentActiveUser.data);
         setActiveUser(currentActiveUser);
         setUniqueId(currentActiveUser.uniqueId);
     }
 
     const addLanguage = () => {
-        let updatedLanguages = [...activeUser.data.data.learningLanguage, ...'L']
-        // Issue here with updating activeUser.data.data
-        //updateUserLanguage();
+        let updatedLanguages = [...activeUser.data.learningLanguage, ...'L']
+        setActiveUser((prevState) => {
+            const newState = Object.assign({}, prevState);
+            newState.data.learningLanguage = updatedLanguages;
+            return newState;
+          });
+        updateUserLanguage();
     };
     
     async function updateUserLanguage() {
-        const requestBody = JSON.stringify(activeUser);
+        console.log('LANGUAGE CHANGED')
+        console.log(activeUser)
         try {
-            const updatedUser = await axios.put(`https://app.yawe.dev/api/1/ce/non-auth-endpoint?key=0a7127ea0a03443ab07d4980de8377ce&uniqueId=${uniqueId}`, 
-            { data: requestBody},
+            await axios.put(`https://app.yawe.dev/api/1/ce/non-auth-endpoint?key=0a7127ea0a03443ab07d4980de8377ce&uniqueId=${uniqueId}`, 
+            activeUser.data,
             { withCredentials: true },
             { headers: {'Content-Type': 'application/json'}}
             )
-            console.log('Updated user' + updatedUser.data.learningLanguage)
-            //setUserData(updatedUser)
         } catch (error) {
             console.log(error)
         }
@@ -81,12 +85,12 @@ export default function ProfileData(props) {
     return(
         <div className='profile-data'>
             <div className='username-and-flag-container'>
-                <h1 className='profile-name'>{activeUser.data.data.username}</h1>
+                <h1 className='profile-name'>{activeUser.data.username}</h1>
                 <img className='native-language-flag' src={nativeLanguageFlag} alt='flag-showing-native-language'></img>
             </div>
             <div className='learning-languages-container'>
                 <h1>Languages Being Studied</h1>
-                {activeUser.data.data.learningLanguage.map((language) => (
+                {activeUser.data.learningLanguage.map((language) => (
                     <h2>{language}</h2>
                 ))}
                 <button onClick={addLanguage}>Add another language?</button>

@@ -43,7 +43,7 @@ export default function Registration() {
 
     async function registerUser(e) {
         e.preventDefault();
-        const user = {
+        const userData = {
             firstName,
             lastName,
             username,
@@ -53,8 +53,12 @@ export default function Registration() {
             learningLanguage
         };
         try {
-            const registeredUser = await axios.post(APIEndpoints.authenticationEndpoint, user);
-            console.log(registeredUser.data);
+            await axios.post(APIEndpoints.authenticationEndpoint, userData, { withCredentials: true });
+            await axios.post(APIEndpoints.userDataEndpoint,
+                { data: userData }, 
+                { withCredentials: true },
+                { headers: {'Content-Type': 'application/json'}}
+            );
             redirectToLoginPageAfterRegistering();
         } catch (error) {
             console.error(error);

@@ -42,7 +42,9 @@ export default function Routes() {
                 updateSignedIn={updateSignedIn}
             />}></Route>
           <Route path='/registration' component={Registration}></Route>
-          <Route exact path='/profile' component={Profile}></Route>
+          <Route exact path='/profile' render={props => <Profile {...props}
+                user={user}
+            />}></Route>
           <Route path='/profile/search' render={props => <Search {...props}
                 language={language}
                 setLanguage={setLanguage}

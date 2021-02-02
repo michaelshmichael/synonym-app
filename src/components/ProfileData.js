@@ -9,19 +9,17 @@ import germany from '../svg/germany.svg';
 import spain from '../svg/spain.svg';
 import APIEndpoints from '../api';
 
-export default function ProfileData() {
-    const [userData, setUserData] = useState('');
-    const [uniqueId, setUniqueId] = useState('');
+export default function ProfileData(props) {
+    const [activeUser, setActiveUser] = useState('');
+    const [uniqueId, setUniqueId] = useState('')
     const [nativeLanguageFlag, setNativeLanguageFlag] = useState();
-       
+    const [languages, setLanguages] = useState([]);
+    
     useEffect(() => {
         async function getUserData () {
             try {
-                const user = await axios.get(APIEndpoints.authenticationEndpoint, {withCredentials: true});
-                console.log(user.data.data)
-                setUserData(user.data.data);
-                console.log(user.data.uniqueId)
-                setUniqueId(user.data.uniqueId);  
+                const allUsers = await axios.get(APIEndpoints.userDataEndpoint, {withCredentials: true});
+                getActiveUser(allUsers);
             } catch (error) {
                 console.error(error);
             }
@@ -29,8 +27,7 @@ export default function ProfileData() {
         getUserData();
     },[]);
 
-    useEffect(() => {  
-        // Make this DRY   
+    const displayFlag = (userData) => {
         if(userData.nativeLanguage === 'Portuguese') {
             setNativeLanguageFlag(portugal)
         } else if (userData.nativeLanguage === 'French') {
@@ -46,75 +43,56 @@ export default function ProfileData() {
         } else if (userData.nativeLanguage === 'English') {
             setNativeLanguageFlag(unitedKingdom)
         }
-    },[userData]);
-
-    // Fix this
-    // This function sets a new user object without a password to send to the
-    // unauthenticated endpoint. This can then be updated without a password
-    useEffect(() => {  
-        async function setUserWithoutPassword () {
-            console.log('UniqueId' + uniqueId)
-            console.log(typeof(uniqueId))
-            userData.uniqueId = uniqueId;
-            setUserData(userData);
-            console.log(userData);
-            try {
-                await axios.post(APIEndpoints.userDataEndpoint, 
-                { data: userData}, 
-                { withCredentials: true },
-                { headers: {'Content-Type': 'application/json'}}
-                )
-            } catch (error) {
-                console.log(error)
-            }
-        };
-        setUserWithoutPassword();
-    },[uniqueId]);
-
-    const addLanguage = () => {
-        let updatedLanguages = userData.learningLanguage.concat('A new language')
-        setUserData((prevState) => ({
-            ...prevState,
-            learningLanguage: updatedLanguages
-        }));
-        updateUserLanguage();
     };
 
+    const getActiveUser = (allUsers) => {
+        const currentActiveUser = allUsers.data.find(element => element.data.data.username === props.user);
+        displayFlag(currentActiveUser.data.data);
+        setActiveUser(currentActiveUser);
+        setUniqueId(currentActiveUser.uniqueId);
+    }
+
+    const addLanguage = () => {
+        let updatedLanguages = [...activeUser.data.data.learningLanguage, ...'L']
+        // Issue here with updating activeUser.data.data
+        //updateUserLanguage();
+    };
+    
     async function updateUserLanguage() {
-        const requestBody = JSON.stringify(userData);
-        console.log(uniqueId)
-        console.log(requestBody)
+        const requestBody = JSON.stringify(activeUser);
         try {
-            const updatedUser = await axios.put(`https://app.yawe.dev/api/1/ce/user-data-endpoint?key=ecee2707727b40f0b5c742371df2fa8b&uniqueId=${uniqueId}`, 
+            const updatedUser = await axios.put(`https://app.yawe.dev/api/1/ce/non-auth-endpoint?key=0a7127ea0a03443ab07d4980de8377ce&uniqueId=${uniqueId}`, 
             { data: requestBody},
             { withCredentials: true },
             { headers: {'Content-Type': 'application/json'}}
             )
-            console.log(updatedUser)
+            console.log('Updated user' + updatedUser.data.learningLanguage)
+            //setUserData(updatedUser)
         } catch (error) {
             console.log(error)
         }
     };
 
-    if(!userData) {
+    if(!activeUser) {
         return(
             <span>Loading...</span>
         )
-    }
+    } else {
     return(
         <div className='profile-data'>
             <div className='username-and-flag-container'>
-                <h1 className='profile-name'>{userData.username}</h1>
+                <h1 className='profile-name'>{activeUser.data.data.username}</h1>
                 <img className='native-language-flag' src={nativeLanguageFlag} alt='flag-showing-native-language'></img>
             </div>
             <div className='learning-languages-container'>
                 <h1>Languages Being Studied</h1>
-                {userData.learningLanguage.map((language) => (
+                {activeUser.data.data.learningLanguage.map((language) => (
                     <h2>{language}</h2>
                 ))}
                 <button onClick={addLanguage}>Add another language?</button>
             </div>
         </div>
     )
+    }
 };
 

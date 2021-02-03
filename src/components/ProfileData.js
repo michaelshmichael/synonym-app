@@ -69,6 +69,15 @@ export default function ProfileData(props) {
         }
     };
 
+    const deleteLanguage = (languageToDelete) => {
+        let updatedLanguages = activeUser.data.learningLanguage.filter(element => element !== languageToDelete)
+        setActiveUser((prevState) => {
+            const newState = Object.assign({}, prevState);
+            newState.data.learningLanguage = updatedLanguages;
+            return newState;
+        });
+    }
+
     // May want to change this function later to allow for ANY user changes
     useEffect(() => {
         if(uniqueId){
@@ -106,7 +115,13 @@ export default function ProfileData(props) {
                 <div className='learning-languages-container'>
                     <h1>Languages Being Studied</h1>
                     {activeUser.data.learningLanguage.map((language) => (
+                        <div className='learning-languages-individual'>
                         <h2>{language}</h2>
+                        <button className='learning-languages-individual-button'
+                        //data-index={language}
+                        onClick={e => deleteLanguage(language)}
+                        >Delete</button>
+                        </div>
                     ))}
                     <div>
                         <h3>Another Language?</h3>

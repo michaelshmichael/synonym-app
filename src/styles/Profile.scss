@@ -38,6 +38,17 @@
         }
         .learning-languages-container{
             font-family: 'Krub', sans-serif;
+            .learning-languages-individual{
+                width: 200px;
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+                align-items: center;
+                .learning-languages-individual-button{
+                    height: 30px;
+                    margin-left: 15px;
+                }
+            }
         }
         
     }

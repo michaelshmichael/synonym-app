@@ -60,22 +60,30 @@ export default function ProfileData(props) {
             newState.data.learningLanguage = updatedLanguages;
             return newState;
           });
-        updateUserLanguage();
     };
     
-    async function updateUserLanguage() {
-        console.log('LANGUAGE CHANGED')
-        console.log(activeUser)
-        try {
-            await axios.put(`https://app.yawe.dev/api/1/ce/non-auth-endpoint?key=0a7127ea0a03443ab07d4980de8377ce&uniqueId=${uniqueId}`, 
-            activeUser.data,
-            { withCredentials: true },
-            { headers: {'Content-Type': 'application/json'}}
-            )
-        } catch (error) {
-            console.log(error)
-        }
-    };
+    useEffect(() => {
+        if(uniqueId){
+            async function updateUserLanguage() {
+                console.log('LANGUAGE CHANGED')
+                console.log(activeUser)
+                try {
+                    const updatedUser = await axios.put(`https://app.yawe.dev/api/1/ce/non-auth-endpoint?key=b0188b53ea77419ba1d6dcda06e4bea9&uniqueId=${uniqueId}`, 
+                    activeUser.data,
+                    { withCredentials: true },
+                    { headers: {'Content-Type': 'application/json'}}
+                    )
+                    console.log('UPDATED USER')
+                    console.log(updatedUser.data)
+                } catch (error) {
+                    console.log(error)
+                }
+            }
+            updateUserLanguage();
+        };
+        
+    }, [activeUser])
+    
 
     if(!activeUser) {
         return(

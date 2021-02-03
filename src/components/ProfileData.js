@@ -13,7 +13,7 @@ export default function ProfileData(props) {
     const [activeUser, setActiveUser] = useState('');
     const [uniqueId, setUniqueId] = useState('')
     const [nativeLanguageFlag, setNativeLanguageFlag] = useState();
-    const [newLearningLanguage, setNewLearningLanguage] = useState('');
+    const [newLearningLanguage, setNewLearningLanguage] = useState('English');
     
     useEffect(() => {
         async function getUserData () {

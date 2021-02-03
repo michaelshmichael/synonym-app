@@ -12,7 +12,7 @@ export default function Registration() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [nativeLanguage, setNativeLanguage] = useState();
-    const [learningLanguage, setLearningLanguage] = useState(['']);
+    const [learningLanguage, setLearningLanguage] = useState([]);
     const [email, setEmail] = useState('');
 
     const handleChanges = (formItemBeingUpdated, e) => {
@@ -119,7 +119,7 @@ export default function Registration() {
                 </div>
                 <div className="form-group">
                     <label htmlFor="learningLanguage">Language you are learning </label>
-                    <select onChange={e => setLearningLanguage(learningLanguage.concat(e.currentTarget.value))}
+                    <select onChange={e => setLearningLanguage([e.currentTarget.value])}
                     value={learningLanguage} 
                     id="learningLanguage" 
                     name="learningLanguage">

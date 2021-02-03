@@ -81,7 +81,6 @@ export default function ProfileData(props) {
             }
             updateUserLanguage();
         };
-        
     }, [activeUser])
     
 

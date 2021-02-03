@@ -13,6 +13,7 @@ export default function ProfileData(props) {
     const [activeUser, setActiveUser] = useState('');
     const [uniqueId, setUniqueId] = useState('')
     const [nativeLanguageFlag, setNativeLanguageFlag] = useState();
+    const [newLearningLanguage, setNewLearningLanguage] = useState('');
     
     useEffect(() => {
         async function getUserData () {
@@ -54,14 +55,21 @@ export default function ProfileData(props) {
     }
 
     const addLanguage = () => {
-        let updatedLanguages = [...activeUser.data.learningLanguage, ...'L']
-        setActiveUser((prevState) => {
-            const newState = Object.assign({}, prevState);
-            newState.data.learningLanguage = updatedLanguages;
-            return newState;
-          });
+        if(activeUser.data.nativeLanguage === newLearningLanguage){
+            alert('You know this already')
+        } else if(!activeUser.data.learningLanguage.includes(newLearningLanguage)){
+            let updatedLanguages = [...activeUser.data.learningLanguage, newLearningLanguage]
+            setActiveUser((prevState) => {
+                const newState = Object.assign({}, prevState);
+                newState.data.learningLanguage = updatedLanguages;
+                return newState;
+            });
+        } else {
+            alert('Already Learning')
+        }
     };
-    
+
+    // May want to change this function later to allow for ANY user changes
     useEffect(() => {
         if(uniqueId){
             async function updateUserLanguage() {
@@ -89,21 +97,33 @@ export default function ProfileData(props) {
             <span>Loading...</span>
         )
     } else {
-    return(
-        <div className='profile-data'>
-            <div className='username-and-flag-container'>
-                <h1 className='profile-name'>{activeUser.data.username}</h1>
-                <img className='native-language-flag' src={nativeLanguageFlag} alt='flag-showing-native-language'></img>
+        return(
+            <div className='profile-data'>
+                <div className='username-and-flag-container'>
+                    <h1 className='profile-name'>{activeUser.data.username}</h1>
+                    <img className='native-language-flag' src={nativeLanguageFlag} alt='flag-showing-native-language'></img>
+                </div>
+                <div className='learning-languages-container'>
+                    <h1>Languages Being Studied</h1>
+                    {activeUser.data.learningLanguage.map((language) => (
+                        <h2>{language}</h2>
+                    ))}
+                    <div>
+                        <h3>Another Language?</h3>
+                        <select onChange={e => setNewLearningLanguage(e.currentTarget.value)} 
+                        id="learningLanguage" 
+                        name="learningLanguage"
+                        placeholder="Another Language?">
+                            <option value="English">English</option>
+                            <option value="Russian">Russian</option>
+                            <option value="Portuguese">Portuguese</option>
+                            <option value="Spanish">Spanish</option>
+                        </select>
+                    </div>
+                    <button onClick={addLanguage}>Add</button>
+                </div>
             </div>
-            <div className='learning-languages-container'>
-                <h1>Languages Being Studied</h1>
-                {activeUser.data.learningLanguage.map((language) => (
-                    <h2>{language}</h2>
-                ))}
-                <button onClick={addLanguage}>Add another language?</button>
-            </div>
-        </div>
-    )
+        )
     }
 };
 

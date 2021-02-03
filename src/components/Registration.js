@@ -11,8 +11,8 @@ export default function Registration() {
     const [lastName, setLastName] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [nativeLanguage, setNativeLanguage] = useState();
-    const [learningLanguage, setLearningLanguage] = useState([]);
+    const [nativeLanguage, setNativeLanguage] = useState('English');
+    const [learningLanguage, setLearningLanguage] = useState(['English']);
     const [email, setEmail] = useState('');
 
     const handleChanges = (formItemBeingUpdated, e) => {

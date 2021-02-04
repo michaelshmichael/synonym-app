@@ -71,11 +71,13 @@ export default function ProfileData(props) {
 
     const deleteLanguage = (languageToDelete) => {
         let updatedLanguages = activeUser.data.learningLanguage.filter(element => element !== languageToDelete)
-        setActiveUser((prevState) => {
-            const newState = Object.assign({}, prevState);
-            newState.data.learningLanguage = updatedLanguages;
-            return newState;
-        });
+        if(window.confirm('Really Delete Language?')){
+            setActiveUser((prevState) => {
+                const newState = Object.assign({}, prevState);
+                newState.data.learningLanguage = updatedLanguages;
+                return newState;
+            });
+        };
     }
 
     // May want to change this function later to allow for ANY user changes

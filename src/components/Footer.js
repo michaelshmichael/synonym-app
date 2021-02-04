@@ -1,15 +1,20 @@
 import React from 'react';
+import { SocialIcon } from 'react-social-icons';
 import '../styles/Footer.scss';
 
 export default function Footer () {
     return(
-        <div className='footer'>
-            <div className='personal-details'>
-                <p className='shop-owner'>Owner and Proprietor: Leland Gaunt.</p>      
-                <p className='contact-details'>Email: badguy17@hades.com Tel: 1 (666) 111-9876</p> 
+        <div className="footer">
+            <div className="footer-data">
+                <div className='footer-details'>
+                    <p>learnwithvokoban@gmail.com</p>
+                </div>
+                <div className='footer-socials'> 
+                    <SocialIcon className='socials' url="https://twitter.com" />
+                    <SocialIcon className='socials' url="https://www.instagram.com/learnwithvokoban/" />
+                    <SocialIcon className='socials' url="https://www.facebook.com" /> 
+                </div>
             </div>
-            
-            <div className='address'>Castle Rock, Maine. Est. 1993.</div>
         </div>
     )
 }

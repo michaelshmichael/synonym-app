@@ -105,7 +105,7 @@ export default function ProfileData(props) {
 
     if(!activeUser) {
         return(
-            <span>Loading...</span>
+            <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
         )
     } else {
         return(

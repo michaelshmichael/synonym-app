@@ -7,7 +7,7 @@ export default function Landing(props) {
     return (
         <div className='landing-container'>
             <div className='landing-blurb'>
-                <h2>Work with Synonyms!</h2>
+                <h2>Your Language Learning Portal!</h2>
             </div>
             <img className='learning-svg' src={learningSVG} alt='person-learning'></img>
             <button className='ui-button' href='registration'>Register</button>
@@ -17,7 +17,7 @@ export default function Landing(props) {
         return (
         <div className='landing-container'>
             <div className='landing-blurb'>
-                <h2>Work with Synonyms!</h2>
+                <h2>Your Language Learning Portal!</h2>
             </div>
             <img className='learning-svg' src={learningSVG} alt='person-learning'></img>
         </div>

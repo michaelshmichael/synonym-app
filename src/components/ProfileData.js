@@ -17,7 +17,6 @@ export default function ProfileData(props) {
     const [nativeLanguageFlag, setNativeLanguageFlag] = useState();
     const [newLearningLanguage, setNewLearningLanguage] = useState('English');
     const [userCreatedDate, setUserCreatedDate] = useState();
-    let userSince;
 
     useEffect(() => {
         async function getUserData () {
@@ -131,8 +130,9 @@ export default function ProfileData(props) {
                         >Delete</button>
                         </div>
                     ))}
-                    <div>
+                    <div className='another-language-div'>
                         <h3>Another Language?</h3>
+                        <div className='another-language-select'>
                         <select onChange={e => setNewLearningLanguage(e.currentTarget.value)} 
                         id="learningLanguage" 
                         name="learningLanguage"
@@ -142,8 +142,9 @@ export default function ProfileData(props) {
                             <option value="Portuguese">Portuguese</option>
                             <option value="Spanish">Spanish</option>
                         </select>
+                        <button onClick={addLanguage} className='uibutton'>Add</button>
+                        </div>
                     </div>
-                    <button onClick={addLanguage}>Add</button>
                 </div>
             </div>
         )

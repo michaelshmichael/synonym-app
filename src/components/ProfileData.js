@@ -1,4 +1,6 @@
 import { React, useEffect, useState } from 'react';
+import {formatDistance} from 'date-fns';
+import parseISO from 'date-fns/parseISO';
 import axios from 'axios';
 import unitedKingdom from '../svg/unitedKingdom.svg';
 import russia from '../svg/russia.svg';
@@ -14,7 +16,9 @@ export default function ProfileData(props) {
     const [uniqueId, setUniqueId] = useState('')
     const [nativeLanguageFlag, setNativeLanguageFlag] = useState();
     const [newLearningLanguage, setNewLearningLanguage] = useState('English');
-    
+    const [userCreatedDate, setUserCreatedDate] = useState();
+    let userSince;
+
     useEffect(() => {
         async function getUserData () {
             try {
@@ -49,6 +53,8 @@ export default function ProfileData(props) {
 
     const getActiveUser = (allUsers) => {
         const currentActiveUser = allUsers.data.find(element => element.data.username === props.user);
+        let dateCreated = currentActiveUser.createdAt.slice(0,10);
+        setUserCreatedDate(dateCreated);
         displayFlag(currentActiveUser.data);
         setActiveUser(currentActiveUser);
         setUniqueId(currentActiveUser.uniqueId);
@@ -101,7 +107,6 @@ export default function ProfileData(props) {
             updateUserLanguage();
         };
     }, [activeUser])
-    
 
     if(!activeUser) {
         return(
@@ -114,6 +119,7 @@ export default function ProfileData(props) {
                     <h1 className='profile-name'>{activeUser.data.username}</h1>
                     <img className='native-language-flag' src={nativeLanguageFlag} alt='flag-showing-native-language'></img>
                 </div>
+                <p className='member-for'> Member for {formatDistance(parseISO(userCreatedDate), new Date())}</p>
                 <div className='learning-languages-container'>
                     <h1>Languages Being Studied</h1>
                     {activeUser.data.learningLanguage.map((language) => (

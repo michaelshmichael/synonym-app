@@ -1,5 +1,6 @@
 import { React, useEffect, useState } from 'react';
 import {formatDistance} from 'date-fns';
+import { FaTrashAlt } from 'react-icons/fa';
 import parseISO from 'date-fns/parseISO';
 import axios from 'axios';
 import unitedKingdom from '../svg/unitedKingdom.svg';
@@ -13,7 +14,7 @@ import APIEndpoints from '../api';
 
 export default function ProfileData(props) {
     const [activeUser, setActiveUser] = useState('');
-    const [uniqueId, setUniqueId] = useState('')
+    const [uniqueId, setUniqueId] = useState('');
     const [nativeLanguageFlag, setNativeLanguageFlag] = useState();
     const [newLearningLanguage, setNewLearningLanguage] = useState('English');
     const [userCreatedDate, setUserCreatedDate] = useState();
@@ -117,20 +118,22 @@ export default function ProfileData(props) {
                 <div className='username-and-flag-container'>
                     <h1 className='profile-name'>{activeUser.data.username}</h1>
                     <img className='native-language-flag' src={nativeLanguageFlag} alt='flag-showing-native-language'></img>
+                    <p className='member-for'> Member for {formatDistance(parseISO(userCreatedDate), new Date())}</p>
                 </div>
-                <p className='member-for'> Member for {formatDistance(parseISO(userCreatedDate), new Date())}</p>
+                
                 <div className='learning-languages-container'>
                     <h1>Languages Being Studied</h1>
                     {activeUser.data.learningLanguage.map((language) => (
                         <div className='learning-languages-individual'>
                         <h2>{language}</h2>
-                        <button className='learning-languages-individual-button'
-                        //data-index={language}
+                        <FaTrashAlt className='learning-languages-individual-button'
                         onClick={e => deleteLanguage(language)}
-                        >Delete</button>
+                        >Delete</FaTrashAlt>
                         </div>
                     ))}
-                    <div className='another-language-div'>
+                    
+                </div>
+                <div className='another-language-div'>
                         <h3>Another Language?</h3>
                         <div className='another-language-select'>
                         <select onChange={e => setNewLearningLanguage(e.currentTarget.value)} 
@@ -145,7 +148,6 @@ export default function ProfileData(props) {
                         <button onClick={addLanguage} className='uibutton'>Add</button>
                         </div>
                     </div>
-                </div>
             </div>
         )
     }

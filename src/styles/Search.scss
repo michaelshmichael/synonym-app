@@ -10,7 +10,7 @@
         width: 18%;
         padding-top: 35px;
         padding-left: 30px;
-        background-color: rgb(205, 235, 247);
+        background-color: rgb(252, 241, 93);
     }
     .search-and-results-container {
         width: 82%;
@@ -67,6 +67,9 @@
                 cursor: default;
                 .p {
                     pointer-events: inherit;
+                }
+                .add-word-icon {
+                    pointer-events: visible;
                 }
             }
         }

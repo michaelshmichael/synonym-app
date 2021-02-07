@@ -48,6 +48,7 @@ export default function Routes() {
           <Route path='/profile/search' render={props => <Search {...props}
                 language={language}
                 setLanguage={setLanguage}
+                user={user}
             />}></Route>
           <Footer></Footer>
       </div>

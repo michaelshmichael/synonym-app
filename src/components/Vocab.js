@@ -5,6 +5,9 @@ import APIEndpoints from '../api';
 import Sidebar from '../components/Sidebar';
 import '../styles/Vocab.scss';
 
+const Owlbot = require('owlbot-js');
+const client = Owlbot('cd633cb60f1e938922965049e8c62c673cb779a3');
+
 export default function Vocab (props) {
     const [activeUser, setActiveUser] = useState('');
     const [uniqueId, setUniqueId] = useState('');
@@ -39,6 +42,13 @@ export default function Vocab (props) {
                 return newState;
             });
         };
+    };
+
+    const owl = (word) => {
+        client.define(word).then(function(result){
+            console.log(result)
+            alert(result.definitions[0].example)
+        })
     };
 
     useEffect(() => {
@@ -76,6 +86,7 @@ export default function Vocab (props) {
                         <h1>{word}</h1>
                         <FaTrashAlt
                         onClick={e => removeWordFromUserVocab(word)}/>
+                        <button onClick={e => owl(word)}>Example</button>
                     </div>
                 ))}
             </div>

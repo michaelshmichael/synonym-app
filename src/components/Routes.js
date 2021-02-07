@@ -8,6 +8,7 @@ import Login from './Login';
 import Landing from './Landing';
 import Search from './Search';
 import Profile from './Profile';
+import Vocab from './Vocab';
 import APIEndpoints from '../api';
 import '../html.scss'
 
@@ -48,6 +49,9 @@ export default function Routes() {
           <Route path='/profile/search' render={props => <Search {...props}
                 language={language}
                 setLanguage={setLanguage}
+                user={user}
+            />}></Route>
+            <Route path='/profile/vocab' render={props => <Vocab {...props}
                 user={user}
             />}></Route>
           <Footer></Footer>

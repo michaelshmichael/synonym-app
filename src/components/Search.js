@@ -57,7 +57,7 @@ export default function Search(props) {
         const currentActiveUser = allUsers.data.find(element => element.data.username === props.user);
         setActiveUser(currentActiveUser);
         setUniqueId(currentActiveUser.uniqueId);
-    }
+    };
 
     const createNewSearchFromResult = (e) =>  {
         setSearchWord(e);

@@ -74,9 +74,22 @@
         background-color: rgb(252, 241, 93);
     }
     .vocab-data{
+        font-family: 'Krub', sans-serif;
+        display: grid;
+        grid-template-columns: auto auto auto;
+        column-gap: 20px;
+        row-gap: 20px;
         width: 75%;
+        height: 40vh;
         margin-right: -20px;
+        margin-top: 20px;
         padding-left: 50px;
+        .vocab-data-word{
+            text-align: center;
+            padding-top: 10px;
+            padding-bottom: 20px;
+            background-color:rgb(252, 241, 93)
+        }
     }
 }
 

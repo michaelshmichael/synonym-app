@@ -117,35 +117,6 @@ export default function Set (props) {
     }
 }
 
- // const removeWordFromUserVocab = (word) => {
-    //     let updatedAssociatedWords = activeUser.data.associatedWords.filter(element => element !== word)
-    //     if(window.confirm('Really Delete Word?')){
-    //         setActiveUser((prevState) => {
-    //             const newState = Object.assign({}, prevState);
-    //             newState.data.associatedWords = updatedAssociatedWords;
-    //             return newState;
-    //         });
-    //     };
-    // };
-
-
-    // const addWordToUserVocab = () => {
-    //     let word = prompt('What word do you want to add?');
-    //     let associatedWords
-    //     if(word === null){
-    //         return;
-    //     } else if(activeUser.data.associatedWords){
-    //         associatedWords = [...activeUser.data.associatedWords, word]
-    //     } else {
-    //         associatedWords = [word]
-    //     }
-    //     setActiveUser((prevState) => {
-    //         const newState = Object.assign({}, prevState);
-    //         newState.data.associatedWords = associatedWords;
-    //         return newState;
-    //     });
-    // }
-
     // const owlBot = (word) => {
     //     client.define(word).then(function(result){
     //         console.log(result)

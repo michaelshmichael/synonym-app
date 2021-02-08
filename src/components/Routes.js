@@ -55,7 +55,7 @@ export default function Routes() {
             <Route exact path='/profile/vocab' render={props => <Vocab {...props}
                 user={user}
             />}></Route>
-            <Route path='/profile/vocab/:set' render={props => <Set {...props}
+            <Route exact path='/profile/vocab/:set' render={props => <Set {...props}
                 user={user}
             />}></Route>
           <Footer></Footer>

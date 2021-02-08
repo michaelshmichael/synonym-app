@@ -37,6 +37,7 @@ export default function Vocab (props) {
 
     const redirectToSet = (e) => {
         let setURL = e.target.dataset.index;
+        console.log(setURL)
         history.push(`/profile/vocab/${setURL}`);
     }
 

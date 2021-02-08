@@ -9,6 +9,7 @@ import Landing from './Landing';
 import Search from './Search';
 import Profile from './Profile';
 import Vocab from './Vocab';
+import Set from './Set';
 import APIEndpoints from '../api';
 import '../html.scss'
 
@@ -51,7 +52,10 @@ export default function Routes() {
                 setLanguage={setLanguage}
                 user={user}
             />}></Route>
-            <Route path='/profile/vocab' render={props => <Vocab {...props}
+            <Route exact path='/profile/vocab' render={props => <Vocab {...props}
+                user={user}
+            />}></Route>
+            <Route path='/profile/vocab/:set' render={props => <Set {...props}
                 user={user}
             />}></Route>
           <Footer></Footer>

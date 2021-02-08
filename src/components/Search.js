@@ -107,19 +107,18 @@ export default function Search(props) {
     };
 
     const addWordToActiveUserVocab = (newAssociatedWord) => {
-        let associatedWords
-        if(activeUser.data.associatedWords){
-            associatedWords = [...activeUser.data.associatedWords, newAssociatedWord]
+        let updatedVocab
+        if(activeUser.data.vocab.miscellaneous){
+            updatedVocab = [...activeUser.data.vocab.miscellaneous, newAssociatedWord]
         } else {
-            associatedWords = [newAssociatedWord]
+            updatedVocab = [newAssociatedWord]
         }
-        
         setActiveUser((prevState) => {
             const newState = Object.assign({}, prevState);
-            newState.data.associatedWords = associatedWords;
+            newState.data.vocab.miscellaneous = updatedVocab;
             return newState;
         });
-        console.log(activeUser.data.associatedWords)
+        console.log(activeUser.data.vocab.miscellaneous)
     };
 
     useEffect(() => {

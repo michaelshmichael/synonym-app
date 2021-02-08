@@ -58,7 +58,7 @@
     }
 }
 
-.vocab-container {
+.set-container {
     display: flex;
     flex-direction: row;
     height: 100vh;
@@ -73,22 +73,39 @@
         padding-left: 30px;
         background-color: rgb(252, 241, 93);
     }
-    .vocab-data{
-        font-family: 'Krub', sans-serif;
-        display: grid;
-        grid-template-columns: auto auto auto;
-        column-gap: 20px;
-        row-gap: 20px;
+    .set-main-container {
+        display: flex;
+        flex-direction: column;
         width: 75%;
-        height: 40vh;
-        margin-right: -20px;
-        margin-top: 20px;
-        padding-left: 50px;
-        .vocab-data-word{
-            text-align: center;
-            padding-top: 10px;
-            padding-bottom: 20px;
-            background-color:rgb(252, 241, 93)
+        .set-title {
+            font-family: 'Krub', sans-serif;
+            margin-left: 50px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            width: 200px;
+            .bi-plus-circle {
+                font-size: 2.3em;
+            }
+        }
+        .set-box-container{
+            font-family: 'Krub', sans-serif;
+            display: grid;
+            grid-template-columns: auto auto auto;
+            column-gap: 20px;
+            row-gap: 20px;
+            height: 40vh;
+            margin-right: -20px;
+            margin-top: 20px;
+            padding-left: 50px;
+            .set-box{
+                text-align: center;
+                padding-top: 10px;
+                padding-bottom: 20px;
+                background-color:rgb(252, 241, 93);
+                cursor: pointer;
+            }
         }
     }
 }

@@ -14,6 +14,9 @@ export default function Registration() {
     const [nativeLanguage, setNativeLanguage] = useState('English');
     const [learningLanguage, setLearningLanguage] = useState(['English']);
     const [email, setEmail] = useState('');
+    const vocab = {
+        miscellaneous: [],
+    }
 
     const handleChanges = (formItemBeingUpdated, e) => {
         switch (formItemBeingUpdated) {
@@ -50,7 +53,8 @@ export default function Registration() {
             password,
             email,
             nativeLanguage,
-            learningLanguage
+            learningLanguage,
+            vocab
         };
         try {
             await axios.post(APIEndpoints.authenticationEndpoint, userData, { withCredentials: true });

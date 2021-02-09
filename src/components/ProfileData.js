@@ -24,8 +24,6 @@ export default function ProfileData(props) {
             try {
                 const allUsers = await axios.get(APIEndpoints.userDataEndpoint, {withCredentials: true});
                 getActiveUser(allUsers);
-                console.log('ALL USERS')
-                console.log(allUsers)
             } catch (error) {
                 console.error(error);
             }

@@ -75,7 +75,8 @@ export default function Search(props) {
     
     async function _getAssociations () {
         try {
-            let data = await fetch(`https://api.wordassociations.net/associations/v1.0/json/search?apikey=5b4acb51-a76e-4d05-9349-8044794dea94&text=${searchWord}&lang=${props.language}&limit=10`, {mode: 'cors'})
+            let data = await fetch(`https://api.wordassociations.net/associations/v1.0/json/search?apikey=5b4acb51-a76e-4d05-9349-8044794dea94&text=${searchWord}&lang=${props.language}&limit=10`, 
+            {mode: 'no-cors'})
             let words = await data.json()
             console.log(words)
             return words

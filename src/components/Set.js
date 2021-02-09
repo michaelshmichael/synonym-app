@@ -12,6 +12,10 @@ export default function Set (props) {
     const [activeUser, setActiveUser] = useState('');
     const [uniqueId, setUniqueId] = useState('');
     const [vocabArray, setVocabArray] = useState([]);
+    const [inputFormDisplay, setInputFormDisplay] = useState('word-input-hidden');
+    const [newWord, setNewWord] = useState('');
+    const [explanation, setExplanation] = useState('');
+
     const { set } = useParams();
 
     // const Owlbot = require('owlbot-js');
@@ -38,7 +42,7 @@ export default function Set (props) {
     };
 
     const deleteItem = (e) => {
-        let updatedArray = vocabArray.filter(element => element !== e.target.dataset.index)
+        let updatedArray = vocabArray.filter(element => element.word !== e.target.dataset.index)
         console.log(updatedArray)
         if(window.confirm('Really Delete Word?')){
             setActiveUser((prevState) => {
@@ -50,19 +54,27 @@ export default function Set (props) {
         }
     }
 
-    const addItem = () => {
-        let item = prompt(`What word do you want to add to ${set}?`);
-        let updatedArray = vocabArray.concat(item);
-        if(item === null){
-            return;
+    const toggleInputFormDisplay = () => {
+        if(inputFormDisplay === 'word-input-hidden'){
+            setInputFormDisplay('word-input-display')
         } else {
-            setActiveUser((prevState) => {
-                const newState = Object.assign({}, prevState);
-                newState.data.vocab[set] = updatedArray;
-                return newState;
-            });
-            setVocabArray(updatedArray);
+            setInputFormDisplay('word-input-hidden')
         }
+    };
+
+    const submitNewWordAndExplanation = (e) => {
+        e.preventDefault();
+        let obj = {word: newWord, explanation: explanation}
+        let updatedArray = vocabArray.concat(obj);
+        setActiveUser((prevState) => {
+            const newState = Object.assign({}, prevState);
+            newState.data.vocab[set] = updatedArray;
+            return newState;
+        });
+        setVocabArray(updatedArray);
+        setNewWord('');
+        setExplanation('');
+        toggleInputFormDisplay();
     };
 
     useEffect(() => {
@@ -99,18 +111,31 @@ export default function Set (props) {
                 <div className='set-main-container'>
                     <div className='set-title'>
                         <h1>Add Word</h1>
-                        <BiPlusCircle className='bi-plus-circle' onClick={addItem}></BiPlusCircle>
+                        <BiPlusCircle className='bi-plus-circle' onClick={toggleInputFormDisplay}></BiPlusCircle>
                     </div>
                         <div className='vocabulary-item-container'>
                         {vocabArray.map((item) => (
                             <div className='vocabulary-item'>
                                 <h2>
-                                    {item}
+                                    {item.word}
                                 </h2>
-                                <FiTrash data-index={item} onClick={e => deleteItem(e)}/>
+                                <FiTrash data-index={item.word} onClick={e => deleteItem(e)}/>
                             </div>
                         ))}
                         </div>
+                    </div>
+                    <div className={inputFormDisplay}>
+                            <form>
+                            <div className='form-group'>
+                                <label htmlFor='word'>Word</label>
+                                <input id='word' type='text' value={newWord} onChange={e => setNewWord(e.target.value)}></input>
+                            </div>
+                            <div className='form-group'>
+                                <label htmlFor='translation'>Translation / Explanation</label>
+                                <input id='translation' type='text' value={explanation} onChange={e => setExplanation(e.target.value)}></input>
+                            </div>
+                                <button onClick={e => submitNewWordAndExplanation(e)}>Submit</button>
+                            </form>
                     </div>
             </div>
         )

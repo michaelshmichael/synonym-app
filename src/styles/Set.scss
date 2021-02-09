@@ -102,4 +102,26 @@
     
 }
 
+.word-input-hidden {
+    display: none;
+}
+
+.word-input-display {
+    font-family: 'Krub', sans-serif;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    top: 400px;
+    left: 400px;
+    height: 400px;
+    width: 400px;
+    .form-group {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-bottom: 10px;
+    }
+}
+
 

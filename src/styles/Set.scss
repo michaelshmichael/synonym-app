@@ -1,3 +1,96 @@
+.set-container {
+    font-family: 'Krub', sans-serif;
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+    margin-left: -10px;
+    margin-top: 80px;
+    overflow: hidden;
+    .sidebar {
+        height: 100vh;
+        width: 18%;
+        padding-top: 35px;
+        padding-left: 30px;
+        background-color: rgb(252, 241, 93);
+    }
+    .set-main-container {
+        display: flex;
+        flex-direction: column;
+        width: 75%;
+        .set-title {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: flex-start;
+            width: 500px;
+            .bi-plus-circle {
+                margin-left: 20px;
+                font-size: 2.3em;
+            }
+        }
+        .vocabulary-item-container {
+            display: grid;
+            grid-template-columns: auto auto auto auto;
+            grid-template-rows: auto auto auto;
+            grid-column-gap: 10px;
+            grid-row-gap: 10px;
+            height: 400px;
+            margin-left: 20px;
+            .vocabulary-item {
+                text-align: center;
+                width: 100%;
+                height: 100%;
+                background-color: orange;
+                border-radius: 25px;
+                transform-style: preserve-3d; 
+                transition: all 0.5s ease;
+            }
+            .vocabulary-item:hover {
+                transform: rotateY(180deg);
+            }
+            .vocab-front-word {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                backface-visibility: hidden;
+            }
+            .vocab-back-explanation {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                backface-visibility: hidden;
+                transform: rotateY(180deg);
+                cursor: default;
+            }
+        }
+    }
+}
+
+.word-input-display {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    top: 150px;
+    left: 400px;
+    height: 100px;
+    width: 400px;
+    background-color: rgb(169, 169, 253);
+    padding: 100px;
+    border: 2px solid black;
+    opacity: 0.9;
+    .form-group {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-bottom: 10px;
+    }
+}
+
+.word-input-hidden {
+    display: none;
+}
+
 .lds-ellipsis {
     position: absolute;
     margin-top: 20px;
@@ -55,72 +148,6 @@
     }
     100% {
         transform: translate(24px, 0);
-    }
-}
-
-.set-container {
-    display: flex;
-    flex-direction: row;
-    height: 100vh;
-    margin-left: -10px;
-    margin-top: 80px;
-    overflow: hidden;
-    .sidebar {
-        height: 100vh;
-        font-family: 'Krub', sans-serif;
-        width: 18%;
-        padding-top: 35px;
-        padding-left: 30px;
-        background-color: rgb(252, 241, 93);
-    }
-    .set-main-container {
-        display: flex;
-        flex-direction: column;
-        width: 75%;
-        .set-title {
-            font-family: 'Krub', sans-serif;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            width: 200px;
-            .bi-plus-circle {
-                font-size: 2.3em;
-            }
-        }
-        .vocabulary-item-container {
-            display: grid;
-            grid-template-columns: auto auto auto;
-            height: 100vh;
-        }
-        .vocabulary-item {
-            font-family: 'Krub', sans-serif;
-            width: 100px;
-            height: 100px;
-            background-color: orange;
-        }
-    }
-    
-}
-
-.word-input-hidden {
-    display: none;
-}
-
-.word-input-display {
-    font-family: 'Krub', sans-serif;
-    position: fixed;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    top: 400px;
-    left: 400px;
-    height: 400px;
-    width: 400px;
-    .form-group {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        margin-bottom: 10px;
     }
 }
 

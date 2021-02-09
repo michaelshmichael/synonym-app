@@ -10,7 +10,7 @@ import '../styles/Vocab.scss';
 export default function Vocab (props) {
     const [activeUser, setActiveUser] = useState('');
     const [uniqueId, setUniqueId] = useState('');
-    const [keysArray, setKeysArray] = useState([]);
+    const [vocabSetsArray, setVocabSetsArray] = useState([]);
     const history = useHistory();
     
     // These two functions are repeated from the profile page. Could be refactored I'm sure.
@@ -30,33 +30,32 @@ export default function Vocab (props) {
         const currentActiveUser = allUsers.data.find(element => element.data.username === props.user);
         setActiveUser(currentActiveUser);   
         setUniqueId(currentActiveUser.uniqueId);
-        let arrayFromObject = Object.keys(currentActiveUser.data.vocab)
-        setKeysArray(arrayFromObject)
-        console.log(arrayFromObject)
+        let vocabSetsArray = Object.keys(currentActiveUser.data.vocab)
+        setVocabSetsArray(vocabSetsArray)
     };
 
     const redirectToSet = (e) => {
-        let setURL = e.target.dataset.index;
-        console.log(setURL)
-        history.push(`/profile/vocab/${setURL}`);
+        let vocabSetURL = e.target.dataset.index;
+        history.push(`/profile/vocab/${vocabSetURL}`);
     }
 
     const deleteSet = (set) => {
-        let setName = set.target.dataset.index
-        let updatedSets = keysArray.filter(element => element !== setName);
-        let obj = updatedSets.reduce(function(acc, cur) {
+        let vocabSetName = set.target.dataset.index
+        let updatedVocabSets = vocabSetsArray.filter(element => element !== vocabSetName);
+        let obj = updatedVocabSets.reduce(function(acc, cur) {
             acc[cur] = [];
             return acc;
           }, {});
-        console.log(obj)
-        if(window.confirm('Really Delete Word?')){
+        if(window.confirm('Really Delete Set?')){
             setActiveUser((prevState) => {
                 const newState = Object.assign({}, prevState);
                 newState.data.vocab = obj;
                 return newState;
             });
-            setKeysArray(updatedSets)
-        };
+            setVocabSetsArray(updatedVocabSets)
+        } else {
+            return;
+        }
     };
 
     const addSet = () => {
@@ -69,7 +68,7 @@ export default function Vocab (props) {
                 newState.data.vocab[set] = [];
                 return newState;
             });
-            setKeysArray(keysArray.concat(set))
+            setVocabSetsArray(vocabSetsArray.concat(set))
         }
     };
 
@@ -93,24 +92,24 @@ export default function Vocab (props) {
 
     if(!activeUser) {
         return(
-            <div className='set-container'>
+            <div className='sets-page-container'>
                 <Sidebar className='sidebar'></Sidebar>
-                <div className='set-main-container'>
+                <div className='sets-main-container'>
                     <div className="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
                 </div>
             </div>
         )
     } else {
         return(
-            <div className='set-container'>
+            <div className='sets-page-container'>
                 <Sidebar className='sidebar'></Sidebar>
-                <div className='set-main-container'>
-                    <div className='set-title'>
-                        <h1>Add Set</h1>
+                <div className='sets-main-container'>
+                    <div className='sets-title-container'>
+                        <h1 className='sets-title'>Add Set</h1>
                         <BiPlusCircle className='bi-plus-circle' onClick={addSet}/>
                     </div>
-                    <div className='set-box-container'>
-                        {keysArray.map((set) => (
+                    <div className='sets-box-container'>
+                        {vocabSetsArray.map((set) => (
                             <div
                             data-index={set}
                             className='set-box'

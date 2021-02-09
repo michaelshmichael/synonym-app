@@ -1,3 +1,54 @@
+.sets-page-container {
+    font-family: 'Krub', sans-serif;
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+    margin-left: -10px;
+    margin-top: 80px;
+    overflow: hidden;
+    .sidebar {
+        height: 100vh;
+        width: 18%;
+        padding-top: 35px;
+        padding-left: 30px;
+        background-color: rgb(252, 241, 93);
+    }
+    .sets-main-container {
+        display: flex;
+        flex-direction: column;
+        width: 75%;
+        .sets-title-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            margin-left: 50px;
+            width: 180px;
+            .bi-plus-circle {
+                font-size: 2.3em;
+            }
+        }
+        .sets-box-container {
+            display: grid;
+            grid-template-columns: auto auto auto auto;
+            grid-template-rows: auto auto auto;
+            grid-column-gap: 10px;
+            grid-row-gap: 10px;
+            height: 400px;
+            margin-left: 20px;
+            .set-box {
+                text-align: center;
+                width: 100%;
+                height: 100%;
+                background-color: rgb(252, 241, 93);
+                border-radius: 25px;
+                cursor: pointer;
+            }
+        }
+    }
+}
+
+
 .lds-ellipsis {
     position: absolute;
     margin-top: 20px;
@@ -57,62 +108,4 @@
         transform: translate(24px, 0);
     }
 }
-
-.set-container {
-    display: flex;
-    flex-direction: row;
-    height: 100vh;
-    margin-left: -10px;
-    margin-top: 80px;
-    overflow: hidden;
-    .sidebar {
-        height: 100vh;
-        font-family: 'Krub', sans-serif;
-        width: 18%;
-        padding-top: 35px;
-        padding-left: 30px;
-        background-color: rgb(252, 241, 93);
-    }
-    .set-main-container {
-        display: flex;
-        flex-direction: column;
-        width: 75%;
-        .set-title {
-            font-family: 'Krub', sans-serif;
-            margin-left: 50px;
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            align-items: center;
-            width: 200px;
-            .bi-plus-circle {
-                font-size: 2.3em;
-            }
-        }
-        .set-box-container{
-            font-family: 'Krub', sans-serif;
-            display: grid;
-            grid-template-columns: auto auto auto;
-            column-gap: 20px;
-            row-gap: 20px;
-            height: 40vh;
-            margin-right: -20px;
-            margin-top: 20px;
-            padding-left: 50px;
-            .set-box{
-                text-align: center;
-                padding-top: 10px;
-                padding-bottom: 20px;
-                background-color:rgb(252, 241, 93);
-                cursor: pointer;
-                // .link-to-vocab {
-                //     width: 50px;
-                //     height: 50px;
-                //     background-colo
-                // }
-            }
-        }
-    }
-}
-
 

@@ -41,6 +41,12 @@ export default function VocabInfo (props) {
         setUniqueId(currentActiveUser.uniqueId);
     };
 
+    const updateExplanation = (e) => {
+        console.log(e.target.value)
+        // Must set the explanation on the user object to the updated value
+        // Then, with each change, send this to the API
+    }
+
     if(!owlData) {
         return(
             <div className='vocab-item-page-container'>
@@ -59,7 +65,9 @@ export default function VocabInfo (props) {
                         <h1 className='vocab-item-word'>Word: {vocabItem}</h1>
                         <h1 className='vocab-item-definition'>Your Explanation: </h1>
                         <input className='vocab-item-definition-input' type='text' 
-                        placeholder={explanation}/>
+                        placeholder={explanation}
+                        onChange={e => updateExplanation(e)}
+                        />
                     </div>
                     <div className='vocab-item-owl-data'>
                         <h2>{owlData.definitions[0].type} {owlData.definitions[0].emoji}</h2>

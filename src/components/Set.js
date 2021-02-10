@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BiPlusCircle } from 'react-icons/bi';
 import { FiTrash } from 'react-icons/fi'
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import APIEndpoints from '../api';
 import axios from 'axios';
 import Sidebar from '../components/Sidebar';
@@ -17,9 +17,7 @@ export default function Set (props) {
     const [explanation, setExplanation] = useState('');
 
     const { set } = useParams();
-
-    // const Owlbot = require('owlbot-js');
-    // const client = Owlbot('cd633cb60f1e938922965049e8c62c673cb779a3');
+    const history = useHistory();
     
     useEffect(() => {
         async function getUserData () {
@@ -40,7 +38,13 @@ export default function Set (props) {
         setVocabArray(currentActiveUser.data.vocab[set]);
     };
 
+    const redirectToVocabInfo = (e) => {
+        let vocabInfoURL = e.target.dataset.index;
+        history.push(`/profile/vocab/${set}/${vocabInfoURL}`)
+    }
+
     const deleteItem = (e) => {
+        e.stopPropagation();
         let updatedArray = vocabArray.filter(element => element.word !== e.target.dataset.index)
         if(window.confirm('Really Delete Word?')){
             setActiveUser((prevState) => {
@@ -117,8 +121,10 @@ export default function Set (props) {
                             <div className='vocab-front-word'>
                                 <h2>{item.word}</h2>
                             </div>
-                            <div className='vocab-back-explanation'>
-                                <h2>{item.explanation}</h2>
+                            <div className='vocab-back-explanation'
+                            data-index={item.word}
+                            onClick={e => redirectToVocabInfo(e)}>
+                                <h2 data-index={item.word}>{item.explanation}</h2>
                                 <FiTrash data-index={item.word} onClick={e => deleteItem(e)}/>
                             </div>
                         </div>
@@ -144,10 +150,3 @@ export default function Set (props) {
         )
     }
 }
-
-    // const owlBot = (word) => {
-    //     client.define(word).then(function(result){
-    //         console.log(result)
-    //         alert(result.definitions[0].example)
-    //     })
-    // };

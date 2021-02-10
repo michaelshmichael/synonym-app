@@ -10,6 +10,7 @@ import Search from './Search';
 import Profile from './Profile';
 import Vocab from './Vocab';
 import Set from './Set';
+import VocabInfo from './VocabInfo';
 import APIEndpoints from '../api';
 import '../html.scss'
 
@@ -56,6 +57,9 @@ export default function Routes() {
                 user={user}
             />}></Route>
             <Route exact path='/profile/vocab/:set' render={props => <Set {...props}
+                user={user}
+            />}></Route>
+            <Route exact path='/profile/vocab/:set/:vocabItem' render={props => <VocabInfo {...props}
                 user={user}
             />}></Route>
           <Footer></Footer>

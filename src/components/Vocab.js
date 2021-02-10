@@ -39,8 +39,9 @@ export default function Vocab (props) {
         history.push(`/profile/vocab/${vocabSetURL}`);
     }
 
-    const deleteSet = (set) => {
-        let vocabSetName = set.target.dataset.index
+    const deleteSet = (event) => {
+        event.stopPropagation();
+        let vocabSetName = event.target.dataset.index
         let updatedVocabSets = vocabSetsArray.filter(element => element !== vocabSetName);
         let obj = updatedVocabSets.reduce(function(acc, cur) {
             acc[cur] = [];
@@ -114,8 +115,13 @@ export default function Vocab (props) {
                             data-index={set}
                             className='set-box'
                             onClick={e => redirectToSet(e)}>
-                                <h1>{set}</h1>
-                                <FiTrash data-index={set} onClick={e => deleteSet(e)}/>
+                                <h1 data-index={set}
+                                >{set}</h1>
+                                    <div className='delete-set'>
+                                    <FiTrash data-index={set}  
+                                    onClick={e => deleteSet(e)}
+                                    />
+                                    </div>
                             </div>
                         ))}
                     </div>

@@ -21,21 +21,21 @@ export default function Search(props) {
     const searchButton = useRef();
     
     // Rename this
-    let x;
+    let searchHeader;
     if (props.language === 'en') {
-        x = 'Search in English';
+        searchHeader = 'Search in English';
     } else if (props.language === 'ru') {
-        x = 'Search in Russian';
+        searchHeader = 'Search in Russian';
     } else if (props.language === 'pt') {
-        x = 'Search in Portuguese'
+        searchHeader = 'Search in Portuguese'
     } else if (props.language === 'de') {
-        x = 'Search in German';
+        searchHeader = 'Search in German';
     } else if (props.language === 'fr') {
-        x = 'Search in French';
+        searchHeader = 'Search in French';
     } else if (props.language === 'it') {
-        x = 'Search in Italian';
+        searchHeader = 'Search in Italian';
     } else if (props.language === 'es') {
-        x = 'Search in Spanish';
+        searchHeader = 'Search in Spanish';
     }
 
     // These two functions are repeated from the profile page. Could be refactored I'm sure.
@@ -76,7 +76,8 @@ export default function Search(props) {
     async function _getAssociations () {
         try {
             let data = await fetch(`https://api.wordassociations.net/associations/v1.0/json/search?apikey=5b4acb51-a76e-4d05-9349-8044794dea94&text=${searchWord}&lang=${props.language}&limit=10`, 
-            {mode: 'no-cors'})
+            {mode: 'no-cors'},
+            {'Access-Control-Allow-Origin': '*'})
             let words = await data.json()
             console.log(words)
             return words
@@ -158,7 +159,7 @@ export default function Search(props) {
                     
                 </div>
                 <div className='search-container'>
-                    <h2>{x}</h2>
+                    <h2>{searchHeader}</h2>
                     <div className='search-input-and-button'>
                         <input ref={inputRef} type='text' className='search-input-text' 
                         onChange={e => setSearchWord(e.target.value)}>

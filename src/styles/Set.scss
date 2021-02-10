@@ -22,6 +22,8 @@
             flex-direction: row;
             align-items: center;
             justify-content: flex-start;
+            align-items: center;
+            margin-left: 50px;
             width: 500px;
             .bi-plus-circle {
                 margin-left: 20px;
@@ -47,6 +49,7 @@
             }
             .vocabulary-item:hover {
                 transform: rotateY(180deg);
+                background-color: rgb(253, 122, 0);
             }
             .vocab-front-word {
                 position: absolute;

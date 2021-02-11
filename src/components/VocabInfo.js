@@ -9,9 +9,9 @@ export default function VocabInfo (props) {
     const [activeUser, setActiveUser] = useState('');
     const [uniqueId, setUniqueId] = useState('');
     const [explanation, setExplanation] = useState('');
-    const [definition, setDefinition] = useState('');
-    const [example, setExample] = useState('');
-    const [pronunciation, setPronunciation] = useState('');
+    const [APIdefinition, setAPIDefinition] = useState('');
+    const [APIexample, setAPIExample] = useState('');
+    const [APIpronunciation, setAPIPronunciation] = useState('');
     const { set, vocabItem } = useParams(); 
 
     useEffect(() => {
@@ -22,16 +22,16 @@ export default function VocabInfo (props) {
                         'x-rapidapi-key': 'f74c925871msh70f9c315d6fed91p101f0cjsn861ef3bc1f60',
                         'x-rapidapi-host': 'wordsapiv1.p.rapidapi.com'
                     }})
-                    setPronunciation(result.data.pronunciation.all);
-                    setDefinition(result.data.results[0].definition);
-                    setExample(result.data.results[0].examples[0]);
+                    setAPIPronunciation(result.data.pronunciation.all);
+                    setAPIDefinition(result.data.results[0].definition);
+                    setAPIExample(result.data.results[0].examples[0]);
                     console.log(result)                
                 } catch (error) {
                 console.log(error)
             }
         }
         WordAPICall();
-    },[activeUser]);
+    },[]);
 
     useEffect(() => {
         async function getUserData () {
@@ -48,6 +48,7 @@ export default function VocabInfo (props) {
     const getActiveUser = (allUsers) => {
         const currentActiveUser = allUsers.data.find(element => element.data.username === props.user);
         setActiveUser(currentActiveUser);
+        console.log(currentActiveUser)
         let currentWord = currentActiveUser.data.vocab[set].find(({word}) => word === vocabItem)
         setExplanation(currentWord.explanation) 
         setUniqueId(currentActiveUser.uniqueId);
@@ -55,9 +56,31 @@ export default function VocabInfo (props) {
 
     const updateExplanation = (e) => {
         console.log(e.target.value)
-        // Must set the explanation on the user object to the updated value
-        // Then, with each change, send this to the API
-    }
+        let currentWord = activeUser.data.vocab[set].find(({word}) => word === vocabItem)
+        setActiveUser((prevState) => {
+            const newState = Object.assign({}, prevState);
+            currentWord.explanation = e.target.value;
+            return newState;
+        });
+    };
+
+    useEffect(() => {
+        if(uniqueId){
+            async function updateUser() {
+                try {
+                    const updatedUser = await axios.put(`https://app.yawe.dev/api/1/ce/non-auth-endpoint?key=b0188b53ea77419ba1d6dcda06e4bea9&uniqueId=${uniqueId}`, 
+                    activeUser.data,
+                    { withCredentials: true },
+                    { headers: {'Content-Type': 'application/json'}}
+                    )
+                    console.log(updatedUser)
+                } catch (error) {
+                    console.log(error)
+                }
+            }
+            updateUser();
+        };
+    }, [activeUser])
 
     if(!activeUser) {
         return(
@@ -83,11 +106,11 @@ export default function VocabInfo (props) {
                     </div>
                     <div className='vocab-item-api-data'>
                     <h3>Pronunciation</h3>
-                        <h2>{pronunciation}</h2>
+                        <h2>{APIpronunciation}</h2>
                     <h3>Definition</h3>
-                        <h2>{definition}</h2>
+                        <h2>{APIdefinition}</h2>
                     <h3>Example</h3>
-                        <h2>{example}</h2>
+                        <h2>{APIexample}</h2>
                     </div>
                 </div>
             </div>

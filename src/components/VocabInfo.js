@@ -9,16 +9,28 @@ export default function VocabInfo (props) {
     const [activeUser, setActiveUser] = useState('');
     const [uniqueId, setUniqueId] = useState('');
     const [explanation, setExplanation] = useState('');
-    const [owlData, setOwlData] = useState('');
-    const Owlbot = require('owlbot-js');
-    const client = Owlbot('cd633cb60f1e938922965049e8c62c673cb779a3');
-    const { set, vocabItem } = useParams();   
+    const [definition, setDefinition] = useState('');
+    const [example, setExample] = useState('');
+    const [pronunciation, setPronunciation] = useState('');
+    const { set, vocabItem } = useParams(); 
 
     useEffect(() => {
-        client.define(vocabItem).then(function(result){
-           setOwlData(result);
-           console.log(result)
-        })
+        async function WordAPICall () {
+            try {
+                const result = await axios.get(`https://wordsapiv1.p.rapidapi.com/words/${vocabItem}`,
+                    {headers: {
+                        'x-rapidapi-key': 'f74c925871msh70f9c315d6fed91p101f0cjsn861ef3bc1f60',
+                        'x-rapidapi-host': 'wordsapiv1.p.rapidapi.com'
+                    }})
+                    setPronunciation(result.data.pronunciation.all);
+                    setDefinition(result.data.results[0].definition);
+                    setExample(result.data.results[0].examples[0]);
+                    console.log(result)                
+                } catch (error) {
+                console.log(error)
+            }
+        }
+        WordAPICall();
     },[activeUser]);
 
     useEffect(() => {
@@ -47,7 +59,7 @@ export default function VocabInfo (props) {
         // Then, with each change, send this to the API
     }
 
-    if(!owlData) {
+    if(!activeUser) {
         return(
             <div className='vocab-item-page-container'>
                 <Sidebar className='sidebar'></Sidebar>
@@ -69,11 +81,13 @@ export default function VocabInfo (props) {
                         onChange={e => updateExplanation(e)}
                         />
                     </div>
-                    <div className='vocab-item-owl-data'>
-                        <h2>{owlData.definitions[0].type} {owlData.definitions[0].emoji}</h2>
-                        <h2>{owlData.definitions[0].definition}</h2>
-                        <h2>{owlData.definitions[0].example}</h2>
-                        <h2>{owlData.pronunciation}</h2>
+                    <div className='vocab-item-api-data'>
+                    <h3>Pronunciation</h3>
+                        <h2>{pronunciation}</h2>
+                    <h3>Definition</h3>
+                        <h2>{definition}</h2>
+                    <h3>Example</h3>
+                        <h2>{example}</h2>
                     </div>
                 </div>
             </div>

@@ -3,35 +3,14 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import APIEndpoints from '../api';
 import Sidebar from './Sidebar';
+import WordAPI from './WordAPI'
 import '../styles/VocabInfo.scss';
 
 export default function VocabInfo (props) {
     const [activeUser, setActiveUser] = useState('');
     const [uniqueId, setUniqueId] = useState('');
     const [explanation, setExplanation] = useState('');
-    const [APIdefinition, setAPIDefinition] = useState('');
-    const [APIexample, setAPIExample] = useState('');
-    const [APIpronunciation, setAPIPronunciation] = useState('');
     const { set, vocabItem } = useParams(); 
-
-    useEffect(() => {
-        async function WordAPICall () {
-            try {
-                const result = await axios.get(`https://wordsapiv1.p.rapidapi.com/words/${vocabItem}`,
-                    {headers: {
-                        'x-rapidapi-key': 'f74c925871msh70f9c315d6fed91p101f0cjsn861ef3bc1f60',
-                        'x-rapidapi-host': 'wordsapiv1.p.rapidapi.com'
-                    }})
-                    setAPIPronunciation(result.data.pronunciation.all);
-                    setAPIDefinition(result.data.results[0].definition);
-                    setAPIExample(result.data.results[0].examples[0]);
-                    console.log(result)                
-                } catch (error) {
-                console.log(error)
-            }
-        }
-        WordAPICall();
-    },[]);
 
     useEffect(() => {
         async function getUserData () {
@@ -104,14 +83,9 @@ export default function VocabInfo (props) {
                         onChange={e => updateExplanation(e)}
                         />
                     </div>
-                    <div className='vocab-item-api-data'>
-                    <h3>Pronunciation</h3>
-                        <h2>{APIpronunciation}</h2>
-                    <h3>Definition</h3>
-                        <h2>{APIdefinition}</h2>
-                    <h3>Example</h3>
-                        <h2>{APIexample}</h2>
-                    </div>
+                    <WordAPI
+                        vocabItem={vocabItem}
+                    />
                 </div>
             </div>
         )

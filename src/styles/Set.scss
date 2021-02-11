@@ -47,7 +47,7 @@
                 width: 100%;
                 height: 100%;
                 background-color: rgb(57, 253, 211);
-                box-shadow: black 2px 2px;
+                
                 border-radius: 25px;
                 transform-style: preserve-3d; 
                 transition: all 0.5s ease;
@@ -60,6 +60,8 @@
                 position: absolute;
                 width: 100%;
                 height: 100%;
+                box-shadow: black 2px 2px;
+                border-radius: 25px;
                 backface-visibility: hidden;
             }
             .vocab-back-explanation {
@@ -68,6 +70,8 @@
                 height: 100%;
                 backface-visibility: hidden;
                 transform: rotateY(180deg);
+                box-shadow: black 2px 2px;
+                border-radius: 25px;
                 cursor: default;
             }
         }

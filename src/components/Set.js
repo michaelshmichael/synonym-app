@@ -109,8 +109,9 @@ export default function Set (props) {
             <div className='set-container'>
                 <Sidebar className='sidebar'></Sidebar>
                 <div className='set-main-container'>
-                    <div className='set-title'>
-                        <h1>Add Word to {set}</h1>
+                    <h1 className='set-title'>Your words in the {set} set</h1>
+                    <div className='set-add'>
+                        <h2>Add Word to {set}</h2>
                         <BiPlusCircle className='bi-plus-circle' 
                         onClick={toggleInputFormDisplay}>
                         </BiPlusCircle>

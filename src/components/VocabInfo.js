@@ -31,6 +31,7 @@ export default function VocabInfo (props) {
         let currentWord = currentActiveUser.data.vocab[set].find(({word}) => word === vocabItem)
         setExplanation(currentWord.explanation) 
         setUniqueId(currentActiveUser.uniqueId);
+        console.log(currentWord)
     };
 
     const updateExplanation = (e) => {

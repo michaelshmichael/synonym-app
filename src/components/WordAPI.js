@@ -3,11 +3,11 @@ import axios from 'axios';
 import '../styles/VocabInfo.scss';
 
 export default function WordAPI (props) {
-
     const [APIdefinition, setAPIDefinition] = useState('');
     const [APIexample, setAPIExample] = useState('');
     const [APIpronunciation, setAPIPronunciation] = useState('');
     const [definitionNumber, setDefinitionNumber] = useState(0);
+    const [previousDefinitionButton, setPreviousDefinitionButton] = useState(false)
 
     useEffect(() => {
         async function WordAPICall () {
@@ -19,8 +19,7 @@ export default function WordAPI (props) {
                     }})
                     setAPIPronunciation(result.data.pronunciation.all);
                     setAPIDefinition(result.data.results[definitionNumber].definition);
-                    setAPIExample(result.data.results[definitionNumber].examples[0]);
-                    console.log(result)                
+                    setAPIExample(result.data.results[definitionNumber].examples[0]);             
                 } catch (error) {
                 console.log(error)
             }
@@ -28,11 +27,20 @@ export default function WordAPI (props) {
         WordAPICall();
     },[definitionNumber]);
 
-    const toggleDefinitionNumber = () => {
-        let newNumber = definitionNumber +1
-        console.log(newNumber)
+    const toggleDefinitionNumber = (e) => {
+        if(previousDefinitionButton === true && definitionNumber >= 0){
+            setPreviousDefinitionButton(false)
+        }
+        let newNumber;
+        e.target.dataset.index === 'forward' 
+        ? newNumber = definitionNumber +1 
+        : newNumber = definitionNumber -1
         setDefinitionNumber(newNumber);
+        if(definitionNumber === 0){
+            setPreviousDefinitionButton(true)
+        }
     }
+
     return (
         <div className='vocab-item-api-data'>
             <h3>Pronunciation</h3>
@@ -41,7 +49,8 @@ export default function WordAPI (props) {
                 <h2>{APIdefinition}</h2>
             <h3>Example</h3>
                 <h2>{APIexample}</h2>
-            <button onClick={toggleDefinitionNumber}>Next Definition</button>
+            <button data-index='back' disabled={previousDefinitionButton} onClick={e => toggleDefinitionNumber(e)}>Previous Definition</button>
+            <button data-index='forward' onClick={e => toggleDefinitionNumber(e)}>Next Definition</button>
         </div>
     )
 }

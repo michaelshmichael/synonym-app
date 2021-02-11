@@ -43,14 +43,10 @@ export default function Vocab (props) {
         event.stopPropagation();
         let vocabSetName = event.target.dataset.index
         let updatedVocabSets = vocabSetsArray.filter(element => element !== vocabSetName);
-        let obj = updatedVocabSets.reduce(function(acc, cur) {
-            acc[cur] = [];
-            return acc;
-          }, {});
         if(window.confirm('Really Delete Set?')){
+            delete activeUser.data.vocab[vocabSetName]
             setActiveUser((prevState) => {
                 const newState = Object.assign({}, prevState);
-                newState.data.vocab = obj;
                 return newState;
             });
             setVocabSetsArray(updatedVocabSets)

@@ -14,9 +14,7 @@ export default function Registration() {
     const [nativeLanguage, setNativeLanguage] = useState('English');
     const [learningLanguage, setLearningLanguage] = useState(['English']);
     const [email, setEmail] = useState('');
-    const vocab = {
-        miscellaneous: [],
-    }
+    const vocab = {}
 
     const handleChanges = (formItemBeingUpdated, e) => {
         switch (formItemBeingUpdated) {

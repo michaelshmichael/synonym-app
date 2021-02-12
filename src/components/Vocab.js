@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { FiTrash} from 'react-icons/fi';
 import { BiPlusCircle } from 'react-icons/bi';
 import axios from 'axios';
+import uniqid from 'uniqid';
 import APIEndpoints from '../api';
 import Sidebar from '../components/Sidebar';
 import '../styles/Vocab.scss';
@@ -101,14 +102,16 @@ export default function Vocab (props) {
             <div className='sets-page-container'>
                 <Sidebar className='sidebar'></Sidebar>
                 <div className='sets-main-container'>
-                    <div className='sets-title-container'>
-                        <h1 className='sets-title'>Add Set</h1>
+                    <h1 className='sets-main-title'>Your Sets</h1>
+                    <div className='sets-add-container'>
+                        <h2 className='sets-add'>Add Set</h2>
                         <BiPlusCircle className='bi-plus-circle' onClick={addSet}/>
                     </div>
                     <div className='sets-box-container'>
                         {vocabSetsArray.map((set) => (
                             <div
                             data-index={set}
+                            key={uniqid}
                             className='set-box'
                             onClick={e => redirectToSet(e)}>
                                 <h1 data-index={set}

@@ -4,6 +4,7 @@ import { FiTrash } from 'react-icons/fi'
 import { useParams, useHistory } from 'react-router-dom';
 import APIEndpoints from '../api';
 import axios from 'axios';
+import uniqid from 'uniqid';
 import Sidebar from '../components/Sidebar';
 import '../styles/Set.scss';
 
@@ -118,7 +119,8 @@ export default function Set (props) {
                     </div>
                     <div className='vocabulary-item-container'>
                     {vocabArray.map((item) => (
-                        <div className='vocabulary-item'>
+                        <div className='vocabulary-item'
+                        key={uniqid}>
                             <div className='vocab-front-word'>
                                 <h2>{item.word}</h2>
                             </div>

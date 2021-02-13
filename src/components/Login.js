@@ -29,6 +29,10 @@ export default function Login(props) {
         toast.success(`${username} logged in.`)
     }
 
+    const failedLogInToast = () => {
+        toast.error('Log In Failed. Try again.')
+    }
+
     async function loginUser(e) {
         e.preventDefault();
         const userLogIn = {
@@ -41,7 +45,7 @@ export default function Login(props) {
             redirectToProfileAfterLoggingIn();
             logInToast();
         } catch (error) {
-            alert('User or password not correct');
+            failedLogInToast();
             console.log(error);
         }
     }

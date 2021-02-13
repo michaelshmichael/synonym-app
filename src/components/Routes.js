@@ -27,9 +27,8 @@ export default function Routes() {
           localStorage.clear();
           axios.post(APIEndpoints.logoutEndpoint, { withCredentials: true });
         }
-      };
-      
-
+    };
+    
     async function updateUser (uniqueId, activeUser) {
       try {
           const updatedUser = await axios.put(`https://app.yawe.dev/api/1/ce/non-auth-endpoint?key=b0188b53ea77419ba1d6dcda06e4bea9&uniqueId=${uniqueId}`, 

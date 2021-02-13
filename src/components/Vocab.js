@@ -2,11 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { FiTrash} from 'react-icons/fi';
 import { BiPlusCircle } from 'react-icons/bi';
+import { toast } from 'react-toastify'; 
 import axios from 'axios';
 import uniqid from 'uniqid';
 import APIEndpoints from '../api';
 import Sidebar from '../components/Sidebar';
+import 'react-toastify/dist/ReactToastify.css';
 import '../styles/Vocab.scss';
+
+toast.configure();
 
 export default function Vocab (props) {
     const [activeUser, setActiveUser] = useState('');
@@ -52,13 +56,14 @@ export default function Vocab (props) {
                 return newState;
             });
             setVocabSetsArray(updatedVocabSets)
+            toast.info('Set Deleted', { autoClose: 1000 })
         } else {
             return;
         }
     };
 
     const addSet = () => {
-        if(newSetName === null){
+        if(newSetName === ''){
             return;
         } else {
             setActiveUser((prevState) => {
@@ -67,6 +72,7 @@ export default function Vocab (props) {
                 return newState;
             });
             setVocabSetsArray(vocabSetsArray.concat(newSetName))
+            setNewSetName('');
         }
     };
 
@@ -92,9 +98,9 @@ export default function Vocab (props) {
                     <div className='sets-add-container'>
                         <h2 className='sets-add'>Add Set</h2>
                         <input type='text' 
-                        value={newSetName} 
-                        className= 'new-set-input-box'
-                        onChange={e => setNewSetName(e.target.value)}/>
+                            value={newSetName} 
+                            className= 'new-set-input-box'
+                            onChange={e => setNewSetName(e.target.value)}/>
                         <BiPlusCircle className='bi-plus-circle' onClick={addSet}/>
                     </div>
                     <div className='sets-box-container'>

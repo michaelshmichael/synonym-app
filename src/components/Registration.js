@@ -3,7 +3,11 @@ import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import APIEndpoints from '../api';
 import joiningSVG from '../svg/joining.svg';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import '../styles/Registration.scss';
+
+toast.configure()
 
 export default function Registration() {
     const history = useHistory();
@@ -42,6 +46,14 @@ export default function Registration() {
         history.push('./login');
     };
 
+    const registerToast = () => {
+        toast.success(`${username} successfully registered!`)
+    }
+
+    const failedRegisterToast = () => {
+        toast.error('Could not register. Try again.')
+    }
+
     async function registerUser(e) {
         e.preventDefault();
         const userData = {
@@ -62,7 +74,9 @@ export default function Registration() {
                 { headers: {'Content-Type': 'application/json'}}
             );
             redirectToLoginPageAfterRegistering();
+            registerToast();
         } catch (error) {
+            failedRegisterToast();
             console.error(error);
         }
     }

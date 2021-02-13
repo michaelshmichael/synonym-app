@@ -11,6 +11,7 @@ export default function Landing(props) {
             </div>
             <img className='learning-svg' src={learningSVG} alt='person-learning'></img>
             <button className='ui-button' href='registration'>Register</button>
+            
         </div>
     );
     } else {

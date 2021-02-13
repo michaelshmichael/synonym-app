@@ -12,6 +12,7 @@ export default function Vocab (props) {
     const [activeUser, setActiveUser] = useState('');
     const [uniqueId, setUniqueId] = useState('');
     const [vocabSetsArray, setVocabSetsArray] = useState([]);
+    const [newSetName, setNewSetName] = useState('');
     const history = useHistory();
     
     // These two functions are repeated from the profile page. Could be refactored I'm sure.
@@ -57,35 +58,20 @@ export default function Vocab (props) {
     };
 
     const addSet = () => {
-        let set = prompt('What is the name of your set?');
-        if(set === null){
+        if(newSetName === null){
             return;
         } else {
             setActiveUser((prevState) => {
                 const newState = Object.assign({}, prevState);
-                newState.data.vocab[set] = [];
+                newState.data.vocab[newSetName] = [];
                 return newState;
             });
-            setVocabSetsArray(vocabSetsArray.concat(set))
+            setVocabSetsArray(vocabSetsArray.concat(newSetName))
         }
     };
 
     useEffect(() => {
-        if(uniqueId){
-            async function updateUser() {
-                try {
-                    const updatedUser = await axios.put(`https://app.yawe.dev/api/1/ce/non-auth-endpoint?key=b0188b53ea77419ba1d6dcda06e4bea9&uniqueId=${uniqueId}`, 
-                    activeUser.data,
-                    { withCredentials: true },
-                    { headers: {'Content-Type': 'application/json'}}
-                    )
-                    console.log(updatedUser)
-                } catch (error) {
-                    console.log(error)
-                }
-            }
-            updateUser();
-        };
+        props.updateUser(uniqueId, activeUser);
     }, [activeUser])
 
     if(!activeUser) {
@@ -105,6 +91,10 @@ export default function Vocab (props) {
                     <h1 className='sets-main-title'>Your Sets</h1>
                     <div className='sets-add-container'>
                         <h2 className='sets-add'>Add Set</h2>
+                        <input type='text' 
+                        value={newSetName} 
+                        className= 'new-set-input-box'
+                        onChange={e => setNewSetName(e.target.value)}/>
                         <BiPlusCircle className='bi-plus-circle' onClick={addSet}/>
                     </div>
                     <div className='sets-box-container'>

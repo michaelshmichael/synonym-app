@@ -13,7 +13,6 @@ export default function Set (props) {
     const [activeUser, setActiveUser] = useState('');
     const [uniqueId, setUniqueId] = useState('');
     const [vocabArray, setVocabArray] = useState([]);
-    const [inputFormDisplay, setInputFormDisplay] = useState('word-input-hidden');
     const [newWord, setNewWord] = useState('');
     const [explanation, setExplanation] = useState('');
 
@@ -57,12 +56,6 @@ export default function Set (props) {
         }
     }
 
-    const toggleInputFormDisplay = () => {
-        inputFormDisplay === 'word-input-hidden' ? 
-        setInputFormDisplay('word-input-display') : 
-        setInputFormDisplay('word-input-hidden')
-    };
-
     const submitNewWordAndExplanation = (e) => {
         e.preventDefault();
         let newWordObject = {word: newWord, explanation: explanation}
@@ -75,25 +68,10 @@ export default function Set (props) {
         setVocabArray(updatedArray);
         setNewWord('');
         setExplanation('');
-        toggleInputFormDisplay();
     };
 
     useEffect(() => {
-        if(uniqueId){
-            async function updateUser() {
-                try {
-                    const updatedUser = await axios.put(`https://app.yawe.dev/api/1/ce/non-auth-endpoint?key=b0188b53ea77419ba1d6dcda06e4bea9&uniqueId=${uniqueId}`, 
-                    activeUser.data,
-                    { withCredentials: true },
-                    { headers: {'Content-Type': 'application/json'}}
-                    )
-                    console.log(updatedUser)
-                } catch (error) {
-                    console.log(error)
-                }
-            }
-            updateUser();
-        };
+        props.updateUser(uniqueId, activeUser);
     }, [activeUser])
 
     if(!activeUser){
@@ -111,10 +89,20 @@ export default function Set (props) {
                 <Sidebar className='sidebar'></Sidebar>
                 <div className='set-main-container'>
                     <h1 className='set-title'>Your words in the {set} set</h1>
-                    <div className='set-add'>
+                    <div className='word-add'>
                         <h2>Add Word to {set}</h2>
+                        <input type='text'
+                            placeholder='word' 
+                            className='word-add-input' 
+                            value={newWord} 
+                            onChange={e => {setNewWord(e.target.value)}}/>
+                        <input type='text'
+                            placeholder='explanation' 
+                            className='word-add-input' 
+                            value={explanation} 
+                            onChange={e => {setExplanation(e.target.value)}}/>
                         <BiPlusCircle className='bi-plus-circle' 
-                        onClick={toggleInputFormDisplay}>
+                            onClick={e => submitNewWordAndExplanation(e)}>
                         </BiPlusCircle>
                     </div>
                     <div className='vocabulary-item-container'>
@@ -133,21 +121,6 @@ export default function Set (props) {
                         </div>
                     ))}
                     </div>
-                </div>
-                <div className={inputFormDisplay}>
-                    <form>
-                        <div className='form-group'>
-                            <label htmlFor='word'>Word</label>
-                            <input id='word' type='text' value={newWord} 
-                            onChange={e => setNewWord(e.target.value)}></input>
-                        </div>
-                        <div className='form-group'>
-                            <label htmlFor='translation'>Translation / Explanation</label>
-                            <input id='translation' type='text' value={explanation} 
-                            onChange={e => setExplanation(e.target.value)}></input>
-                        </div>
-                        <button onClick={e => submitNewWordAndExplanation(e)}>Submit</button>
-                    </form>
                 </div>
             </div>
         )

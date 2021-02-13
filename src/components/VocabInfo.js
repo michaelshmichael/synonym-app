@@ -27,11 +27,9 @@ export default function VocabInfo (props) {
     const getActiveUser = (allUsers) => {
         const currentActiveUser = allUsers.data.find(element => element.data.username === props.user);
         setActiveUser(currentActiveUser);
-        console.log(currentActiveUser)
+        setUniqueId(currentActiveUser.uniqueId);
         let currentWord = currentActiveUser.data.vocab[set].find(({word}) => word === vocabItem)
         setExplanation(currentWord.explanation) 
-        setUniqueId(currentActiveUser.uniqueId);
-        console.log(currentWord)
     };
 
     const updateExplanation = (e) => {
@@ -45,23 +43,9 @@ export default function VocabInfo (props) {
     };
 
     useEffect(() => {
-        if(uniqueId){
-            async function updateUser() {
-                try {
-                    const updatedUser = await axios.put(`https://app.yawe.dev/api/1/ce/non-auth-endpoint?key=b0188b53ea77419ba1d6dcda06e4bea9&uniqueId=${uniqueId}`, 
-                    activeUser.data,
-                    { withCredentials: true },
-                    { headers: {'Content-Type': 'application/json'}}
-                    )
-                    console.log(updatedUser)
-                } catch (error) {
-                    console.log(error)
-                }
-            }
-            updateUser();
-        };
+        props.updateUser(uniqueId, activeUser);
     }, [activeUser])
-
+    
     if(!activeUser) {
         return(
             <div className='vocab-item-page-container'>

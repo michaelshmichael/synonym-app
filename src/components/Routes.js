@@ -28,6 +28,20 @@ export default function Routes() {
           axios.post(APIEndpoints.logoutEndpoint, { withCredentials: true });
         }
       };
+      
+
+    async function updateUser (uniqueId, activeUser) {
+      try {
+          const updatedUser = await axios.put(`https://app.yawe.dev/api/1/ce/non-auth-endpoint?key=b0188b53ea77419ba1d6dcda06e4bea9&uniqueId=${uniqueId}`, 
+          activeUser.data,
+          { withCredentials: true },
+          { headers: {'Content-Type': 'application/json'}}
+          )
+          console.log(updatedUser)
+      } catch (error) {
+          console.log(error)
+      }
+    }
 
     return (
       <div className="App">
@@ -55,12 +69,15 @@ export default function Routes() {
             />}></Route>
             <Route exact path='/profile/vocab' render={props => <Vocab {...props}
                 user={user}
+                updateUser={updateUser}
             />}></Route>
             <Route exact path='/profile/vocab/:set' render={props => <Set {...props}
                 user={user}
+                updateUser={updateUser}
             />}></Route>
             <Route exact path='/profile/vocab/:set/:vocabItem' render={props => <VocabInfo {...props}
                 user={user}
+                updateUser={updateUser}
             />}></Route>
           <Footer></Footer>
       </div>

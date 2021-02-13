@@ -2,7 +2,11 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import APIEndpoints from '../api';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import '../styles/Login.scss';
+
+toast.configure();
 
 export default function Login(props) {
     const history = useHistory();
@@ -21,6 +25,10 @@ export default function Login(props) {
         history.push('./profile');
     };
 
+    const logInToast = () => {
+        toast.success(`${username} logged in.`)
+    }
+
     async function loginUser(e) {
         e.preventDefault();
         const userLogIn = {
@@ -31,6 +39,7 @@ export default function Login(props) {
             await axios.post(APIEndpoints.loginEndpoint, userLogIn, { withCredentials: true });
             props.updateSignedIn(userLogIn.username);
             redirectToProfileAfterLoggingIn();
+            logInToast();
         } catch (error) {
             alert('User or password not correct');
             console.log(error);

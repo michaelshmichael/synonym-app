@@ -38,6 +38,15 @@
             padding-left: 40px;
             
         }
+        .vocab-item-example {
+            margin-left: 40px;
+            input {
+                font-size: 30px;
+                width: 800px;
+                height: 40px;
+                border: none; 
+            }
+        }
     }
 }
 

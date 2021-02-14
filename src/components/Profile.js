@@ -1,5 +1,6 @@
 import { React, useEffect, useState } from 'react';
 import {formatDistance} from 'date-fns';
+import { useParams } from 'react-router-dom';
 import { FaTrashAlt } from 'react-icons/fa';
 import parseISO from 'date-fns/parseISO';
 import axios from 'axios';
@@ -20,6 +21,8 @@ export default function Profile (props) {
     const [nativeLanguageFlag, setNativeLanguageFlag] = useState();
     const [newLearningLanguage, setNewLearningLanguage] = useState('English');
     const [userCreatedDate, setUserCreatedDate] = useState();
+
+    const { profile } = useParams();
 
     useEffect(() => {
         async function getUserData () {
@@ -52,7 +55,7 @@ export default function Profile (props) {
     };
 
     const getActiveUser = (allUsers) => {
-        const currentActiveUser = allUsers.data.find(element => element.data.username === props.user);
+        const currentActiveUser = allUsers.data.find(element => element.data.username === profile);
         let dateCreated = currentActiveUser.createdAt.slice(0,10);
         setUserCreatedDate(dateCreated);
         displayFlag(currentActiveUser.data);

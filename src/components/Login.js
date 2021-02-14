@@ -8,7 +8,7 @@ import '../styles/Login.scss';
 
 toast.configure();
 
-export default function Login(props) {
+export default function Login (props) {
     const history = useHistory();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -22,7 +22,7 @@ export default function Login(props) {
     };
 
     const redirectToProfileAfterLoggingIn = () => {
-        history.push('./profile');
+        history.push(`./${username}`);
     };
 
     const logInToast = () => {

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { FiTrash} from 'react-icons/fi';
 import { BiPlusCircle } from 'react-icons/bi';
 import { toast } from 'react-toastify'; 
@@ -18,6 +19,7 @@ export default function Vocab (props) {
     const [vocabSetsArray, setVocabSetsArray] = useState([]);
     const [newSetName, setNewSetName] = useState('');
     const history = useHistory();
+    const { profile } = useParams();
     
     // These two functions are repeated from the profile page. Could be refactored I'm sure.
     useEffect(() => {
@@ -34,15 +36,15 @@ export default function Vocab (props) {
 
     const getActiveUser = (allUsers) => {
         const currentActiveUser = allUsers.data.find(element => element.data.username === props.user);
-        setActiveUser(currentActiveUser);   
         setUniqueId(currentActiveUser.uniqueId);
+        setActiveUser(currentActiveUser);
         let vocabSetsArray = Object.keys(currentActiveUser.data.vocab)
         setVocabSetsArray(vocabSetsArray)
     };
 
     const redirectToSet = (e) => {
         let vocabSetURL = e.target.dataset.index;
-        history.push(`/profile/vocab/${vocabSetURL}`);
+        history.push(`/${profile}/vocab/${vocabSetURL}`);
     }
 
     const deleteSet = (event) => {
@@ -77,7 +79,9 @@ export default function Vocab (props) {
     };
 
     useEffect(() => {
-        props.updateUser(uniqueId, activeUser);
+        if(uniqueId){
+            props.updateUser(uniqueId, activeUser);
+        }
     }, [activeUser])
 
     if(!activeUser) {

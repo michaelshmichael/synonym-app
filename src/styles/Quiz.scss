@@ -1,0 +1,25 @@
+.quiz-page-container {
+    font-family: 'Krub', sans-serif;
+    margin-left: -10px;
+    margin-top: 80px;
+    overflow: hidden;
+    .sidebar {
+        position: fixed;
+        height: 100%;
+        width: 18%;
+        padding-top: 35px;
+        padding-left: 30px;
+        background-color: rgb(252, 241, 93);
+    }
+    .quiz-main-container {
+        display: flex;
+        flex-direction: column;
+        width: 75%;
+        height: 100%;
+        margin-left: 22%;
+        .sets-main-title {
+            margin-left: 50px;
+            margin-bottom: 0px;
+        }
+    }
+}

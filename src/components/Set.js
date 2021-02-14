@@ -16,7 +16,7 @@ export default function Set (props) {
     const [newWord, setNewWord] = useState('');
     const [explanation, setExplanation] = useState('');
 
-    const { set } = useParams();
+    const { profile, set } = useParams();
     const history = useHistory();
     
     useEffect(() => {
@@ -35,12 +35,13 @@ export default function Set (props) {
         const currentActiveUser = allUsers.data.find(element => element.data.username === props.user);
         setActiveUser(currentActiveUser);   
         setUniqueId(currentActiveUser.uniqueId);
+        console.log(uniqueId)
         setVocabArray(currentActiveUser.data.vocab[set]);
     };
 
     const redirectToVocabInfo = (e) => {
         let vocabInfoURL = e.target.dataset.index;
-        history.push(`/profile/vocab/${set}/${vocabInfoURL}`)
+        history.push(`/${profile}/vocab/${set}/${vocabInfoURL}`)
     }
 
     const deleteItem = (e) => {

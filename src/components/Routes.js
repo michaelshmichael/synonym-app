@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import axios from 'axios';
 import Header from './Header';
 import Footer from './Footer';
@@ -11,6 +11,7 @@ import Profile from './Profile';
 import Vocab from './Vocab';
 import Set from './Set';
 import VocabInfo from './VocabInfo';
+import Quiz from './Quiz';
 import APIEndpoints from '../api';
 import '../html.scss'
 
@@ -49,35 +50,41 @@ export default function Routes() {
           user={user}
           updateSignedIn={updateSignedIn}
           ></Header>
+          <Switch>
           <Route exact path='/' render={props => <Landing {...props}
                 signedIn={signedIn}
                 language={language}
                 setLanguage={setLanguage}
             />}></Route>
-          <Route path='/login' render={props => <Login {...props}
+          <Route exact path='/login' render={props => <Login {...props}
                 updateSignedIn={updateSignedIn}
             />}></Route>
-          <Route path='/registration' component={Registration}></Route>
-          <Route exact path='/profile' render={props => <Profile {...props}
+          <Route exact path='/registration' component={Registration}></Route>
+          <Route exact path='/:profile' render={props => <Profile {...props}
                 user={user}
             />}></Route>
-          <Route path='/profile/search' render={props => <Search {...props}
+          <Route path='/:profile/search' render={props => <Search {...props}
                 language={language}
                 setLanguage={setLanguage}
                 user={user}
             />}></Route>
-            <Route exact path='/profile/vocab' render={props => <Vocab {...props}
+            <Route exact path='/:profile/vocab' render={props => <Vocab {...props}
                 user={user}
                 updateUser={updateUser}
             />}></Route>
-            <Route exact path='/profile/vocab/:set' render={props => <Set {...props}
+            <Route exact path='/:profile/vocab/:set' render={props => <Set {...props}
                 user={user}
                 updateUser={updateUser}
             />}></Route>
-            <Route exact path='/profile/vocab/:set/:vocabItem' render={props => <VocabInfo {...props}
+            <Route exact path='/:profile/vocab/:set/:vocabItem' render={props => <VocabInfo {...props}
                 user={user}
                 updateUser={updateUser}
             />}></Route>
+            <Route exact path='/:profile/quiz' render={props => <Quiz {...props}
+                user={user}
+                updateUser={updateUser}
+            />}></Route>
+            </Switch>
           <Footer></Footer>
       </div>
     );

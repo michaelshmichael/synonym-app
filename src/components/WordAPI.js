@@ -4,7 +4,6 @@ import '../styles/VocabInfo.scss';
 
 export default function WordAPI (props) {
     const [APIdefinition, setAPIDefinition] = useState('');
-    const [APIexample, setAPIExample] = useState('');
     const [APIpronunciation, setAPIPronunciation] = useState('');
     const [definitionNumber, setDefinitionNumber] = useState(0);
     const [previousDefinitionButton, setPreviousDefinitionButton] = useState(false)
@@ -19,7 +18,7 @@ export default function WordAPI (props) {
                     }})
                     setAPIPronunciation(result.data.pronunciation.all);
                     setAPIDefinition(result.data.results[definitionNumber].definition);
-                    setAPIExample(result.data.results[definitionNumber].examples[0]);             
+                    console.log(result)             
                 } catch (error) {
                 console.log(error)
             }
@@ -47,8 +46,7 @@ export default function WordAPI (props) {
                 <h2>{APIpronunciation}</h2>
             <h3>Definition</h3>
                 <h2>{APIdefinition}</h2>
-            <h3>Example</h3>
-                <h2>{APIexample}</h2>
+
             <button data-index='back' disabled={previousDefinitionButton} onClick={e => toggleDefinitionNumber(e)}>Previous Definition</button>
             <button data-index='forward' onClick={e => toggleDefinitionNumber(e)}>Next Definition</button>
         </div>

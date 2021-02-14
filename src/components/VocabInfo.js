@@ -10,6 +10,7 @@ export default function VocabInfo (props) {
     const [activeUser, setActiveUser] = useState('');
     const [uniqueId, setUniqueId] = useState('');
     const [explanation, setExplanation] = useState('');
+    const [example, setExample] = useState('');
     const { set, vocabItem } = useParams(); 
 
     useEffect(() => {
@@ -29,7 +30,8 @@ export default function VocabInfo (props) {
         setActiveUser(currentActiveUser);
         setUniqueId(currentActiveUser.uniqueId);
         let currentWord = currentActiveUser.data.vocab[set].find(({word}) => word === vocabItem)
-        setExplanation(currentWord.explanation) 
+        setExplanation(currentWord.explanation)
+        setExample(currentWord.example)
     };
 
     const updateExplanation = (e) => {
@@ -41,6 +43,16 @@ export default function VocabInfo (props) {
             return newState;
         });
     };
+
+    const updateExample = (e) => {
+        console.log(e.target.value)
+        let currentWord = activeUser.data.vocab[set].find(({word}) => word === vocabItem)
+        setActiveUser((prevState) => {
+            const newState = Object.assign({}, prevState);
+            currentWord.example = e.target.value;
+            return newState;
+        });
+    }
 
     useEffect(() => {
         props.updateUser(uniqueId, activeUser);
@@ -68,9 +80,17 @@ export default function VocabInfo (props) {
                         onChange={e => updateExplanation(e)}
                         />
                     </div>
+                    
                     <WordAPI
                         vocabItem={vocabItem}
                     />
+                    <div className='vocab-item-example'>
+                        <h2>Example Sentence</h2>
+                            <input type='text'
+                            placeholder={example}
+                            onChange={e => updateExample(e)}
+                            />
+                    </div>
                 </div>
             </div>
         )

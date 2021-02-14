@@ -1,12 +1,10 @@
 .set-container {
     font-family: 'Krub', sans-serif;
-    display: flex;
-    flex-direction: row;
-    height: 100%;
     margin-left: -10px;
     margin-top: 80px;
     overflow: hidden;
     .sidebar {
+        position: fixed;
         height: 100vh;
         width: 18%;
         padding-top: 35px;
@@ -17,6 +15,8 @@
         display: flex;
         flex-direction: column;
         width: 75%;
+        height: 100%;
+        margin-left: 22%;
         .set-title {
             margin-left: 50px;
             margin-bottom: 0px;

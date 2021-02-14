@@ -59,24 +59,24 @@
 }
 
 .profile-container {
-    display: flex;
-    flex-direction: row;
-    height: 100vh;
+    font-family: 'Krub', sans-serif;
     margin-left: -10px;
     margin-top: 80px;
     overflow: hidden;
     .sidebar {
-        height: 100vh;
-        font-family: 'Krub', sans-serif;
+        position: fixed;
+        height: 100%;
         width: 18%;
         padding-top: 35px;
         padding-left: 30px;
         background-color: rgb(252, 241, 93);
     }
-    .profile-data {
+    .profile-data-container {
+        display: flex;
+        flex-direction: column;
         width: 75%;
-        margin-right: -20px;
-        padding-left: 50px;
+        height: 100%;
+        margin-left: 26%;
         .username-and-flag-container {
             display: flex;
             flex-direction: row;
@@ -103,7 +103,7 @@
         .learning-languages-container{
             font-family: 'Krub', sans-serif;
             background-color: lightblue;
-            width: 420px;
+            width: 720px;
             padding-top: 1px;
             padding-left: 10px;
             clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);

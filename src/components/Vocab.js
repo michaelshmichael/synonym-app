@@ -56,7 +56,7 @@ export default function Vocab (props) {
                 return newState;
             });
             setVocabSetsArray(updatedVocabSets)
-            toast.info('Set Deleted', { autoClose: 1000 })
+            toast.info(`${vocabSetName} Deleted`, { autoClose: 1000 })
         } else {
             return;
         }

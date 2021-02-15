@@ -8,23 +8,23 @@ export default function WordAPI (props) {
     const [definitionNumber, setDefinitionNumber] = useState(0);
     const [previousDefinitionButton, setPreviousDefinitionButton] = useState(false)
 
-    useEffect(() => {
-        async function WordAPICall () {
-            try {
-                const result = await axios.get(`https://wordsapiv1.p.rapidapi.com/words/${props.vocabItem}`,
-                    {headers: {
-                        'x-rapidapi-key': 'f74c925871msh70f9c315d6fed91p101f0cjsn861ef3bc1f60',
-                        'x-rapidapi-host': 'wordsapiv1.p.rapidapi.com'
-                    }})
-                    setAPIPronunciation(result.data.pronunciation.all);
-                    setAPIDefinition(result.data.results[definitionNumber].definition);
-                    console.log(result)             
-                } catch (error) {
-                console.log(error)
-            }
-        }
-        WordAPICall();
-    },[definitionNumber]);
+    // useEffect(() => {
+    //     async function WordAPICall () {
+    //         try {
+    //             const result = await axios.get(`https://wordsapiv1.p.rapidapi.com/words/${props.vocabItem}`,
+    //                 {headers: {
+    //                     'x-rapidapi-key': 'f74c925871msh70f9c315d6fed91p101f0cjsn861ef3bc1f60',
+    //                     'x-rapidapi-host': 'wordsapiv1.p.rapidapi.com'
+    //                 }})
+    //                 setAPIPronunciation(result.data.pronunciation.all);
+    //                 setAPIDefinition(result.data.results[definitionNumber].definition);
+    //                 console.log(result)             
+    //             } catch (error) {
+    //             console.log(error)
+    //         }
+    //     }
+    //     WordAPICall();
+    // },[definitionNumber]);
 
     const toggleDefinitionNumber = (e) => {
         if(previousDefinitionButton === true && definitionNumber >= 0){

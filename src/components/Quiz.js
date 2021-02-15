@@ -61,10 +61,31 @@ export default function Quiz(props) {
     }
 
     const skipWord = () => {
-        let newNumber = Math.floor(Math.random() * Math.floor(activeUser.data.vocab[set].length))
+        let newNumber = 0;
+        do {
+            newNumber = Math.floor(Math.random() * Math.floor(activeUser.data.vocab[set].length))
+        } while(newNumber === number);
+        console.log(newNumber)
         setNumber(newNumber);
-        setWord(activeUser.data.vocab[set][number].word)
-        generateRandomAnswers();
+        
+    };
+
+    useEffect(() => {
+        if (!firstTimeRender.current) {
+            setWord(activeUser.data.vocab[set][number].word)
+            generateRandomAnswers()
+        }
+    },[number])
+
+    const selectAnswer = (e) => {
+        console.log(e.target.dataset.index)
+        console.log(number)
+        console.log(activeUser.data.vocab[set][number].explanation)
+        if(e.target.dataset.index === activeUser.data.vocab[set][number].explanation) {
+            alert('Good')
+        } else {
+            alert('Try Again')
+        }
     };
 
     if(!activeUser){
@@ -87,13 +108,14 @@ export default function Quiz(props) {
                         <h2 className='quiz-word'>
                             {word}
                         </h2>
-                        
                         <div className='quiz-answers'>
                             <h2>ANSWERS</h2>
                             {answers.map((answer) => (
-                                <h2
+                                <button
                                 key={uniqid}
-                                >{answer}</h2>
+                                data-index={answer}
+                                onClick={e => selectAnswer(e)}
+                                >{answer}</button>
                             ))}
                         </div>
                     </div>

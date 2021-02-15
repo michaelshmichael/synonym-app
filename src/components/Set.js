@@ -44,6 +44,10 @@ export default function Set (props) {
         history.push(`/${profile}/vocab/${set}/${vocabInfoURL}`)
     }
 
+    const redirectToSetQuiz = () => {
+        history.push(`/${profile}/vocab/${set}/quiz`)
+    }
+
     const deleteItem = (e) => {
         e.stopPropagation();
         let updatedArray = vocabArray.filter(element => element.word !== e.target.dataset.index)
@@ -105,6 +109,7 @@ export default function Set (props) {
                         <BiPlusCircle className='bi-plus-circle' 
                             onClick={e => submitNewWordAndExplanation(e)}>
                         </BiPlusCircle>
+                        <button onClick={redirectToSetQuiz}>Quiz</button>
                     </div>
                     <div className='vocabulary-item-container'>
                     {vocabArray.map((item) => (

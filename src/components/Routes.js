@@ -76,11 +76,11 @@ export default function Routes() {
                 user={user}
                 updateUser={updateUser}
             />}></Route>
-            <Route exact path='/:profile/vocab/:set/:vocabItem' render={props => <VocabInfo {...props}
+            <Route exact path='/:profile/vocab/:set/quiz' render={props => <Quiz {...props}
                 user={user}
                 updateUser={updateUser}
             />}></Route>
-            <Route exact path='/:profile/quiz' render={props => <Quiz {...props}
+            <Route exact path='/:profile/vocab/:set/:vocabItem' render={props => <VocabInfo {...props}
                 user={user}
                 updateUser={updateUser}
             />}></Route>

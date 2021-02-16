@@ -76,9 +76,18 @@ export default function Quiz(props) {
     },[number])
 
     const selectAnswer = (e) => {
-        e.target.dataset.index === activeUser.data.vocab[set][number].explanation ?
-        nextWord():
-        alert('Try Again');
+        if(e.target.dataset.index === activeUser.data.vocab[set][number].explanation) {
+            e.target.className = 'option-div-correct' 
+            setTimeout(function() {
+                e.target.className = 'option-div' 
+                nextWord()
+            }, 1000)
+        } else {
+            e.target.className = 'option-div-incorrect'
+            setTimeout(function() {
+                e.target.className = 'option-div'
+            }, 350);
+        }
     };
 
     if(!activeUser){

@@ -29,7 +29,6 @@ export default function Quiz(props) {
     const getActiveUser = (allUsers) => {
         firstTimeRender.current = false 
         const currentActiveUser = allUsers.data.find(element => element.data.username === props.user);
-        console.log(currentActiveUser)
         setWord(currentActiveUser.data.vocab[set][0].word)
         setActiveUser(currentActiveUser)
     };
@@ -51,23 +50,22 @@ export default function Quiz(props) {
                 i++
             }
         }
-        for (var i = newAnswers.length - 1; i > 0; i--) {
-            var j = Math.floor(Math.random() * (i + 1));
-            var temp = newAnswers[i];
+        // Durstenfeld Shuffle
+        for (let i = newAnswers.length - 1; i > 0; i--) {
+            let j = Math.floor(Math.random() * (i + 1));
+            let temp = newAnswers[i];
             newAnswers[i] = newAnswers[j];
             newAnswers[j] = temp;
         }
         setAnswers(newAnswers)
     }
 
-    const skipWord = () => {
+    const nextWord = () => {
         let newNumber = 0;
         do {
             newNumber = Math.floor(Math.random() * Math.floor(activeUser.data.vocab[set].length))
         } while(newNumber === number);
-        console.log(newNumber)
         setNumber(newNumber);
-        
     };
 
     useEffect(() => {
@@ -78,14 +76,9 @@ export default function Quiz(props) {
     },[number])
 
     const selectAnswer = (e) => {
-        console.log(e.target.dataset.index)
-        console.log(number)
-        console.log(activeUser.data.vocab[set][number].explanation)
-        if(e.target.dataset.index === activeUser.data.vocab[set][number].explanation) {
-            alert('Good')
-        } else {
-            alert('Try Again')
-        }
+        e.target.dataset.index === activeUser.data.vocab[set][number].explanation ?
+        nextWord():
+        alert('Try Again');
     };
 
     if(!activeUser){
@@ -102,20 +95,18 @@ export default function Quiz(props) {
         <div className='quiz-page-container'>
                 <Sidebar className='sidebar'></Sidebar>
                 <div className='quiz-main-container'>
-                    <h1>Quiz Yourself on the Words from the {set} set</h1>
-                    <button onClick={skipWord}>SKIP</button>
+                    <h1 className='quiz-main-title'>Quiz Yourself on the Words from the {set} Set</h1>
                     <div className='quiz-container'>
-                        <h2 className='quiz-word'>
+                        <div className='quiz-word'>
                             {word}
-                        </h2>
+                        </div>
                         <div className='quiz-answers'>
-                            <h2>ANSWERS</h2>
                             {answers.map((answer) => (
-                                <button
+                                <div className='option-div'
                                 key={uniqid}
                                 data-index={answer}
                                 onClick={e => selectAnswer(e)}
-                                >{answer}</button>
+                                >{answer}</div>
                             ))}
                         </div>
                     </div>

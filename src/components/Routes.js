@@ -11,6 +11,7 @@ import Profile from './Profile';
 import Vocab from './Vocab';
 import Set from './Set';
 import VocabInfo from './VocabInfo';
+import QuizSelect from './QuizSelect';
 import Quiz from './Quiz';
 import APIEndpoints from '../api';
 import '../html.scss'
@@ -75,6 +76,9 @@ export default function Routes() {
             <Route exact path='/:profile/vocab/:set' render={props => <Set {...props}
                 user={user}
                 updateUser={updateUser}
+            />}></Route>
+            <Route exact path='/:profile/quizselect' render={props => <QuizSelect {...props}
+                user={user}
             />}></Route>
             <Route exact path='/:profile/vocab/:set/quiz' render={props => <Quiz {...props}
                 user={user}

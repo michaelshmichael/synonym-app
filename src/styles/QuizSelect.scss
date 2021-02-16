@@ -21,10 +21,27 @@
             width: 60%;
             height: 600px;
             padding-left: 40px;
+            .sets {
+                display: grid;
+                grid-template-columns: auto auto;
+                grid-template-rows: auto auto;
+                grid-column-gap: 10px;
+                grid-row-gap: 30px;
+                padding-right: 15px;
+                .individual-set-box {
+                    text-align: center;
+                    height: 100px;
+                    background-color: rgb(252, 241, 93);
+                    cursor: pointer;
+                    clip-path: polygon(0 0, 100% 10%, 100% 90%, 0 100%);
+                    padding-top: 40px;
+                }
+            }
+            
         }
         img {
-            width: 450px;
-            height: 45s0px;
+            width: 400px;
+            height: 450px;
         }
     }
 }

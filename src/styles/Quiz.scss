@@ -57,6 +57,7 @@
                 .option-div {
                     @include option-div;
                     background-color:rgb(235, 235, 235);
+                    animation: optionsEntrance 0.5s;
                 }
                 .option-div-correct {
                     @include option-div;
@@ -101,3 +102,4 @@
         transform: translateX(-5px);
     }
 }
+

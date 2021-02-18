@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { BiPlusCircle } from 'react-icons/bi';
 import { FiTrash } from 'react-icons/fi'
 import { useParams, useHistory } from 'react-router-dom';
@@ -15,6 +15,7 @@ export default function Set (props) {
     const [vocabArray, setVocabArray] = useState([]);
     const [newWord, setNewWord] = useState('');
     const [explanation, setExplanation] = useState('');
+    const firstTimeRender = useRef(true);
 
     const { profile, set } = useParams();
     const history = useHistory();
@@ -32,10 +33,10 @@ export default function Set (props) {
     },[]);
 
     const getActiveUser = (allUsers) => {
+        firstTimeRender.current = false 
         const currentActiveUser = allUsers.data.find(element => element.data.username === props.user);
         setActiveUser(currentActiveUser);   
         setUniqueId(currentActiveUser.uniqueId);
-        console.log(uniqueId)
         setVocabArray(currentActiveUser.data.vocab[set]);
     };
 
@@ -61,9 +62,22 @@ export default function Set (props) {
         }
     }
 
-    const submitNewWordAndExplanation = (e) => {
+    async function submitNewWordAndExplanation (e) {
         e.preventDefault();
-        let newWordObject = {word: newWord, explanation: explanation}
+        let APIData = await wordAPICall();
+        let definitionArray = [];
+        
+        for(let i = 0; i <= APIData.data.results.length-1; i++){
+            console.log(APIData.data.results[i])
+            definitionArray.push(APIData.data.results[i].definition)
+        }
+
+        let newWordObject = {word: newWord, 
+            explanation: explanation, 
+            pronunciation: APIData.data.pronunciation.all,
+            definitions: definitionArray
+        }
+
         let updatedArray = vocabArray.concat(newWordObject);
         setActiveUser((prevState) => {
             const newState = Object.assign({}, prevState);
@@ -75,8 +89,25 @@ export default function Set (props) {
         setExplanation('');
     };
 
+    
+    async function wordAPICall () {
+        try {
+            const result = await axios.get(`https://wordsapiv1.p.rapidapi.com/words/${newWord}`,
+                {headers: {
+                    'x-rapidapi-key': 'f74c925871msh70f9c315d6fed91p101f0cjsn861ef3bc1f60',
+                    'x-rapidapi-host': 'wordsapiv1.p.rapidapi.com'
+                }})
+                return result            
+            } catch (error) {
+            console.log(error)
+        }
+    }
+    
+
     useEffect(() => {
-        props.updateUser(uniqueId, activeUser);
+        if (!firstTimeRender.current) {
+            props.updateUser(uniqueId, activeUser);
+        }
     }, [activeUser])
 
     if(!activeUser){

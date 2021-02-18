@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom';
 import '../styles/Sidebar.scss';
 
 export default function Sidebar() {
-
     const { profile } = useParams();
 
     return(

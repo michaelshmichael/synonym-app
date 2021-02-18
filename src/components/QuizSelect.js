@@ -7,7 +7,6 @@ import Sidebar from './Sidebar';
 import '../styles/QuizSelect.scss';
 
 export default function QuizSelect (props) {
-    const [activeUser, setActiveUser] = useState('');
     const [vocabSetsArray, setVocabSetsArray] = useState([]);
     const history = useHistory();
     const { profile } = useParams();    
@@ -26,7 +25,6 @@ export default function QuizSelect (props) {
 
     const getActiveUser = (allUsers) => {
         const currentActiveUser = allUsers.data.find(element => element.data.username === props.user);
-        setActiveUser(currentActiveUser)
         let vocabSetsArray = Object.keys(currentActiveUser.data.vocab)
         setVocabSetsArray(vocabSetsArray)
     };

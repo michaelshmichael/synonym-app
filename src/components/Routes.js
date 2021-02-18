@@ -52,22 +52,23 @@ export default function Routes() {
           updateSignedIn={updateSignedIn}
           ></Header>
           <Switch>
-          <Route exact path='/' render={props => <Landing {...props}
-                signedIn={signedIn}
-                language={language}
-                setLanguage={setLanguage}
-            />}></Route>
-          <Route exact path='/login' render={props => <Login {...props}
-                updateSignedIn={updateSignedIn}
-            />}></Route>
-          <Route exact path='/registration' component={Registration}></Route>
-          <Route exact path='/:profile' render={props => <Profile {...props}
-                user={user}
-            />}></Route>
-          <Route path='/:profile/search' render={props => <Search {...props}
-                language={language}
-                setLanguage={setLanguage}
-                user={user}
+            <Route exact path='/' render={props => <Landing {...props}
+                  signedIn={signedIn}
+                  language={language}
+                  setLanguage={setLanguage}
+              />}></Route>
+            <Route exact path='/login' render={props => <Login {...props}
+                  updateSignedIn={updateSignedIn}
+              />}></Route>
+            <Route exact path='/registration' component={Registration}></Route>
+            <Route exact path='/:profile' render={props => <Profile {...props}
+                  user={user}
+                  updateUser={updateUser}
+              />}></Route>
+            <Route path='/:profile/search' render={props => <Search {...props}
+                  language={language}
+                  setLanguage={setLanguage}
+                  user={user}
             />}></Route>
             <Route exact path='/:profile/vocab' render={props => <Vocab {...props}
                 user={user}
@@ -88,8 +89,8 @@ export default function Routes() {
                 user={user}
                 updateUser={updateUser}
             />}></Route>
-            </Switch>
-          <Footer></Footer>
+          </Switch>
+        <Footer></Footer>
       </div>
     );
 };

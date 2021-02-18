@@ -3,14 +3,12 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import APIEndpoints from '../api';
 import Sidebar from './Sidebar';
-import WordAPI from './WordAPI'
 import '../styles/VocabInfo.scss';
 
 export default function VocabInfo (props) {
     const [activeUser, setActiveUser] = useState('');
     const [uniqueId, setUniqueId] = useState('');
-    const [explanation, setExplanation] = useState('');
-    const [example, setExample] = useState('');
+    const [wordObject, setWordObject] = useState('');
     const { set, vocabItem } = useParams(); 
 
     useEffect(() => {
@@ -30,8 +28,7 @@ export default function VocabInfo (props) {
         setActiveUser(currentActiveUser);
         setUniqueId(currentActiveUser.uniqueId);
         let currentWord = currentActiveUser.data.vocab[set].find(({word}) => word === vocabItem)
-        setExplanation(currentWord.explanation)
-        setExample(currentWord.example)
+        setWordObject(currentWord);
     };
 
     const updateExplanation = (e) => {
@@ -58,7 +55,7 @@ export default function VocabInfo (props) {
         props.updateUser(uniqueId, activeUser);
     }, [activeUser])
     
-    if(!activeUser) {
+    if(!wordObject) {
         return(
             <div className='vocab-item-page-container'>
                 <Sidebar className='sidebar'></Sidebar>
@@ -76,18 +73,21 @@ export default function VocabInfo (props) {
                         <h1 className='vocab-item-word'>Word: {vocabItem}</h1>
                         <h1 className='vocab-item-definition'>Your Explanation: </h1>
                         <input className='vocab-item-definition-input' type='text' 
-                        placeholder={explanation}
+                        placeholder={wordObject.explanation}
                         onChange={e => updateExplanation(e)}
                         />
                     </div>
                     
-                    <WordAPI
-                        vocabItem={vocabItem}
-                    />
+                    <div className='vocab-item-api-data'>
+                        <h3>Pronunciation</h3>
+                            <h3>{wordObject.pronunciation}</h3>
+                        <h3>Definition</h3>
+                            <h3>{wordObject.definitions[1]}</h3>
+                    </div>
                     <div className='vocab-item-example'>
                         <h2>Example Sentence</h2>
                             <input type='text'
-                            placeholder={example}
+                            placeholder={wordObject.example}
                             onChange={e => updateExample(e)}
                             />
                     </div>

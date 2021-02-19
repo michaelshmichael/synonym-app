@@ -5,8 +5,8 @@
     overflow: hidden;
     .sidebar {
         position: fixed;
-        height: 100vh;
-        width: 18%;
+        height: 100%;
+        width: 200px;
         padding-top: 35px;
         padding-left: 30px;
         background-color: rgb(252, 241, 93);
@@ -14,9 +14,9 @@
     .vocab-item-main-container {
         display: flex;
         flex-direction: column;
-        width: 75%;
+        width: 850px;
         height: 100%;
-        margin-left: 22%;
+        margin-left: 250px;
         .vocab-item-user-data {
             display: flex;
             flex-direction: row;
@@ -44,6 +44,8 @@
                 font-size: 30px;
                 width: 800px;
                 height: 40px;
+                border-radius: 10px;
+                background-color: lightblue;
                 border: none; 
             }
         }

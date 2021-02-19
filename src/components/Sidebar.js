@@ -9,7 +9,6 @@ export default function Sidebar() {
         <div className='sidebar'>
             <div className='link-container'>
                 <a href={`/${profile}`}>Profile</a>
-                <a href={`/${profile}/search`}>Search</a>
                 <a href={`/${profile}/vocab`}>Vocab Learner</a>
                 <a href={`/${profile}/quizselect`}>Quiz</a>
             </div>

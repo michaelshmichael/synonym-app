@@ -6,7 +6,8 @@
     margin-left: -10px;
     font-family: 'Krub', sans-serif;
     .sidebar {
-        height: 100vh;
+        position: fixed;
+        height: 100%;
         width: 18%;
         padding-top: 35px;
         padding-left: 30px;
@@ -15,9 +16,9 @@
     .search-and-results-container {
         width: 75%;
         .language-flags-container {
-            position: relative;
+        
             margin-top: 25px;
-            margin-left: 80px;
+            margin-left: 260px;
             display: flex;
             flex-direction: row;
             justify-content: space-evenly;

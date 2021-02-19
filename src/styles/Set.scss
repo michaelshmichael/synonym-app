@@ -5,8 +5,8 @@
     overflow: hidden;
     .sidebar {
         position: fixed;
-        height: 100vh;
-        width: 18%;
+        height: 100%;
+        width: 200px;
         padding-top: 35px;
         padding-left: 30px;
         background-color: rgb(252, 241, 93);
@@ -14,9 +14,9 @@
     .set-main-container {
         display: flex;
         flex-direction: column;
-        width: 75%;
+        width: 850px;
         height: 100%;
-        margin-left: 22%;
+        margin-left: 250px;
         .set-title {
             margin-left: 50px;
             margin-bottom: 0px;

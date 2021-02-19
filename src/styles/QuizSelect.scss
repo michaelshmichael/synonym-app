@@ -6,7 +6,7 @@
     .sidebar {
         position: fixed;
         height: 100%;
-        width: 18%;
+        width: 200px;
         padding-top: 35px;
         padding-left: 30px;
         background-color: rgb(252, 241, 93);
@@ -14,9 +14,9 @@
     .quiz-select-container {
         display: flex;
         flex-direction: row;
-        width: 75%;
+        width: 850px;
         height: 100%;
-        margin-left: 20%;
+        margin-left: 250px;
         .possible-sets-container {
             width: 60%;
             height: 600px;

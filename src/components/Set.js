@@ -2,12 +2,14 @@ import React, { useState, useEffect, useRef } from 'react';
 import { BiPlusCircle } from 'react-icons/bi';
 import { FiTrash } from 'react-icons/fi'
 import { useParams, useHistory } from 'react-router-dom';
+import { toast } from 'react-toastify'; 
 import APIEndpoints from '../api';
 import axios from 'axios';
 import uniqid from 'uniqid';
 import Sidebar from '../components/Sidebar';
 import '../styles/Set.scss';
 
+toast.configure();
 
 export default function Set (props) {
     const [activeUser, setActiveUser] = useState('');
@@ -46,7 +48,11 @@ export default function Set (props) {
     }
 
     const redirectToSetQuiz = () => {
+        if(vocabArray.length >= 4) {
         history.push(`/${profile}/vocab/${set}/quiz`)
+        } else {
+            toast.warning('Minimum of four vocabulary items needed to launch quiz', { autoClose: 3500 })
+        }
     }
 
     const deleteItem = (e) => {

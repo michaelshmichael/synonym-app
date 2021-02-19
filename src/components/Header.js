@@ -14,7 +14,7 @@ export default function Header(props) {
     return (
         <nav className="navbar navbar-dark bg-primary">
             <div className='navbar-left'>
-                <a className="navbar-brand" href="/">Vokoban</a>
+                <a className="navbar-title" href="/">Vokoban</a>
             </div>
             <div className='navbar-right'>
                 {navbarRight}

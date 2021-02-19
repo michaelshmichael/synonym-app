@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify'; 
 import axios from 'axios';
 import APIEndpoints from '../api';
 import selection from '../svg/selection.svg';
 import Sidebar from './Sidebar';
 import '../styles/QuizSelect.scss';
 
+toast.configure();
+
 export default function QuizSelect (props) {
     const [vocabSetsArray, setVocabSetsArray] = useState([]);
+    const [activeUser, setActiveUser] = useState('');
     const history = useHistory();
     const { profile } = useParams();    
 
@@ -26,12 +30,18 @@ export default function QuizSelect (props) {
     const getActiveUser = (allUsers) => {
         const currentActiveUser = allUsers.data.find(element => element.data.username === props.user);
         let vocabSetsArray = Object.keys(currentActiveUser.data.vocab)
+        setActiveUser(currentActiveUser)
         setVocabSetsArray(vocabSetsArray)
     };
 
     const redirectToSetQuiz = (e) => {
         let set = e.target.dataset.index;
-        history.push(`/${profile}/vocab/${set}/quiz`)
+        let setData = activeUser.data.vocab[set]
+        if(setData.length >= 4) {
+            history.push(`/${profile}/vocab/${set}/quiz`)
+        } else {
+            toast.warning('Minimum of four vocabulary items needed to launch quiz', { autoClose: 3500 })
+        }
     }
 
     return(

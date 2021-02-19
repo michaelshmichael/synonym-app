@@ -65,11 +65,12 @@ export default function Routes() {
                   user={user}
                   updateUser={updateUser}
               />}></Route>
-            <Route path='/:profile/search' render={props => <Search {...props}
+            {/* <Route path='/:profile/search' render={props => <Search {...props}
                   language={language}
                   setLanguage={setLanguage}
+                  updateUser={updateUser}
                   user={user}
-            />}></Route>
+            />}></Route> */}
             <Route exact path='/:profile/vocab' render={props => <Vocab {...props}
                 user={user}
                 updateUser={updateUser}

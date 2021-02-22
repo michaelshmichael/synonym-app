@@ -11,7 +11,7 @@ export default function VocabInfo (props) {
     const [wordObject, setWordObject] = useState('');
     const [definitionNumber, setDefinitionNumber] = useState(0);
     const { set, vocabItem } = useParams(); 
-
+    
     useEffect(() => {
         async function getUserData () {
             try {
@@ -55,24 +55,32 @@ export default function VocabInfo (props) {
     const displayNextDefinition = (e) => {
         let newDefinitionNumber;
         switch(e.target.dataset.index){
-            case 'next': 
-                newDefinitionNumber = definitionNumber +1
-                if (newDefinitionNumber === wordObject.definitions.length) {
-                    newDefinitionNumber = 0
-                }
-                console.log(newDefinitionNumber)
-                setDefinitionNumber(newDefinitionNumber)
-                break;
-            case 'previous':
-                newDefinitionNumber = definitionNumber -1
-                if (newDefinitionNumber === -1) {
-                    newDefinitionNumber = wordObject.definitions.length-1
-                }
-                console.log(newDefinitionNumber)
-                setDefinitionNumber(newDefinitionNumber)
-                break;
-            default: 
-                break;
+        case 'next': 
+            newDefinitionNumber = definitionNumber +1
+            if (newDefinitionNumber === wordObject.definitions.length) {newDefinitionNumber = 0}
+            setDefinitionNumber(newDefinitionNumber)
+            break;
+        case 'previous':
+            newDefinitionNumber = definitionNumber -1
+            if (newDefinitionNumber === -1) {newDefinitionNumber = wordObject.definitions.length-1}
+            setDefinitionNumber(newDefinitionNumber)
+            break;
+        default: 
+            break;
+        }
+    }
+
+    const removeCurrentDefinition = (e) => {
+        if(window.confirm('Delete')) {
+            let updatedDefinitions1 = wordObject.definitions.slice(0, definitionNumber)
+            let updatedDefinitions2 = wordObject.definitions.slice(definitionNumber+1)
+            let newDefinitions = [...updatedDefinitions1, ...updatedDefinitions2]
+            let currentWord = activeUser.data.vocab[set].find(({word}) => word === vocabItem)
+            setActiveUser((prevState) => {
+                const newState = Object.assign({}, prevState);
+                currentWord.definitions = newDefinitions
+                return newState;
+            });
         }
     }
 
@@ -111,6 +119,7 @@ export default function VocabInfo (props) {
                         <button data-index='next' onClick={e => displayNextDefinition(e)}>Next</button>
                         
                             <h3>{wordObject.definitions[definitionNumber]}</h3>
+                        <button data-index={vocabItem} onClick={removeCurrentDefinition}>Delete</button>
                     </div>
                     <div className='vocab-item-example'>
                         <h2>Example Sentence</h2>

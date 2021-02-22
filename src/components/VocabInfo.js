@@ -53,12 +53,27 @@ export default function VocabInfo (props) {
     }
 
     const displayNextDefinition = (e) => {
-        console.log(e.target.dataset.index)
-        let newDefinitionNumber = definitionNumber +1
-        if (newDefinitionNumber === wordObject.definitions.length) {
-            newDefinitionNumber = 0
+        let newDefinitionNumber;
+        switch(e.target.dataset.index){
+            case 'next': 
+                newDefinitionNumber = definitionNumber +1
+                if (newDefinitionNumber === wordObject.definitions.length) {
+                    newDefinitionNumber = 0
+                }
+                console.log(newDefinitionNumber)
+                setDefinitionNumber(newDefinitionNumber)
+                break;
+            case 'previous':
+                newDefinitionNumber = definitionNumber -1
+                if (newDefinitionNumber === -1) {
+                    newDefinitionNumber = wordObject.definitions.length-1
+                }
+                console.log(newDefinitionNumber)
+                setDefinitionNumber(newDefinitionNumber)
+                break;
+            default: 
+                break;
         }
-        setDefinitionNumber(newDefinitionNumber)
     }
 
     useEffect(() => {

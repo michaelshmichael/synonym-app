@@ -22,6 +22,8 @@ export default function Set (props) {
     const { profile, set } = useParams();
     const history = useHistory();
     
+    const WORD_API_KEY = process.env.REACT_APP_WORD_API_KEY;
+
     useEffect(() => {
         async function getUserData () {
             try {
@@ -100,7 +102,7 @@ export default function Set (props) {
         try {
             const result = await axios.get(`https://wordsapiv1.p.rapidapi.com/words/${newWord}`,
                 {headers: {
-                    'x-rapidapi-key': 'f74c925871msh70f9c315d6fed91p101f0cjsn861ef3bc1f60',
+                    'x-rapidapi-key': WORD_API_KEY,
                     'x-rapidapi-host': 'wordsapiv1.p.rapidapi.com'
                 }})
                 return result            

@@ -9,6 +9,7 @@ export default function VocabInfo (props) {
     const [activeUser, setActiveUser] = useState('');
     const [uniqueId, setUniqueId] = useState('');
     const [wordObject, setWordObject] = useState('');
+    const [definitionNumber, setDefinitionNumber] = useState(0);
     const { set, vocabItem } = useParams(); 
 
     useEffect(() => {
@@ -51,6 +52,15 @@ export default function VocabInfo (props) {
         });
     }
 
+    const displayNextDefinition = (e) => {
+        console.log(e.target.dataset.index)
+        let newDefinitionNumber = definitionNumber +1
+        if (newDefinitionNumber === wordObject.definitions.length) {
+            newDefinitionNumber = 0
+        }
+        setDefinitionNumber(newDefinitionNumber)
+    }
+
     useEffect(() => {
         props.updateUser(uniqueId, activeUser);
     }, [activeUser])
@@ -82,7 +92,10 @@ export default function VocabInfo (props) {
                         <h3>Pronunciation</h3>
                             <h3>{wordObject.pronunciation}</h3>
                         <h3>Definition</h3>
-                            <h3>{wordObject.definitions[1]}</h3>
+                        <button data-index='previous' onClick={e => displayNextDefinition(e)}>Previous</button>
+                        <button data-index='next' onClick={e => displayNextDefinition(e)}>Next</button>
+                        
+                            <h3>{wordObject.definitions[definitionNumber]}</h3>
                     </div>
                     <div className='vocab-item-example'>
                         <h2>Example Sentence</h2>

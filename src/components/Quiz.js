@@ -11,7 +11,11 @@ export default function Quiz(props) {
     const [answers, setAnswers] = useState([]);
     const [word, setWord] = useState('');
     const [number, setNumber] = useState(0);
+    const [numberCorrect, setNumberCorrect] = useState(0);
+    const [wordsPassed, setWordsPassed] = useState([]);
+    const [wrongGuesses, setWrongGuesses] = useState([]);
     const firstTimeRender = useRef(true);
+    const firstGuess = useRef(true);
     const { profile, set } = useParams();
 
     useEffect(() => {
@@ -60,13 +64,19 @@ export default function Quiz(props) {
         setAnswers(newAnswers)
     }
 
-    const nextWord = () => {
-        let newNumber = 0;
-        do {
-            newNumber = Math.floor(Math.random() * Math.floor(activeUser.data.vocab[set].length))
-        } while(newNumber === number);
-        setNumber(newNumber);
-    };
+    useEffect(() => {
+        if (!firstTimeRender.current && wordsPassed.length < activeUser.data.vocab[set].length) {
+            firstGuess.current = true;
+            let newNumber = 0;
+            do {
+                newNumber = Math.floor(Math.random() * Math.floor(activeUser.data.vocab[set].length))
+            } while((newNumber === number) ||
+                    (wordsPassed.includes(activeUser.data.vocab[set][newNumber].word)));
+            setNumber(newNumber);
+        } else if (!firstTimeRender.current && wordsPassed.length === activeUser.data.vocab[set].length) {
+            alert(wrongGuesses)
+        }
+    }, [wordsPassed]);
 
     useEffect(() => {
         if (!firstTimeRender.current) {
@@ -77,15 +87,23 @@ export default function Quiz(props) {
 
     const selectAnswer = (e) => {
         if(e.target.dataset.index === activeUser.data.vocab[set][number].explanation) {
-            e.target.className = 'option-div-correct' 
+            e.target.className = 'option-div-correct'
+            if(firstGuess.current) {
+                let newNumberCorrect = numberCorrect +1
+                setNumberCorrect(newNumberCorrect)
+            }
             setTimeout(function() {
-                e.target.className = 'option-div' 
-                nextWord()
+                e.target.className = 'option-div'
+                let newWordsPassed = wordsPassed.concat(word)
+                setWordsPassed(newWordsPassed) 
             }, 1000)
         } else {
             e.target.className = 'option-div-incorrect'
+            firstGuess.current = false;
             setTimeout(function() {
                 e.target.className = 'option-div'
+                let newWrongGuesses = wrongGuesses.concat(word);
+                setWrongGuesses(newWrongGuesses)
             }, 350);
         }
     };
@@ -107,7 +125,7 @@ export default function Quiz(props) {
                     <h1 className='quiz-main-title'>Quiz Yourself on the Words from the {set} Set</h1>
                     <div className='quiz-container'>
                         <div className='quiz-word'>
-                            {word}
+                            {word} {numberCorrect}/{activeUser.data.vocab[set].length}
                         </div>
                         <div className='quiz-answers'>
                             {answers.map((answer) => (

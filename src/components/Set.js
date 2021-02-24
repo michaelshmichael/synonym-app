@@ -17,11 +17,9 @@ export default function Set (props) {
     const [vocabArray, setVocabArray] = useState([]);
     const [newWord, setNewWord] = useState('');
     const [explanation, setExplanation] = useState('');
-    const firstTimeRender = useRef(true);
-
     const { profile, set } = useParams();
+    const firstTimeRender = useRef(true);
     const history = useHistory();
-    
     const WORD_API_KEY = process.env.REACT_APP_WORD_API_KEY;
 
     useEffect(() => {
@@ -44,11 +42,14 @@ export default function Set (props) {
         setVocabArray(currentActiveUser.data.vocab[set]);
     };
 
+    // Sends user to specific vocab item when it is clicked.
     const redirectToVocabInfo = (e) => {
         let vocabInfoURL = e.target.dataset.index;
         history.push(`/${profile}/vocab/${set}/${vocabInfoURL}`)
     }
 
+    // Sends user to set quiz, when quix button is clicked. Set must contain four items
+    // to be redirected.
     const redirectToSetQuiz = () => {
         if(vocabArray.length >= 4) {
         history.push(`/${profile}/vocab/${set}/quiz`)
@@ -57,6 +58,7 @@ export default function Set (props) {
         }
     }
 
+    // Deletes one vocabulary item from the array. Updates activeUser state.
     const deleteItem = (e) => {
         e.stopPropagation();
         let updatedArray = vocabArray.filter(element => element.word !== e.target.dataset.index)
@@ -70,22 +72,34 @@ export default function Set (props) {
         }
     }
 
-    async function submitNewWordAndExplanation (e) {
-        e.preventDefault();
-        let APIData = await wordAPICall();
+    // Creates as many definitions to insert into the word object as are provided from the API call.
+    const _createDefinitionArrayFromAPIData = (APIData) => {
         let definitionArray = [];
-        
         for(let i = 0; i <= APIData.data.results.length-1; i++){
             console.log(APIData.data.results[i])
             definitionArray.push(APIData.data.results[i].definition)
         }
+        return definitionArray
+    }
 
+    // Takes the pronunciation and definition array from API call and inserts them into the word object.
+    const _createNewWordObject = (APIData, definitionArray) => {
         let newWordObject = {word: newWord, 
             explanation: explanation, 
             pronunciation: APIData.data.pronunciation.all,
             definitions: definitionArray
         }
+        return newWordObject
+    }
 
+    // When user clicks to submit word, this creates a new word object incorporating the word, explanation 
+    // (user provided), pronunciation (API provided), and definitions (API provided). This updates
+    // activeUser state and then resets the newWord and explanation state.
+    async function submitNewWordAndExplanation (e) {
+        e.preventDefault();
+        let APIData = await wordAPICall();
+        let definitionArray = _createDefinitionArrayFromAPIData(APIData);
+        let newWordObject = _createNewWordObject(APIData, definitionArray);
         let updatedArray = vocabArray.concat(newWordObject);
         setActiveUser((prevState) => {
             const newState = Object.assign({}, prevState);
@@ -97,7 +111,7 @@ export default function Set (props) {
         setExplanation('');
     };
 
-    
+    // Uses WordAPI to get data on the word submitted by user.
     async function wordAPICall () {
         try {
             const result = await axios.get(`https://wordsapiv1.p.rapidapi.com/words/${newWord}`,
@@ -111,7 +125,8 @@ export default function Set (props) {
         }
     }
     
-
+    // Will be called when activeUser state is updated, but blocked from first time render update
+    // due to useRef
     useEffect(() => {
         if (!firstTimeRender.current) {
             props.updateUser(uniqueId, activeUser);

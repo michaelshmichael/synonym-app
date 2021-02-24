@@ -1,9 +1,10 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useParams } from 'react-router-dom';
-import uniqid from 'uniqid';
 import axios from 'axios';
 import APIEndpoints from '../api';
 import Sidebar from './Sidebar';
+import QuizResults from './QuizResults';
+import QuizAnswerSelect from './QuizAnswerSelect';
 import '../styles/Quiz.scss';
 
 export default function Quiz(props) {
@@ -14,6 +15,7 @@ export default function Quiz(props) {
     const [numberCorrect, setNumberCorrect] = useState(0);
     const [wordsPassed, setWordsPassed] = useState([]);
     const [wrongGuesses, setWrongGuesses] = useState([]);
+    const [visibleResults, setVisibleResults] = useState(false);
     const firstTimeRender = useRef(true);
     const firstGuess = useRef(true);
     const { profile, set } = useParams();
@@ -74,7 +76,7 @@ export default function Quiz(props) {
                     (wordsPassed.includes(activeUser.data.vocab[set][newNumber].word)));
             setNumber(newNumber);
         } else if (!firstTimeRender.current && wordsPassed.length === activeUser.data.vocab[set].length) {
-            alert(wrongGuesses)
+            setVisibleResults(true);
         }
     }, [wordsPassed]);
 
@@ -108,6 +110,15 @@ export default function Quiz(props) {
         }
     };
 
+    // Rename to 'reset quiz' or something like that
+    const tryQuizAgain = () => {
+        setVisibleResults(false);
+        setWord(activeUser.data.vocab[set][0].word);
+        setWordsPassed([]);
+        setWrongGuesses([]);
+        setNumberCorrect(0);
+    }
+
     if(!activeUser){
         return(
             <div className='set-container'>
@@ -122,22 +133,22 @@ export default function Quiz(props) {
         <div className='quiz-page-container'>
                 <Sidebar className='sidebar'></Sidebar>
                 <div className='quiz-main-container'>
-                    <h1 className='quiz-main-title'>Quiz Yourself on the Words from the {set} Set</h1>
-                    <div className='quiz-container'>
-                        <div className='quiz-word'>
-                            {word} {numberCorrect}/{activeUser.data.vocab[set].length}
-                        </div>
-                        <div className='quiz-answers'>
-                            {answers.map((answer) => (
-                                <div className='option-div'
-                                key={uniqid}
-                                data-index={answer}
-                                onClick={e => selectAnswer(e)}
-                                >{answer}</div>
-                            ))}
-                        </div>
-                    </div>
+                    {!visibleResults &&
+                        <QuizAnswerSelect
+                        word={word}
+                        numberCorrect={numberCorrect}
+                        activeUser={activeUser}
+                        set={set}
+                        answers={answers}
+                        selectAnswer={selectAnswer}
+                        ></QuizAnswerSelect>
+                    }
+                    {visibleResults &&
+                        <QuizResults wrongGuesses={wrongGuesses}
+                        tryQuizAgain={tryQuizAgain}></QuizResults>
+                    }
                 </div>
+                
         </div>
     )
     }

@@ -28,12 +28,15 @@ export default function QuizSelect (props) {
     },[]);
 
     const getActiveUser = (allUsers) => {
-        const currentActiveUser = allUsers.data.find(element => element.data.username === props.user);
-        let vocabSetsArray = Object.keys(currentActiveUser.data.vocab)
-        setActiveUser(currentActiveUser)
+        const foundActiveUser = allUsers.data.find(element => element.data.username === props.user);
+        let vocabSetsArray = Object.keys(foundActiveUser.data.vocab)
+        setActiveUser(foundActiveUser)
+        // This creates the vocabSetsArray state which is then used to display the possible sets
+        // to choose a quiz from.
         setVocabSetsArray(vocabSetsArray)
     };
 
+    // Checks if set has more than four words, if yes, then redirects user to that quiz.
     const redirectToSetQuiz = (e) => {
         let set = e.target.dataset.index;
         let setData = activeUser.data.vocab[set]

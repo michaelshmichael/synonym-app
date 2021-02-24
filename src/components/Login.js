@@ -25,11 +25,11 @@ export default function Login (props) {
         history.push(`./${username}`);
     };
 
-    const logInToast = () => {
+    const displaySuccessfulLogInToast = () => {
         toast.success(`${username} logged in.`)
     }
 
-    const failedLogInToast = () => {
+    const displayFailedLogInToast = () => {
         toast.error('Log In Failed. Try again.')
     }
 
@@ -43,9 +43,9 @@ export default function Login (props) {
             await axios.post(APIEndpoints.loginEndpoint, userLogIn, { withCredentials: true });
             props.updateSignedIn(userLogIn.username);
             redirectToProfileAfterLoggingIn();
-            logInToast();
+            displaySuccessfulLogInToast();
         } catch (error) {
-            failedLogInToast();
+            displayFailedLogInToast();
             console.log(error);
         }
     }

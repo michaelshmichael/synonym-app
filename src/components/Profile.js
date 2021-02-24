@@ -23,6 +23,8 @@ export default function Profile (props) {
     const [userCreatedDate, setUserCreatedDate] = useState();
     const { profile } = useParams();
 
+    // Runs on component mount. This fetches all the users and then 
+    // runs getActiveUser() to find the signed in user.
     useEffect(() => {
         async function getUserData () {
             try {
@@ -35,6 +37,7 @@ export default function Profile (props) {
         getUserData();
     },[]);
 
+    // Displays a country's flag depending on the user's native language
     const displayFlag = (userData) => {
         if(userData.nativeLanguage === 'Portuguese') {
             setNativeLanguageFlag(portugal)
@@ -53,16 +56,18 @@ export default function Profile (props) {
         }
     };
 
+    // Called from useEffect() axios call on component mount. Sets all activeUser details
     const getActiveUser = (allUsers) => {
-        const currentActiveUser = allUsers.data.find(element => element.data.username === profile);
-        let dateCreated = currentActiveUser.createdAt.slice(0,10);
+        const foundActiveUser = allUsers.data.find(element => element.data.username === profile);
+        let dateCreated = foundActiveUser.createdAt.slice(0,10);
         setUserCreatedDate(dateCreated);
-        displayFlag(currentActiveUser.data);
-        setActiveUser(currentActiveUser);
-        console.log(currentActiveUser)
-        setUniqueId(currentActiveUser.uniqueId);
+        displayFlag(foundActiveUser.data);
+        setActiveUser(foundActiveUser);
+        setUniqueId(foundActiveUser.uniqueId);
+        console.log(foundActiveUser)
     }
 
+    // Allows user to add another language that they are learning
     const addLanguage = () => {
         if(activeUser.data.nativeLanguage === newLearningLanguage){
             alert('You know this already')
@@ -78,6 +83,7 @@ export default function Profile (props) {
         }
     };
 
+    // Allows user to delete a language that they had selected to be learning
     const deleteLanguage = (languageToDelete) => {
         let updatedLanguages = activeUser.data.learningLanguage.filter(element => element !== languageToDelete)
         if(window.confirm('Really Delete Language?')){
@@ -89,6 +95,8 @@ export default function Profile (props) {
         };
     }
 
+    // This runs anytime the activeUser state is updated, and sends the new data to
+    // the backend in a PUT request. Initial function is in Routes.js file.
     useEffect(() => {
         props.updateUser(uniqueId, activeUser);
     }, [activeUser])

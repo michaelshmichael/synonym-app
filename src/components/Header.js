@@ -3,6 +3,7 @@ import '../styles/Header.scss';
 
 export default function Header(props) {
 
+    // This conditionally renders the header (right half) depending on if the user is signed in.
     let navbarRight;
     if (props.signedIn === false) {
         navbarRight = <div><a className="navbar-brand" href="login">Login</a>

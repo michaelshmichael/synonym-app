@@ -21,6 +21,9 @@ export default function Routes() {
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')) || '');
     const [language, setLanguage] = useState('en')
 
+    // Called from Login.js when user successfully signs in. Passes signedIn state to Header.js
+    // and passes user state to many components which is then used to retrieve the currently
+    // signed in user. These are also saved to localStorage but can probably remove them in the future.
     const updateSignedIn  = (username) => {
         if (signedIn === false) {
           setSignedIn(true, localStorage.setItem('signedIn', JSON.stringify(true)));
@@ -31,6 +34,8 @@ export default function Routes() {
         }
     };
     
+    // This is sent as props to any component which updates the activeUser state. Updates the 
+    // data on the backend.
     async function updateUser (uniqueId, activeUser) {
       try {
           const updatedUser = await axios.put(`https://app.yawe.dev/api/1/ce/non-auth-endpoint?key=b0188b53ea77419ba1d6dcda06e4bea9&uniqueId=${uniqueId}`, 

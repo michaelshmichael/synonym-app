@@ -46,7 +46,7 @@ export default function Registration() {
         history.push('./login');
     };
 
-    const registerToast = () => {
+    const successfulRegisterToast = () => {
         toast.success(`${username} successfully registered!`)
     }
 
@@ -67,14 +67,16 @@ export default function Registration() {
             vocab
         };
         try {
+            // This is the authentication endpoint to register user.
             await axios.post(APIEndpoints.authenticationEndpoint, userData, { withCredentials: true });
+            // This sends the user data to the backend to be used later, not authentication.
             await axios.post(APIEndpoints.userDataEndpoint,
                 userData, 
                 { withCredentials: true },
                 { headers: {'Content-Type': 'application/json'}}
             );
             redirectToLoginPageAfterRegistering();
-            registerToast();
+            successfulRegisterToast();
         } catch (error) {
             failedRegisterToast();
             console.error(error);

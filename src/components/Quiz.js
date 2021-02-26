@@ -11,6 +11,7 @@ export default function Quiz(props) {
     const [activeUser, setActiveUser] = useState('');
     const [answers, setAnswers] = useState([]);
     const [word, setWord] = useState('');
+    const [explanation, setExplanation] = useState('');
     const [number, setNumber] = useState(0);
     const [numberCorrect, setNumberCorrect] = useState(0);
     const [wordsPassed, setWordsPassed] = useState([]);
@@ -18,6 +19,7 @@ export default function Quiz(props) {
     const [visibleResults, setVisibleResults] = useState(false);
     const firstTimeRender = useRef(true);
     const firstGuess = useRef(true);
+    const guessAlreadyWrong = useRef(false)
     const { profile, set } = useParams();
 
     useEffect(() => {
@@ -35,6 +37,7 @@ export default function Quiz(props) {
     const getActiveUser = (allUsers) => {
         firstTimeRender.current = false 
         const currentActiveUser = allUsers.data.find(element => element.data.username === props.user);
+        setExplanation(currentActiveUser.data.vocab[set][0].explanation)
         setWord(currentActiveUser.data.vocab[set][0].word)
         setActiveUser(currentActiveUser)
     };
@@ -82,6 +85,7 @@ export default function Quiz(props) {
 
     useEffect(() => {
         if (!firstTimeRender.current) {
+            setExplanation(activeUser.data.vocab[set][number].explanation)
             setWord(activeUser.data.vocab[set][number].word)
             generateRandomAnswers()
         }
@@ -96,6 +100,7 @@ export default function Quiz(props) {
             }
             setTimeout(function() {
                 e.target.className = 'option-div'
+                guessAlreadyWrong.current = false;
                 let newWordsPassed = wordsPassed.concat(word)
                 setWordsPassed(newWordsPassed) 
             }, 1000)
@@ -104,8 +109,17 @@ export default function Quiz(props) {
             firstGuess.current = false;
             setTimeout(function() {
                 e.target.className = 'option-div'
-                let newWrongGuesses = wrongGuesses.concat(word);
-                setWrongGuesses(newWrongGuesses)
+                let wrongWordObject = {
+                    word: word,
+                    explanation: explanation
+                }
+                if(!guessAlreadyWrong.current) {
+                    let newWrongGuesses = wrongGuesses.concat(wrongWordObject);
+                    
+                    setWrongGuesses(newWrongGuesses)
+                }
+                guessAlreadyWrong.current = true;
+                console.log(wrongGuesses)
             }, 350);
         }
     };

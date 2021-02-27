@@ -79,6 +79,7 @@ export default function Quiz(props) {
 
     // Function is invoked when user selects an answer.
     const selectAnswer = (e) => {
+        // Answer is correct
         if(e.target.dataset.index === activeUser.data.vocab[set][randomWordNumber].explanation) {
             e.target.className = 'option-div-correct'
             if(firstGuess.current) {
@@ -91,6 +92,7 @@ export default function Quiz(props) {
                 let newWordsPassed = wordsPassed.concat(word)
                 setWordsPassed(newWordsPassed) 
             }, 1000)
+        // Answer is wrong
         } else {
             e.target.className = 'option-div-incorrect'
             firstGuess.current = false;
@@ -111,7 +113,8 @@ export default function Quiz(props) {
 
     // When a guess is correct, wordsPassed state is updated and this function is invoked.
     // It creates a new randomWordNumber, after checking it is not the same as the current
-    // state not has it already been called and the word exists in the wordsPassed state array.
+    // state nor has it already been called (and therefore the respective word would be in
+    // the wordsPassed array).
     useEffect(() => {
         if (!firstTimeRender.current && wordsPassed.length < activeUser.data.vocab[set].length) {
             firstGuess.current = true;

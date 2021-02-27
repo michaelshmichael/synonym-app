@@ -8,6 +8,7 @@ import Login from './Login';
 import Landing from './Landing';
 import Search from './Search';
 import Profile from './Profile';
+import Buddies from './Buddies';
 import Vocab from './Vocab';
 import Set from './Set';
 import VocabInfo from './VocabInfo';
@@ -76,6 +77,10 @@ export default function Routes() {
                   updateUser={updateUser}
                   user={user}
             />}></Route> */}
+            <Route exact path='/:profile/buddies' render={props => <Buddies {...props}
+                user={user}
+                updateUser={updateUser}
+            />}></Route>
             <Route exact path='/:profile/vocab' render={props => <Vocab {...props}
                 user={user}
                 updateUser={updateUser}

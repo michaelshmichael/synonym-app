@@ -1,0 +1,38 @@
+.buddies-page-container {
+    font-family: 'Krub', sans-serif;
+    margin-left: -10px;
+    margin-top: 80px;
+    overflow: hidden;
+    .sidebar {
+        position: fixed;
+        height: 100%;
+        width: 200px;
+        padding-top: 35px;
+        padding-left: 30px;
+        background-color: rgb(252, 241, 93);
+    }
+    .buddies-main-container {
+        display: flex;
+        flex-direction: column;
+        width: 850px;
+        height: 100%;
+        margin-left: 300px;
+        .native-speakers-container {
+           display: flex;
+           flex-direction: row;
+           flex-wrap: wrap;
+           justify-content: flex-start;
+           width: 900px;
+           height: 100%;
+           margin-bottom: 100px;
+            .native-speaker-card {
+                text-align: center;
+                width: 200px;
+                margin-right: 20px;
+                margin-bottom: 20px;
+                background-color: lightcoral;
+            }
+        }
+    }
+}
+

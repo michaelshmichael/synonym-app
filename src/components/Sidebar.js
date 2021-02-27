@@ -11,6 +11,7 @@ export default function Sidebar() {
                 <a href={`/${profile}`}>Profile</a>
                 <a href={`/${profile}/vocab`}>Vocab Learner</a>
                 <a href={`/${profile}/quizselect`}>Quiz</a>
+                <a href={`/${profile}/buddies`}>Buddies</a>
             </div>
         </div>
     )

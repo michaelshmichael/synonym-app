@@ -9,10 +9,10 @@ import '../styles/Quiz.scss';
 
 export default function Quiz(props) {
     const [activeUser, setActiveUser] = useState('');
-    const [answers, setAnswers] = useState([]);
+    const [randomAnswers, setRandomAnswers] = useState([]);
     const [word, setWord] = useState('');
     const [explanation, setExplanation] = useState('');
-    const [number, setNumber] = useState(0);
+    const [randomWordNumber, setRandomWordNumber] = useState(0);
     const [numberCorrect, setNumberCorrect] = useState(0);
     const [wordsPassed, setWordsPassed] = useState([]);
     const [wrongGuesses, setWrongGuesses] = useState([]);
@@ -35,64 +35,51 @@ export default function Quiz(props) {
     },[]);
 
     const getActiveUser = (allUsers) => {
-        firstTimeRender.current = false 
+        firstTimeRender.current = false; 
         const currentActiveUser = allUsers.data.find(element => element.data.username === props.user);
-        setExplanation(currentActiveUser.data.vocab[set][0].explanation)
-        setWord(currentActiveUser.data.vocab[set][0].word)
-        setActiveUser(currentActiveUser)
+        let wordObject = currentActiveUser.data.vocab[set][0];
+        setExplanation(wordObject.explanation);
+        setWord(wordObject.word);
+        setActiveUser(currentActiveUser);
     };
 
+    // Creates random answers after user data has been fetched
     useEffect(() => {
         if (!firstTimeRender.current) {
             generateRandomAnswers()
           }
     },[activeUser])
 
+    // Inserts the correct answer in an array, then adds three more possible answers from the given set
     const generateRandomAnswers = () => {
         let array = activeUser.data.vocab[set]
-        let correctAnswer = activeUser.data.vocab[set][number].explanation
-        let newAnswers = [correctAnswer];
+        let correctAnswer = activeUser.data.vocab[set][randomWordNumber].explanation
+        let newRandomAnswers = [correctAnswer];
         for(let i = 0; i <= 2;){
             let number = Math.floor(Math.random() * Math.floor(array.length))
-            if(!newAnswers.includes(array[number].explanation)) {
-                newAnswers.push(array[number].explanation)
+            if(!newRandomAnswers.includes(array[number].explanation)) {
+                newRandomAnswers.push(array[number].explanation)
                 i++
             }
         }
-        // Durstenfeld Shuffle
+        // Answers are then shuffled and state is updated.
+        newRandomAnswers = durstenfeldShuffle(newRandomAnswers)
+        setRandomAnswers(newRandomAnswers)
+    }
+
+    const durstenfeldShuffle = (newAnswers) => {
         for (let i = newAnswers.length - 1; i > 0; i--) {
             let j = Math.floor(Math.random() * (i + 1));
             let temp = newAnswers[i];
             newAnswers[i] = newAnswers[j];
             newAnswers[j] = temp;
         }
-        setAnswers(newAnswers)
+        return newAnswers
     }
 
-    useEffect(() => {
-        if (!firstTimeRender.current && wordsPassed.length < activeUser.data.vocab[set].length) {
-            firstGuess.current = true;
-            let newNumber = 0;
-            do {
-                newNumber = Math.floor(Math.random() * Math.floor(activeUser.data.vocab[set].length))
-            } while((newNumber === number) ||
-                    (wordsPassed.includes(activeUser.data.vocab[set][newNumber].word)));
-            setNumber(newNumber);
-        } else if (!firstTimeRender.current && wordsPassed.length === activeUser.data.vocab[set].length) {
-            setVisibleResults(true);
-        }
-    }, [wordsPassed]);
-
-    useEffect(() => {
-        if (!firstTimeRender.current) {
-            setExplanation(activeUser.data.vocab[set][number].explanation)
-            setWord(activeUser.data.vocab[set][number].word)
-            generateRandomAnswers()
-        }
-    },[number])
-
+    // Function is invoked when user selects an answer.
     const selectAnswer = (e) => {
-        if(e.target.dataset.index === activeUser.data.vocab[set][number].explanation) {
+        if(e.target.dataset.index === activeUser.data.vocab[set][randomWordNumber].explanation) {
             e.target.className = 'option-div-correct'
             if(firstGuess.current) {
                 let newNumberCorrect = numberCorrect +1
@@ -115,16 +102,41 @@ export default function Quiz(props) {
                 }
                 if(!guessAlreadyWrong.current) {
                     let newWrongGuesses = wrongGuesses.concat(wrongWordObject);
-                    
                     setWrongGuesses(newWrongGuesses)
                 }
                 guessAlreadyWrong.current = true;
-                console.log(wrongGuesses)
             }, 350);
         }
     };
 
-    // Rename to 'reset quiz' or something like that
+    // When a guess is correct, wordsPassed state is updated and this function is invoked.
+    // It creates a new randomWordNumber, after checking it is not the same as the current
+    // state not has it already been called and the word exists in the wordsPassed state array.
+    useEffect(() => {
+        if (!firstTimeRender.current && wordsPassed.length < activeUser.data.vocab[set].length) {
+            firstGuess.current = true;
+            let newNumber;
+            do {
+                newNumber = Math.floor(Math.random() * Math.floor(activeUser.data.vocab[set].length))
+            } while((newNumber === randomWordNumber) || 
+                    (wordsPassed.includes(activeUser.data.vocab[set][newNumber].word)));
+            setRandomWordNumber(newNumber);
+        } else if (!firstTimeRender.current && wordsPassed.length === activeUser.data.vocab[set].length) {
+            setVisibleResults(true);
+        }
+    }, [wordsPassed]);
+
+    // After checking that the word has not been guessed already, this resets the word and its
+    // explanation (its answer). This function displays the next word and regenerates random answers.
+    useEffect(() => {
+        if (!firstTimeRender.current) {
+            setExplanation(activeUser.data.vocab[set][randomWordNumber].explanation)
+            setWord(activeUser.data.vocab[set][randomWordNumber].word)
+            generateRandomAnswers()
+        }
+    },[randomWordNumber])
+
+    // Invoked when user clicks 'Try Again' button in QuizResults.js component.
     const tryQuizAgain = () => {
         setVisibleResults(false);
         setWord(activeUser.data.vocab[set][0].word);
@@ -153,7 +165,7 @@ export default function Quiz(props) {
                         numberCorrect={numberCorrect}
                         activeUser={activeUser}
                         set={set}
-                        answers={answers}
+                        randomAnswers={randomAnswers}
                         selectAnswer={selectAnswer}
                         ></QuizAnswerSelect>
                     }

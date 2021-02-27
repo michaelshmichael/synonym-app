@@ -1,16 +1,18 @@
 import React from 'react';
 
-export default function QuizResults (props) {
+export default function QuizResults ({wrongGuesses, tryQuizAgain}) {
     return(
-        <div>
+        <div className='quiz-results-container'>
             <h1 className='quiz-results-header'>Wrong Guesses</h1>
-            {props.wrongGuesses.map((guess) => (
-                <div>
+            <div className='quiz-results-card-container'>
+            {wrongGuesses.map((guess) => (
+                <div className='quiz-results-item-card'>
                     <h2>{guess.word}</h2>
-                    <h3>{guess.explanation}</h3>
+                    <h2>{guess.explanation}</h2>
                 </div>
             ))}
-            <button onClick={props.tryQuizAgain}>Try Again?</button>
+            </div>
+            <button className='quiz-results-try-again' onClick={tryQuizAgain}>Try Again?</button>
         </div>
     )
 }

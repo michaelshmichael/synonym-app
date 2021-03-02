@@ -18,22 +18,25 @@ import APIEndpoints from '../api';
 import '../html.scss'
 
 export default function Routes() {
-    const [signedIn, setSignedIn] = useState(JSON.parse(localStorage.getItem('signedIn')) || false);
-    const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')) || '');
+    const [signedIn, setSignedIn] = useState(false);
+    const [user, setUser] = useState('');
     const [language, setLanguage] = useState('en')
 
     // Called from Login.js when user successfully signs in. Passes signedIn state to Header.js
     // and passes user state to many components which is then used to retrieve the currently
-    // signed in user. These are also saved to localStorage but can probably remove them in the future.
-    const updateSignedIn  = (username) => {
+    // signed in user. Signs out when called from Header.js
+    const updateSignedIn  = ( username, e ) => {
         if (signedIn === false) {
-          setSignedIn(true, localStorage.setItem('signedIn', JSON.stringify(true)));
-          setUser(username, localStorage.setItem('user', JSON.stringify(username)));
+          setSignedIn(true);
+          setUser(username);
         } else {
-          localStorage.clear();
+          e.stopPropagation();
           axios.post(APIEndpoints.logoutEndpoint, { withCredentials: true });
+          setSignedIn(false);
+          setUser('');
         }
     };
+
     
     // This is sent as props to any component which updates the activeUser state. Updates the 
     // data on the backend.

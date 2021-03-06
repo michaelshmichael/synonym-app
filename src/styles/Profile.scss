@@ -1,55 +1,15 @@
-@mixin loading-animation {
-    .lds-ellipsis {
-        position: absolute;
-        margin-top: 20px;
-        width: 80px;
-        height: 80px;
-    }
-    .lds-ellipsis div {
-        position: absolute;
-        top: 163px;
-        width: 23px;
-        height: 23px;
-        margin-left: 65%;
-        border-radius: 50%;
-        background: rgb(252, 188, 11);
-        animation-timing-function: cubic-bezier(0, 1, 1, 0);
-    }
-    .lds-ellipsis div:nth-child(1) {
-        left: 8px;
-        animation: lds-ellipsis1 0.6s infinite;
-    }
-    .lds-ellipsis div:nth-child(2) {
-        left: 8px;
-        animation: lds-ellipsis2 0.6s infinite;
-    }
-    .lds-ellipsis div:nth-child(3) {
-        left: 32px;
-        animation: lds-ellipsis2 0.6s infinite;
-    }
-    .lds-ellipsis div:nth-child(4) {
-        left: 56px;
-        animation: lds-ellipsis3 0.6s infinite;
-    }
-}
+@use 'mixins';
 
 .profile-container {
     font-family: 'Krub', sans-serif;
     margin-left: -10px;
     margin-top: 80px;
     overflow: hidden;
-    .sidebar {
-        position: fixed;
-        height: 100%;
-        width: 200px;
-        padding-top: 35px;
-        padding-left: 30px;
-        background-color: rgb(252, 241, 93);
-    }
+    @include mixins.sidebar;
     .profile-data-container {
         width: 850px;
         height: 100%;
-        @include loading-animation;
+        @include mixins.loading-animation;
         .profile-has-loaded {
             margin-left: 260px;
             .username-and-flag-container {

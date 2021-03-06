@@ -1,24 +1,17 @@
-@use 'Profile';
+@use 'mixins';
 
 .vocab-item-page-container {
     font-family: 'Krub', sans-serif;
     margin-left: -10px;
     margin-top: 80px;
     overflow: hidden;
-    .sidebar {
-        position: fixed;
-        height: 100%;
-        width: 200px;
-        padding-top: 35px;
-        padding-left: 30px;
-        background-color: rgb(252, 241, 93);
-    }
+    @include mixins.sidebar;
     .vocab-item-main-container {
         display: flex;
         flex-direction: column;
         width: 90%;
         height: 100%;
-        @include Profile.loading-animation;
+        @include mixins.loading-animation;
         .vocab-item-has-loaded {
             margin-left: 250px;
             .vocab-item-user-data {
@@ -54,33 +47,6 @@
                 }
             }
         }
-    }
-}
-
-@keyframes lds-ellipsis1 {
-    0% {
-        transform: scale(0);
-    }
-    100% {
-        transform: scale(1);
-    }
-}
-
-@keyframes lds-ellipsis3 {
-    0% {
-        transform: scale(1);
-    }
-    100% {
-        transform: scale(0);
-    }
-}
-
-@keyframes lds-ellipsis2 {
-    0% {
-        transform: translate(0, 0);
-    }
-    100% {
-        transform: translate(24px, 0);
     }
 }
 

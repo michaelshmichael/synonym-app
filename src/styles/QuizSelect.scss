@@ -14,7 +14,7 @@
     .quiz-select-container {
         display: flex;
         flex-direction: row;
-        width: 850px;
+        width: 950px;
         height: 100%;
         margin-left: 250px;
         .possible-sets-container {
@@ -36,13 +36,35 @@
                     clip-path: polygon(0 0, 100% 10%, 100% 90%, 0 100%);
                     padding-top: 40px;
                 }
+                .individual-set-box:hover {
+                    text-align: center;
+                    height: 100px;
+                    background-color: rgb(252, 241, 93);
+                    cursor: pointer;
+                    clip-path: polygon(0 0, 100% 10%, 100% 90%, 0 100%);
+                    padding-top: 40px;
+                    animation: setHover 0.5s;
+                    animation-fill-mode: forwards;
+                }
             }
-            
         }
         img {
+            margin-left: 30px;
             width: 400px;
             height: 450px;
         }
+    }
+}
+
+@keyframes setHover {
+    0% {
+        clip-path: polygon(0 0, 100% 10%, 100% 90%, 0 100%);
+        background-color: rgb(252, 241, 93);
+    }
+    
+    100% {
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+        background-color: rgb(255, 203, 61);
     }
 }
 

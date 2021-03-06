@@ -102,31 +102,33 @@ export default function VocabInfo (props) {
             <div className='vocab-item-page-container'>
                 <Sidebar className='sidebar'></Sidebar>
                 <div className='vocab-item-main-container'>
-                    <div className='vocab-item-user-data'>
-                        <h1 className='vocab-item-word'>Word: {vocabItem}</h1>
-                        <h1 className='vocab-item-definition'>Your Explanation: </h1>
-                        <input className='vocab-item-definition-input' type='text' 
-                        placeholder={wordObject.explanation}
-                        onChange={e => updateExplanation(e)}
-                        />
-                    </div>
-                    
-                    <div className='vocab-item-api-data'>
-                        <h3>Pronunciation</h3>
-                            <h3>{wordObject.pronunciation}</h3>
-                        <h3>Definition</h3>
-                        <button data-index='previous' onClick={e => displayNextDefinition(e)}>Previous</button>
-                        <button data-index='next' onClick={e => displayNextDefinition(e)}>Next</button>
-                        
-                            <h3>{wordObject.definitions[definitionNumber]}</h3>
-                        <button data-index={vocabItem} onClick={removeCurrentDefinition}>Delete</button>
-                    </div>
-                    <div className='vocab-item-example'>
-                        <h2>Example Sentence</h2>
-                            <input type='text'
-                            placeholder={wordObject.example}
-                            onChange={e => updateExample(e)}
+                    <div className='vocab-item-has-loaded'>
+                        <div className='vocab-item-user-data'>
+                            <h1 className='vocab-item-word'>Word: {vocabItem}</h1>
+                            <h1 className='vocab-item-definition'>Your Explanation: </h1>
+                            <input className='vocab-item-definition-input' type='text' 
+                            placeholder={wordObject.explanation}
+                            onChange={e => updateExplanation(e)}
                             />
+                        </div>
+                        
+                        <div className='vocab-item-api-data'>
+                            <h3>Pronunciation</h3>
+                                <h3>{wordObject.pronunciation}</h3>
+                            <h3>Definition</h3>
+                            <button data-index='previous' onClick={e => displayNextDefinition(e)}>Previous</button>
+                            <button data-index='next' onClick={e => displayNextDefinition(e)}>Next</button>
+                            
+                                <h3>{wordObject.definitions[definitionNumber]}</h3>
+                            <button data-index={vocabItem} onClick={removeCurrentDefinition}>Delete</button>
+                        </div>
+                        <div className='vocab-item-example'>
+                            <h2>Example Sentence</h2>
+                                <input type='text'
+                                placeholder={wordObject.example}
+                                onChange={e => updateExample(e)}
+                                />
+                        </div>
                     </div>
                 </div>
             </div>

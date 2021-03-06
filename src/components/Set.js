@@ -5,7 +5,6 @@ import { useParams, useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify'; 
 import APIEndpoints from '../api';
 import axios from 'axios';
-import uniqid from 'uniqid';
 import Sidebar from '../components/Sidebar';
 import '../styles/Set.scss';
 
@@ -147,39 +146,41 @@ export default function Set (props) {
             <div className='set-container'>
                 <Sidebar className='sidebar'></Sidebar>
                 <div className='set-main-container'>
-                    <h1 className='set-title'>Your words in the {set} set</h1>
-                    <div className='word-add'>
-                        <h2>Add Word to {set}</h2>
-                        <input type='text'
-                            placeholder='word' 
-                            className='word-add-input' 
-                            value={newWord} 
-                            onChange={e => {setNewWord(e.target.value)}}/>
-                        <input type='text'
-                            placeholder='explanation' 
-                            className='word-add-input' 
-                            value={explanation} 
-                            onChange={e => {setExplanation(e.target.value)}}/>
-                        <BiPlusCircle className='bi-plus-circle' 
-                            onClick={e => submitNewWordAndExplanation(e)}>
-                        </BiPlusCircle>
-                        <button onClick={redirectToSetQuiz}>Quiz</button>
-                    </div>
-                    <div className='vocabulary-item-container'>
-                    {vocabArray.map((item) => (
-                        <div className='vocabulary-item'
-                        key={uniqid}>
-                            <div className='vocab-front-word'>
-                                <h2>{item.word}</h2>
-                            </div>
-                            <div className='vocab-back-explanation'
-                            data-index={item.word}
-                            onClick={e => redirectToVocabInfo(e)}>
-                                <h2 data-index={item.word}>{item.explanation}</h2>
-                                <FiTrash data-index={item.word} onClick={e => deleteItem(e)}/>
-                            </div>
+                    <div className='set-has-loaded'>
+                        <h1 className='set-title'>Your words in the {set} set</h1>
+                        <div className='word-add'>
+                            <h2>Add Word</h2>
+                            <input type='text'
+                                placeholder='word' 
+                                className='word-add-input' 
+                                value={newWord} 
+                                onChange={e => {setNewWord(e.target.value)}}/>
+                            <input type='text'
+                                placeholder='explanation' 
+                                className='word-add-input' 
+                                value={explanation} 
+                                onChange={e => {setExplanation(e.target.value)}}/>
+                            <BiPlusCircle className='bi-plus-circle' 
+                                onClick={e => submitNewWordAndExplanation(e)}>
+                            </BiPlusCircle>
+                            <button className='uibutton' onClick={redirectToSetQuiz}>Quiz</button>
                         </div>
-                    ))}
+                        <div className='vocabulary-item-container'>
+                        {vocabArray.map((item, index) => (
+                            <div className='vocabulary-item'
+                            key={index}>
+                                <div className='vocab-front-word'>
+                                    <h2>{item.word}</h2>
+                                </div>
+                                <div className='vocab-back-explanation'
+                                data-index={item.word}
+                                onClick={e => redirectToVocabInfo(e)}>
+                                    <h2 data-index={item.word}>{item.explanation}</h2>
+                                    <FiTrash data-index={item.word} onClick={e => deleteItem(e)}/>
+                                </div>
+                            </div>
+                        ))}
+                        </div>
                     </div>
                 </div>
             </div>

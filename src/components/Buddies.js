@@ -43,8 +43,6 @@ export default function Buddies (props) {
         }
     }, [nativeSpeakers])
 
-   
-
     return(
         <div className='buddies-page-container'>
             <Sidebar></Sidebar>

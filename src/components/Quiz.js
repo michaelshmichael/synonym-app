@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import APIEndpoints from '../api';
 import Sidebar from './Sidebar';
@@ -20,6 +20,7 @@ export default function Quiz(props) {
     const firstTimeRender = useRef(true);
     const firstGuess = useRef(true);
     const guessAlreadyWrong = useRef(false)
+    const history = useHistory();
     const { profile, set } = useParams();
 
     useEffect(() => {
@@ -148,6 +149,11 @@ export default function Quiz(props) {
         setNumberCorrect(0);
     }
 
+    // Invoked when user clicks 'Revise Set' button in QuizResults.js component.
+    const reviseSet = () => {
+        history.push(`/${profile}/vocab/${set}`);
+    }
+
     if(!activeUser){
         return(
             <div className='set-container'>
@@ -174,7 +180,8 @@ export default function Quiz(props) {
                     }
                     {visibleResults &&
                         <QuizResults wrongGuesses={wrongGuesses}
-                        tryQuizAgain={tryQuizAgain}></QuizResults>
+                        tryQuizAgain={tryQuizAgain}
+                        reviseSet={reviseSet}></QuizResults>
                     }
                 </div>
                 

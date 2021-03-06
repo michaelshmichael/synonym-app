@@ -6,7 +6,8 @@ export default function BuddiesDisplay (props) {
         <div className='native-speakers-container'>
             {props.nativeSpeakers.map((user) => (
                 <div className='native-speaker-card'>
-                    <h1>{user.data.username}</h1>
+                    <h3>{user.data.username}</h3>
+                    <button>Add Friend</button>
                 </div>
             ))}
         </div>

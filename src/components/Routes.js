@@ -18,8 +18,8 @@ import APIEndpoints from '../api';
 import '../html.scss'
 
 export default function Routes() {
-    const [signedIn, setSignedIn] = useState(false);
-    const [user, setUser] = useState('');
+  const [signedIn, setSignedIn] = useState(JSON.parse(localStorage.getItem('signedIn')) || false);
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')) || '');
     const [language, setLanguage] = useState('en')
 
     // Called from Login.js when user successfully signs in. Passes signedIn state to Header.js
@@ -27,8 +27,8 @@ export default function Routes() {
     // signed in user. Signs out when called from Header.js
     const updateSignedIn  = ( username, e ) => {
         if (signedIn === false) {
-          setSignedIn(true);
-          setUser(username);
+          setSignedIn(true, localStorage.setItem('signedIn', JSON.stringify(true)));
+          setUser(username, localStorage.setItem('user', JSON.stringify(username)));
         } else {
           e.stopPropagation();
           axios.post(APIEndpoints.logoutEndpoint, { withCredentials: true });

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { formatDistance} from 'date-fns';
 import { useParams } from 'react-router-dom';
 import { FaTrashAlt } from 'react-icons/fa';
+import { uniqid } from 'uniqid';
 import parseISO from 'date-fns/parseISO';
 import axios from 'axios';
 import unitedKingdom from '../svg/unitedKingdom.svg';
@@ -115,35 +116,37 @@ export default function Profile (props) {
             <div className='profile-container'>
                 <Sidebar className='sidebar'></Sidebar>
                 <div className='profile-data-container'>
-                    <div className='username-and-flag-container'>
-                        <h1 className='profile-name'>{activeUser.data.username}</h1>
-                        <img className='native-language-flag' src={nativeLanguageFlag} alt='flag-showing-native-language'></img>
-                        <p className='member-for'> Member for {formatDistance(parseISO(userCreatedDate), new Date())}</p>
-                    </div>
-                    <div className='learning-languages-container'>
-                        <h1>Languages Being Studied</h1>
-                        {activeUser.data.learningLanguage.map((language) => (
-                            <div className='learning-languages-individual'>
-                            <h2>{language}</h2>
-                            <FaTrashAlt className='learning-languages-individual-button'
-                            onClick={e => deleteLanguage(language)}
-                            >Delete</FaTrashAlt>
+                    <div className='profile-has-loaded'>
+                        <div className='username-and-flag-container'>
+                            <h1 className='profile-name'>{activeUser.data.username}</h1>
+                            <img className='native-language-flag' src={nativeLanguageFlag} alt='flag-showing-native-language'></img>
+                            <p className='member-for'> Member for {formatDistance(parseISO(userCreatedDate), new Date())}</p>
+                        </div>
+                        <div className='learning-languages-container'>
+                            <h1>Languages Being Studied</h1>
+                            {activeUser.data.learningLanguage.map((language) => (
+                                <div className='learning-languages-individual' key={uniqid}>
+                                <h2>{language}</h2>
+                                <FaTrashAlt className='learning-languages-individual-button'
+                                onClick={e => deleteLanguage(language)}
+                                >Delete</FaTrashAlt>
+                                </div>
+                            ))}
+                        </div>
+                        <div className='another-language-div'>
+                            <h3>Another Language?</h3>
+                            <div className='another-language-select'>
+                                <select onChange={e => setNewLearningLanguage(e.currentTarget.value)} 
+                                id="learningLanguage" 
+                                name="learningLanguage"
+                                placeholder="Another Language?">
+                                    <option value="English">English</option>
+                                    <option value="Russian">Russian</option>
+                                    <option value="Portuguese">Portuguese</option>
+                                    <option value="Spanish">Spanish</option>
+                                </select>
+                                <button onClick={addLanguage} className='uibutton'>Add</button>
                             </div>
-                        ))}
-                    </div>
-                    <div className='another-language-div'>
-                        <h3>Another Language?</h3>
-                        <div className='another-language-select'>
-                            <select onChange={e => setNewLearningLanguage(e.currentTarget.value)} 
-                            id="learningLanguage" 
-                            name="learningLanguage"
-                            placeholder="Another Language?">
-                                <option value="English">English</option>
-                                <option value="Russian">Russian</option>
-                                <option value="Portuguese">Portuguese</option>
-                                <option value="Spanish">Spanish</option>
-                            </select>
-                            <button onClick={addLanguage} className='uibutton'>Add</button>
                         </div>
                     </div>
                 </div>

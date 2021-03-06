@@ -4,7 +4,15 @@ import celebration from '../svg/celebration.svg';
 export default function QuizResults ({wrongGuesses, tryQuizAgain, reviseSet}) {
     if(wrongGuesses.length === 0) {
         return(
-            <div>
+            <div className='quiz-results-container-success'>
+                <div className='quiz-success-message-and-buttons'>
+                    <h2 className='quiz-success-message'>Well done! You got all the questions right!</h2>
+                    <div className='quiz-success-buttons'>
+                        <button></button>
+                        <button></button>
+                    </div>
+                    
+                </div>
                 <img className='quiz-success-image' src={celebration} alt={'people-celebrating'}></img>
             </div>
         )

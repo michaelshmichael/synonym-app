@@ -32,14 +32,29 @@
             justify-content: flex-start;
             align-items: center;
             height: 500px;
-            .quiz-word {
-                text-align: center;
-                font-size: 2.4em;
-                font-weight: 800;
-                width: 300px;
-                height: 60px;
-                padding-top: 15px;
-                cursor: default;
+            .quiz-word-and-tally {
+                display: grid;
+                grid-template-columns: auto auto auto;
+                grid-template-rows: auto;
+                width: 900px;
+                .quiz-word {
+                    text-align: center;
+                    font-size: 2.4em;
+                    font-weight: 800;
+                    height: 60px;
+                    margin-left: 60px;
+                    padding-top: 15px;
+                    cursor: default;
+                }
+                .correct-tally-number {
+                    text-align: center;
+                    font-size: 2.4em;
+                    font-weight: 800;
+                    height: 60px;
+                    padding-top: 15px;
+                    cursor: default;
+    
+                }   
             }
             .quiz-answers {
                 display: flex;

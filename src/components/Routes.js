@@ -7,7 +7,7 @@ import Registration from './Registration';
 import Login from './Login';
 import Landing from './Landing';
 import Search from './Search';
-import Profile from './Profile';
+import Profile from './ProfileComponents/Profile';
 import Buddies from './Buddies';
 import Vocab from './Vocab';
 import Set from './Set';

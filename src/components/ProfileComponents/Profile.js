@@ -1,20 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { formatDistance} from 'date-fns';
 import { useParams } from 'react-router-dom';
-import { FaTrashAlt } from 'react-icons/fa';
-import { uniqid } from 'uniqid';
 import parseISO from 'date-fns/parseISO';
 import axios from 'axios';
-import unitedKingdom from '../svg/unitedKingdom.svg';
-import russia from '../svg/russia.svg';
-import portugal from '../svg/portugal.svg';
-import italy from '../svg/italy.svg';
-import france from '../svg/france.svg';
-import germany from '../svg/germany.svg';
-import spain from '../svg/spain.svg';
-import APIEndpoints from '../api';
-import Sidebar from './Sidebar';
-import '../styles/Profile.scss';
+import unitedKingdom from '../../svg/unitedKingdom.svg';
+import russia from '../../svg/russia.svg';
+import portugal from '../../svg/portugal.svg';
+import italy from '../../svg/italy.svg';
+import france from '../../svg/france.svg';
+import germany from '../../svg/germany.svg';
+import spain from '../../svg/spain.svg';
+import APIEndpoints from '../../api';
+import Sidebar from '../Sidebar';
+import LanguagesBeingStudied from './LanguagesBeingStudied';
+import '../../styles/Profile.scss';
 
 export default function Profile (props) {
     const [activeUser, setActiveUser] = useState('');
@@ -122,17 +121,11 @@ export default function Profile (props) {
                             <img className='native-language-flag' src={nativeLanguageFlag} alt='flag-showing-native-language'></img>
                             <p className='member-for'> Member for {formatDistance(parseISO(userCreatedDate), new Date())}</p>
                         </div>
-                        <div className='learning-languages-container'>
-                            <h1>Languages Being Studied</h1>
-                            {activeUser.data.learningLanguage.map((language) => (
-                                <div className='learning-languages-individual' key={uniqid}>
-                                <h2>{language}</h2>
-                                <FaTrashAlt className='learning-languages-individual-button'
-                                onClick={e => deleteLanguage(language)}
-                                >Delete</FaTrashAlt>
-                                </div>
-                            ))}
-                        </div>
+                        <LanguagesBeingStudied
+                        activeUser={activeUser}
+                        deleteLanguage={deleteLanguage}
+                        >
+                        </LanguagesBeingStudied>
                         <div className='another-language-div'>
                             <h3>Another Language?</h3>
                             <div className='another-language-select'>

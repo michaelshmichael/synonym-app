@@ -1,5 +1,6 @@
 import React from 'react';
 import QuizScoreTally from './QuizScoreTally';
+import QuizWord from './QuizWord';
 import uniqid from 'uniqid';
 
 export default function QuizAnswerSelect ({word, numberCorrect, activeUser, set, randomAnswers, selectAnswer}) {
@@ -7,11 +8,10 @@ export default function QuizAnswerSelect ({word, numberCorrect, activeUser, set,
         <div className='quiz-container'>
             <h1 className='quiz-main-title'>Quiz Yourself on the Words from the {set} Set</h1>
                 <div className='quiz-word-and-tally'>
-                    <div>
-                    </div>
-                    <div className='quiz-word'>
-                        {word}
-                    </div>
+                    <div></div>
+                    <QuizWord
+                        word={word}>
+                    </QuizWord>
                     <QuizScoreTally numberCorrect={numberCorrect} 
                         activeUser={activeUser} 
                         set={set}>

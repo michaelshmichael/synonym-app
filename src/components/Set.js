@@ -97,6 +97,7 @@ export default function Set (props) {
     async function submitNewWordAndExplanation (e) {
         e.preventDefault();
         let APIData = await wordAPICall();
+        console.log(APIData)
         let definitionArray = _createDefinitionArrayFromAPIData(APIData);
         let newWordObject = _createNewWordObject(APIData, definitionArray);
         let updatedArray = vocabArray.concat(newWordObject);
@@ -121,6 +122,7 @@ export default function Set (props) {
                 return result            
             } catch (error) {
             console.log(error)
+            // Need to do something here if result is not found from API call
         }
     }
     

@@ -1,11 +1,11 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import axios from 'axios';
-import APIEndpoints from '../api';
-import Sidebar from './Sidebar';
-import QuizResults from './QuizResults';
-import QuizAnswerSelect from './QuizAnswerSelect';
-import '../styles/Quiz.scss';
+import APIEndpoints from '../../api';
+import Sidebar from '../Sidebar';
+import QuizResults from './QuizResults/QuizResults';
+import QuizAnswerSelect from './QuizAnswerSelect/QuizAnswerSelect';
+import '../../styles/Quiz.scss';
 
 export default function Quiz(props) {
     const [activeUser, setActiveUser] = useState('');

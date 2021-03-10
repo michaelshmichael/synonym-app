@@ -13,7 +13,7 @@ import Vocab from './Vocab';
 import Set from './Set';
 import VocabInfo from './VocabInfo';
 import QuizSelect from './QuizSelect';
-import Quiz from './Quiz';
+import Quiz from './QuizComponents/Quiz';
 import APIEndpoints from '../api';
 import '../html.scss'
 

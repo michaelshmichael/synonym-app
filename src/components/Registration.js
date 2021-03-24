@@ -148,6 +148,9 @@ export default function Registration() {
                         <option value="Russian">Russian</option>
                         <option value="Portuguese">Portuguese</option>
                         <option value="Spanish">Spanish</option>
+                        <option value="French">French</option>
+                        <option value="Italian">Italian</option>
+                        <option value="German">German</option>
                     </select>
                 </div>
                 <div className="form-group">

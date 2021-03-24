@@ -20,38 +20,39 @@ import '../html.scss'
 export default function Routes() {
   const [signedIn, setSignedIn] = useState(JSON.parse(localStorage.getItem('signedIn')) || false);
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')) || '');
-    const [language, setLanguage] = useState('en')
+  const [language, setLanguage] = useState('en')
 
-    // Called from Login.js when user successfully signs in. Passes signedIn state to Header.js
-    // and passes user state to many components which is then used to retrieve the currently
-    // signed in user. Signs out when called from Header.js
-    const updateSignedIn  = ( username, e ) => {
-        if (signedIn === false) {
-          setSignedIn(true, localStorage.setItem('signedIn', JSON.stringify(true)));
-          setUser(username, localStorage.setItem('user', JSON.stringify(username)));
-        } else {
-          e.stopPropagation();
-          axios.post(APIEndpoints.logoutEndpoint, { withCredentials: true });
-          setSignedIn(false);
-          setUser('');
-        }
-    };
-
-    
-    // This is sent as props to any component which updates the activeUser state. Updates the 
-    // data on the backend.
-    async function updateUser (uniqueId, activeUser) {
-      try {
-          const updatedUser = await axios.put(`https://app.yawe.dev/api/1/ce/non-auth-endpoint?key=b0188b53ea77419ba1d6dcda06e4bea9&uniqueId=${uniqueId}`, 
-          activeUser.data,
-          { withCredentials: true },
-          { headers: {'Content-Type': 'application/json'}}
-          )
-          console.log(updatedUser)
-      } catch (error) {
-          console.log(error)
+  // Called from Login.js when user successfully signs in. Passes signedIn state to Header.js
+  // and passes user state to many components which is then used to retrieve the currently
+  // signed in user. Signs out when called from Header.js
+  const updateSignedIn  = ( username, e ) => {
+      if (signedIn === false) {
+        setSignedIn(true, localStorage.setItem('signedIn', JSON.stringify(true)));
+        setUser(username, localStorage.setItem('user', JSON.stringify(username)));
+      } else {
+        localStorage.clear();
+        e.stopPropagation();
+        axios.post(APIEndpoints.logoutEndpoint, { withCredentials: true });
+        setSignedIn(false);
+        setUser('');
       }
+  };
+
+  
+  // This is sent as props to any component which updates the activeUser state. Updates the 
+  // data on the backend.
+  async function updateUser (uniqueId, activeUser) {
+    try {
+        const updatedUser = await axios.put(`https://app.yawe.dev/api/1/ce/non-auth-endpoint?key=b0188b53ea77419ba1d6dcda06e4bea9&uniqueId=${uniqueId}`, 
+        activeUser.data,
+        { withCredentials: true },
+        { headers: {'Content-Type': 'application/json'}}
+        )
+        console.log(updatedUser)
+    } catch (error) {
+        console.log(error)
     }
+  }
 
     return (
       <div className="App">

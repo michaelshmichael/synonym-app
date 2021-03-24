@@ -47,7 +47,7 @@ export default function Registration() {
     };
 
     const successfulRegisterToast = () => {
-        toast.success(`${username} successfully registered!`)
+        toast.success(`${username} successfully registered!`, { autoClose: 1500 })
     }
 
     const failedRegisterToast = () => {

@@ -26,7 +26,7 @@ export default function Login (props) {
     };
 
     const displaySuccessfulLogInToast = () => {
-        toast.success(`${username} logged in.`)
+        toast.success(`${username} logged in.`, { autoClose: 1500 })
     }
 
     const displayFailedLogInToast = () => {

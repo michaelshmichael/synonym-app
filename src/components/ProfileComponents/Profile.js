@@ -127,7 +127,7 @@ export default function Profile (props) {
                         >
                         </LanguagesBeingStudied>
                         <div className='another-language-div'>
-                            <h3>Another Language?</h3>
+                            <h3>Studying Another Language?</h3>
                             <div className='another-language-select'>
                                 <select onChange={e => setNewLearningLanguage(e.currentTarget.value)} 
                                 id="learningLanguage" 
@@ -137,6 +137,9 @@ export default function Profile (props) {
                                     <option value="Russian">Russian</option>
                                     <option value="Portuguese">Portuguese</option>
                                     <option value="Spanish">Spanish</option>
+                                    <option value="French">French</option>
+                                    <option value="Italian">Italian</option>
+                                    <option value="German">German</option>
                                 </select>
                                 <button onClick={addLanguage} className='uibutton'>Add</button>
                             </div>

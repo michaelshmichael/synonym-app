@@ -10,6 +10,7 @@
         width: 850px;
         height: 100%;
         @include mixins.loading-animation;
+        overflow: auto;
         .profile-has-loaded {
             margin-left: 260px;
             .username-and-flag-container {
@@ -69,6 +70,7 @@
                     flex-direction: row;
                     justify-content: space-between;
                     height: 30px;
+                    margin-bottom: 50px;
                     select {
                         width: 210px;
                         margin-right: 10px;

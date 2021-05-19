@@ -98,17 +98,19 @@ export default function Set (props) {
         e.preventDefault();
         let APIData = await wordAPICall();
         console.log(APIData)
-        let definitionArray = _createDefinitionArrayFromAPIData(APIData);
-        let newWordObject = _createNewWordObject(APIData, definitionArray);
-        let updatedArray = vocabArray.concat(newWordObject);
-        setActiveUser((prevState) => {
-            const newState = Object.assign({}, prevState);
-            newState.data.vocab[set] = updatedArray;
-            return newState;
-        });
-        setVocabArray(updatedArray);
-        setNewWord('');
-        setExplanation('');
+        if(APIData){
+            let definitionArray = _createDefinitionArrayFromAPIData(APIData);
+            let newWordObject = _createNewWordObject(APIData, definitionArray);
+            let updatedArray = vocabArray.concat(newWordObject);
+            setActiveUser((prevState) => {
+                const newState = Object.assign({}, prevState);
+                newState.data.vocab[set] = updatedArray;
+                return newState;
+            });
+            setVocabArray(updatedArray);
+            setNewWord('');
+            setExplanation('');
+        }
     };
 
     // Uses WordAPI to get data on the word submitted by user.
@@ -122,7 +124,6 @@ export default function Set (props) {
                 return result            
             } catch (error) {
             console.log(error)
-            // Need to do something here if result is not found from API call
         }
     }
     
